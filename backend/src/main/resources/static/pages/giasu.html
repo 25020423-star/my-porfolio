@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -9,9 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/giasu-page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
 <body>
     <nav class="navbar-unified">
         <a href="../index.html" class="nav-logo">
@@ -19,15 +19,14 @@
         </a>
         <ul class="nav-links-unified">
             <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
             <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
             <li>
                 <a href="about.html">Tìm Hiểu Thêm ▾</a>
                 <ul class="nav-dropdown">
                     <li><a href="about.html">Cá Nhân</a></li>
                     <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
+                    <li><a href="teaching.html#research">Nghiên Cứu</a></li>
+                    <li><a href="about.html#knowledge">Kiến Thức</a></li>
                     <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
                 </ul>
             </li>
@@ -36,9 +35,7 @@
             <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối">
                 <i class="fa-solid fa-moon"></i>
             </button>
-            <div id="guest-links">
-                <button onclick="window.promptAdmin()" class="btn-premium-nav" id="admin-login-label">Đăng nhập Admin</button>
-            </div>
+            <div id="guest-links"></div>
             <div id="user-links" style="display: none; gap: 10px; align-items: center;">
                 <span id="nav-user-name" class="user-badge"></span>
                 <button onclick="logout()" class="logout-btn">Thoát</button>
@@ -48,13 +45,10 @@
     <main class="page-content" style="padding-top: 100px;">
         <!-- Tutor Hero Section -->
         <section class="tutor-hero reveal">
-            <button class="admin-toggle-btn" onclick="window.promptAdmin()" title="Admin Login">
-                <i class="fa-solid fa-lock"></i>
-            </button>
             <div class="tutor-hero-container">
                 <div class="tutor-hero-image">
                     <label id="tutor-img-label" class="tutor-img-wrapper" title="" style="cursor: default;">
-                        <img src="../assets/images/profile.jpg" alt="Gia sư Trường" class="tutor-img" id="main-tutor-img" onerror="this.src='https://ui-avatars.com/api/?name=Truong&background=f15a24&color=fff&size=512'">
+                        <img src="https://ui-avatars.com/api/?name=Truong&background=f15a24&color=fff&size=512" alt="Gia sư Trường" class="tutor-img" id="main-tutor-img">
                         <div class="img-edit-overlay" id="img-edit-overlay" style="display: none;">
                             <i class="fa-solid fa-camera"></i>
                             <span>Chọn ảnh đại diện</span>
@@ -85,7 +79,7 @@
         <section class="tutor-achievements-certs">
             <div class="achievements-container glass-card-dark">
                 <h2 class="section-title"><i class="fa-solid fa-medal"></i> Thành tích & Chứng nhận</h2>
-                
+
                 <div class="achievement-highlight">
                     <div class="medal-icon"><i class="fa-solid fa-award"></i></div>
                     <div class="highlight-text">
@@ -110,10 +104,6 @@
                 </div>
 
                 <div class="cert-gallery" id="cert-gallery">
-                    <div class="cert-item" onclick="openLightbox(this)">
-                        <img src="../assets/images/profile.jpg" alt="Chứng nhận">
-                        <div class="cert-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    </div>
                     <!-- New certificates will be added here -->
                 </div>
 
@@ -218,9 +208,9 @@
                 <div style="margin-bottom: 30px;">
                     <h2 class="section-title-center" style="margin: 0;">Kết Quả Thực Tế & Đánh Giá</h2>
                 </div>
-                
+
                 <!-- Dynamic Reviews will be added to the slider below -->
-                
+
                 <!-- Success Stories (Ca gia sư thành công) -->
                 <div class="success-stories">
                     <div class="story-card glass-card-dark">
@@ -235,7 +225,7 @@
                             <span class="story-tag">Bứt phá 2 tháng</span>
                         </div>
                     </div>
-                    
+
                     <div class="story-card glass-card-dark">
                         <div class="story-stats">
                             <div class="score-before">4.5</div>
@@ -296,7 +286,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="carousel-controls" style="gap: 20px;">
                         <button class="carousel-btn" id="prev-testim"><i class="fa-solid fa-chevron-left"></i></button>
                         <button class="btn-orange" onclick="openReviewModal()" style="font-size: 0.85rem; padding: 10px 25px;">
@@ -347,35 +337,35 @@
                     <div class="card-tag">Hóa Học</div>
                     <h4>Mẹo bấm máy tính Casio giải nhanh bài toán bảo toàn electron</h4>
                     <p>Khám phá cách xử lý các bài toán Hóa nâng cao chỉ trong 30 giây...</p>
-                    <a href="blog.html">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="about.html#knowledge">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
                 <article class="blog-card-small glass-card-dark">
                     <div class="card-tag">Lộ Trình</div>
                     <h4>Lộ trình 3 tháng bứt phá 8+ môn Hóa từ con số 0</h4>
                     <p>Kế hoạch chi tiết dành cho các bạn học sinh mất gốc đang lo lắng...</p>
-                    <a href="blog.html">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="about.html#knowledge">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
             </div>
             <div class="center-btn mt-4">
-                <a href="blog.html" class="btn-outline-white">Xem tất cả bài viết</a>
+                <a href="about.html#knowledge" class="btn-outline-white">Xem tất cả bài viết</a>
             </div>
         </section>
         <!-- Availability Calendar Section -->
         <section class="tutor-calendar-section">
             <h2 class="section-title-center">Lịch Rảnh & Đặt Lịch Dạy</h2>
             <p class="subtitle-center">Lịch trình học tập tại UET và thời gian có thể nhận lớp gia sư trong tuần này.</p>
-            
+
             <div class="calendar-container glass-card-dark">
                 <div class="calendar-header">
                     <button id="prevMonth" class="cal-btn"><i class="fa-solid fa-chevron-left"></i></button>
                     <h3 id="monthDisplay">Tháng 5, 2026</h3>
                     <button id="nextMonth" class="cal-btn"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
-                
+
                 <div class="calendar-weekdays">
                     <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div>
                 </div>
-                
+
                 <div class="calendar-days" id="calendar-days">
                     <!-- Days generated by JS -->
                 </div>
@@ -386,14 +376,14 @@
                     <div class="legend-item"><span class="box past"></span> <span>Đã qua</span></div>
                 </div>
             </div>
-            
+
             <div class="center-btn mt-4">
                 <a href="#trial-modal" class="btn-orange" id="book-now-btn">Đặt lịch học ngay</a>
             </div>
         </section>
     </main>
 
-    <footer class="tutor-footer">
+    <footer class="tutor-footer" data-shared-footer>
         <div class="footer-content">
             <p>&copy; 2026 Hoàng Mạnh Trường. Chuyên gia luyện thi khối A00.</p>
             <div class="footer-social">
@@ -480,26 +470,6 @@
         </div>
     </div>
 
-    <!-- Admin Login Modal -->
-    <div id="admin-modal" class="modal-overlay">
-        <div class="modal-card admin-auth-card glass-card-dark">
-            <div class="admin-auth-icon">
-                <i class="fa-solid fa-lock-open"></i>
-            </div>
-            <h2 class="admin-auth-title">ADMIN ACCESS</h2>
-            <p style="color: #64748b; margin-top: -20px; margin-bottom: 30px; font-size: 0.9rem;">Vui lòng xác minh quyền quản trị viên</p>
-            <div class="admin-auth-form">
-                <div class="input-glow-wrapper">
-                    <input type="password" id="admin-pass-input" placeholder="••••" class="admin-input">
-                </div>
-                <button onclick="submitAdminPass()" class="btn-premium-auth">XÁC NHẬN</button>
-                <div class="text-center mt-4">
-                    <a href="javascript:void(0)" onclick="closeAdminModal()" class="btn-cancel-auth">Hủy bỏ</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Success Message Toast -->
     <div id="toast" class="toast">Gửi thành công! Tôi sẽ liên hệ bạn sớm.</div>
 
@@ -509,882 +479,11 @@
         <img id="lightbox-img" src="" alt="Enlarged Certificate">
     </div>
 
-    <style>
-        /* Registration Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal.active { display: flex; }
-        .modal-content {
-            width: 90%;
-            max-width: 500px;
-            padding: 35px;
-            position: relative;
-            background: #1a0b2e;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            animation: modalSlide 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-        }
-        @keyframes modalSlide {
-            from { transform: translateY(40px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .close-modal {
-            position: absolute;
-            top: 20px; right: 20px;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: white;
-            opacity: 0.5;
-            transition: 0.3s;
-        }
-        .close-modal:hover { opacity: 1; transform: rotate(90deg); }
-        .w-full { width: 100%; }
-        .toast {
-            position: fixed;
-            bottom: 30px; left: 50%;
-            transform: translateX(-50%);
-            background: #4CAF50;
-            color: white;
-            padding: 12px 35px;
-            border-radius: 50px;
-            display: none;
-            z-index: 10001;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-            font-weight: 600;
-        }
-
-        /* Tutor Profile Image Enhancements */
-        .tutor-img-wrapper {
-            display: block;
-            position: relative;
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 6px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            margin: 0 auto;
-        }
-        .tutor-img-wrapper:hover .img-edit-overlay {
-            opacity: 1;
-        }
-        .cert-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .cert-delete-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .cert-delete-btn:hover {
-            background: #ef4444;
-            transform: scale(1.1);
-        }
-        .tutor-img-wrapper:hover .tutor-img {
-            transform: scale(1.1);
-        }
-
-        .admin-toggle-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .admin-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        /* Review Styles */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .review-card {
-            padding: 30px;
-            position: relative;
-        }
-
-        .review-stars {
-            color: #fbbf24;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        .review-content {
-            font-style: italic;
-            color: #cbd5e1;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .review-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .author-info h5 {
-            margin: 0;
-            color: white;
-        }
-
-        .author-info span {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .rating-input {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-            gap: 5px;
-        }
-
-        .rating-input input { display: none; }
-        .rating-input label {
-            font-size: 2rem;
-            color: #475569;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .rating-input input:checked ~ label,
-        .rating-input label:hover,
-        .rating-input label:hover ~ label {
-            color: #fbbf24;
-        }
-
-        .review-delete-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: #ef4444;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-
-        .review-delete-btn:hover { opacity: 1; }
-        
-        /* Modal Global Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-card {
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            position: relative;
-            animation: modalFadeUp 0.4s ease-out;
-        }
-
-        @keyframes modalFadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: none; border: none;
-            color: #94a3b8; font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .admin-header { margin-bottom: 30px; text-align: center; }
-        .admin-header h3 { color: var(--primary-color); margin-bottom: 10px; }
-        
-        /* Admin Auth Modal Specifics - Premium Redesign */
-        .admin-auth-card {
-            text-align: center;
-            max-width: 380px;
-            padding: 50px 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            background: rgba(15, 23, 42, 0.8) !important;
-        }
-        .admin-auth-icon {
-            font-size: 3rem;
-            background: linear-gradient(135deg, var(--primary-color), #f97316);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 10px rgba(255, 126, 95, 0.4));
-        }
-        .admin-auth-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-            color: white;
-            text-transform: uppercase;
-        }
-        .input-glow-wrapper {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        .admin-input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 18px;
-            border-radius: 12px;
-            color: white;
-            text-align: center;
-            font-size: 1.5rem;
-            letter-spacing: 10px;
-            transition: all 0.3s ease;
-        }
-        .admin-input::placeholder {
-            color: #334155;
-            letter-spacing: 2px;
-            font-size: 1rem;
-        }
-        .admin-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 20px rgba(255, 126, 95, 0.1);
-        }
-        
-        .btn-premium-auth {
-            width: 100%;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, var(--primary-color), #f97316);
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px -5px rgba(255, 126, 95, 0.4);
-        }
-
-        .btn-premium-auth:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px -5px rgba(255, 126, 95, 0.6);
-            filter: brightness(1.1);
-        }
-
-        .btn-cancel-auth {
-            color: #64748b;
-            font-size: 0.85rem;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-        .btn-cancel-auth:hover {
-            color: #94a3b8;
-        }
-        
-        .img-edit-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            opacity: 0;
-            transition: 0.3s;
-            gap: 10px;
-        }
-        .img-edit-overlay i { font-size: 2rem; }
-        .img-edit-overlay span { font-size: 0.9rem; font-weight: 600; }
-        
-        .remove-img-btn {
-            margin-top: 15px;
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .remove-img-btn:hover { background: #ef4444; color: white; }
-    </style>
-
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/api-client.js"></script>
     <script src="../assets/js/chatbot.js"></script>
     <script src="../assets/js/main.js"></script>
-    <script>
-        (function() {
-            const trialModal = document.getElementById('trial-modal');
-            const trialBtn = document.getElementById('trial-btn');
-            const bookNowBtn = document.getElementById('book-now-btn');
-            const closeModal = document.querySelector('.close-modal');
-
-            function openBooking(msg = "") {
-                const modal = document.getElementById('trial-modal');
-                if (modal) {
-                    modal.style.display = 'flex';
-                    if (msg) {
-                        const msgField = document.getElementById('message');
-                        if (msgField) msgField.value = msg;
-                    }
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-
-            window.closeBooking = function() {
-                const modal = document.getElementById('trial-modal');
-                if (modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            }
-
-            if (trialBtn) trialBtn.onclick = (e) => { e.stopImmediatePropagation(); e.preventDefault(); openBooking(); };
-            if (bookNowBtn) bookNowBtn.onclick = (e) => { e.stopImmediatePropagation(); e.preventDefault(); openBooking(); };
-            
-            window.addEventListener('click', (e) => {
-                const trialModal = document.getElementById('trial-modal');
-                if (e.target === trialModal) closeBooking();
-            });
-
-            const trialForm = document.getElementById('trial-form');
-            if (trialForm) {
-                trialForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const btn = this.querySelector('button');
-                    const originalText = btn.innerText;
-                    btn.innerText = "ĐANG GỬI...";
-                    btn.disabled = true;
-
-                    // Sử dụng cấu hình của bạn
-                    const serviceID = "service_mm7h96j";
-                    const templateID = "template_t59gmii";
-                    const publicKey = "KcZVp8Gd0nlMDosx9";
-
-                    emailjs.sendForm(serviceID, templateID, this, publicKey)
-                        .then(() => {
-                            const toast = document.getElementById('toast');
-                            if (toast) {
-                                toast.innerText = "Gửi thành công! Tôi sẽ liên hệ bạn sớm.";
-                                toast.style.display = 'block';
-                                toast.style.backgroundColor = '#10b981';
-                                setTimeout(() => toast.style.display = 'none', 3000);
-                            }
-                            btn.innerText = originalText;
-                            btn.disabled = false;
-                            closeBooking();
-                            this.reset();
-                        }, (err) => {
-                            console.error("EmailJS Error:", err);
-                            // Hiển thị lỗi chi tiết để dễ debug
-                            alert("Lỗi EmailJS: " + (err.text || JSON.stringify(err)) + "\n\nVui lòng kiểm tra lại Service ID, Template ID hoặc Public Key trong tài khoản EmailJS của bạn.");
-                            btn.innerText = originalText;
-                            btn.disabled = false;
-                        });
-                });
-            }
-
-            window.changeTutorImage = async function(input) {
-                const file = input.files[0];
-                if (file) {
-                    try {
-                        const compressedBase64 = await compressImage(file);
-                        document.getElementById('main-tutor-img').src = compressedBase64;
-                        localStorage.setItem('tutor_profile_img', compressedBase64);
-                        document.getElementById('btn-remove-img').style.display = 'inline-flex';
-                    } catch (e) {
-                        console.error("Lỗi xử lý ảnh:", e);
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            document.getElementById('main-tutor-img').src = e.target.result;
-                            try {
-                                localStorage.setItem('tutor_profile_img', e.target.result);
-                            } catch(err) { console.warn("Không thể lưu ảnh vào bộ nhớ trình duyệt vì quá nặng."); }
-                            document.getElementById('btn-remove-img').style.display = 'inline-flex';
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-            };
-
-            function compressImage(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = (event) => {
-                        const img = new Image();
-                        img.src = event.target.result;
-                        img.onload = () => {
-                            const canvas = document.createElement('canvas');
-                            const MAX_WIDTH = 800; 
-                            const scaleSize = MAX_WIDTH / img.width;
-                            if (img.width > MAX_WIDTH) {
-                                canvas.width = MAX_WIDTH;
-                                canvas.height = img.height * scaleSize;
-                            } else {
-                                canvas.width = img.width;
-                                canvas.height = img.height;
-                            }
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                            resolve(canvas.toDataURL('image/jpeg', 0.7));
-                        };
-                        img.onerror = reject;
-                    };
-                    reader.onerror = reject;
-                });
-            }
-
-            window.removeTutorImage = function() {
-                if (confirm('Bạn có chắc muốn xóa ảnh đại diện này?')) {
-                    localStorage.removeItem('tutor_profile_img');
-                    document.getElementById('main-tutor-img').src = '../assets/images/profile.jpg';
-                    document.getElementById('btn-remove-img').style.display = 'none';
-                }
-            };
-
-            window.openLightbox = function(element) {
-                const lightbox = document.getElementById('lightbox');
-                const lightboxImg = document.getElementById('lightbox-img');
-                const imgSrc = element.querySelector('img').src;
-                lightboxImg.src = imgSrc;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            };
-
-            window.closeLightbox = function() {
-                const lightbox = document.getElementById('lightbox');
-                if (lightbox) lightbox.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            };
-
-            const API_BASE = `${API_CONFIG.BASE_URL}/api/certificates`;
-
-            async function loadCertificates() {
-                try {
-                    const response = await fetch(API_BASE);
-                    const certs = await response.json();
-                    const gallery = document.getElementById('cert-gallery');
-                    if (!gallery) return;
-                    
-                    // Clear existing (except maybe placeholders if any, but better clear all and re-render)
-                    gallery.innerHTML = '';
-                    
-                    certs.forEach(cert => {
-                        renderCertificate(cert);
-                    });
-                } catch (error) {
-                    console.error("Lỗi tải chứng nhận:", error);
-                }
-            }
-
-            function renderCertificate(cert) {
-                const gallery = document.getElementById('cert-gallery');
-                const certItem = document.createElement('div');
-                certItem.className = 'cert-item';
-                certItem.setAttribute('data-id', cert.id);
-                certItem.onclick = function(e) { 
-                    if (e.target.classList.contains('fa-trash-can') || e.target.closest('.cert-delete-btn')) return;
-                    window.openLightbox(this); 
-                };
-                
-                const isAdmin = localStorage.getItem('isAdmin') === 'true';
-                const deleteBtn = isAdmin ? `<button class="cert-delete-btn" onclick="deleteCert(${cert.id})"><i class="fa-solid fa-trash-can"></i></button>` : '';
-
-                certItem.innerHTML = `
-                    <img src="${API_CONFIG.BASE_URL}${cert.imageUrl}" alt="${cert.title}">
-                    <div class="cert-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    ${deleteBtn}
-                `;
-                gallery.appendChild(certItem);
-            }
-
-            window.deleteCert = async function(id) {
-                if (!confirm("Bạn có chắc muốn xóa chứng nhận này?")) return;
-                try {
-                    const response = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
-                    if (response.ok) {
-                        const el = document.querySelector(`.cert-item[data-id="${id}"]`);
-                        if (el) el.remove();
-                    }
-                } catch (error) {
-                    console.error("Lỗi xóa chứng nhận:", error);
-                }
-            };
-
-            const certUpload = document.getElementById('cert-upload');
-            if (certUpload) {
-                certUpload.addEventListener('change', async function(e) {
-                    const files = e.target.files;
-                    for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
-                        const formData = new FormData();
-                        formData.append('file', file);
-                        formData.append('title', 'Chứng nhận mới');
-
-                        try {
-                            const response = await fetch(API_BASE, {
-                                method: 'POST',
-                                body: formData
-                            });
-                            if (response.ok) {
-                                const newCert = await response.json();
-                                renderCertificate(newCert);
-                            }
-                        } catch (error) {
-                            console.error("Lỗi upload chứng nhận:", error);
-                        }
-                    }
-                });
-            }
-
-            const track = document.getElementById('testimonial-track');
-            const prevBtn = document.getElementById('prev-testim');
-            const nextBtn = document.getElementById('next-testim');
-            let currentPos = 0;
-
-            if (nextBtn && track) {
-                nextBtn.addEventListener('click', () => {
-                    const cardWidth = track.querySelector('.testimonial-card-pro').offsetWidth + 30;
-                    const maxScroll = track.scrollWidth - track.parentElement.offsetWidth;
-                    currentPos = Math.min(currentPos + cardWidth, maxScroll);
-                    track.style.transform = `translateX(-${currentPos}px)`;
-                });
-            }
-
-            if (prevBtn && track) {
-                prevBtn.addEventListener('click', () => {
-                    const cardWidth = track.querySelector('.testimonial-card-pro').offsetWidth + 30;
-                    currentPos = Math.max(currentPos - cardWidth, 0);
-                    track.style.transform = `translateX(-${currentPos}px)`;
-                });
-            }
-
-            const monthDisplay = document.getElementById('monthDisplay');
-            const daysContainer = document.getElementById('calendar-days');
-            let currentDate = new Date(2026, 4, 7); 
-
-            const mySchedule = {
-                1: 1, 2: 1, 3: 2, 4: 1, 5: 2, 6: 2, 7: 1,
-                8: 1, 9: 2, 10: 2, 11: 1, 12: 1, 13: 2, 14: 2,
-                15: 1, 16: 1, 17: 2, 18: 1, 19: 2, 20: 2, 21: 1,
-                22: 1, 23: 2, 24: 2, 25: 1, 26: 1, 27: 2, 28: 2,
-                29: 1, 30: 2, 31: 2
-            };
-
-            function renderCalendar(date) {
-                if (!daysContainer || !monthDisplay) return;
-                const year = date.getFullYear();
-                const month = date.getMonth();
-                const firstDay = new Date(year, month, 1).getDay(); 
-                let startDay = firstDay === 0 ? 6 : firstDay - 1;
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                
-                monthDisplay.innerText = `Tháng ${month + 1}, ${year}`;
-                daysContainer.innerHTML = '';
-
-                for (let i = 0; i < startDay; i++) {
-                    daysContainer.innerHTML += '<div></div>';
-                }
-
-                for (let d = 1; d <= daysInMonth; d++) {
-                    let statusClass = '';
-                    const status = mySchedule[d];
-                    if (d < 7) statusClass = 'past';
-                    else if (status === 1) statusClass = 'busy';
-                    else if (status === 2) statusClass = 'available';
-                    const dayEl = document.createElement('div');
-                    dayEl.className = `day ${statusClass}`;
-                    dayEl.innerText = d;
-                    if (status === 2 && d >= 7) {
-                        dayEl.style.cursor = 'pointer';
-                        dayEl.onclick = () => openBooking(`Em muốn đặt lịch học thử vào ngày ${d}/${month + 1}/${year}`);
-                    }
-                    daysContainer.appendChild(dayEl);
-                }
-            }
-
-            window.promptAdmin = function() {
-                const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-                
-                if (isAdmin) {
-                    if (confirm("Bạn có chắc chắn muốn thoát quyền Admin và khóa các chức năng chỉnh sửa?")) {
-                        sessionStorage.removeItem('isAdmin');
-                        alert("Đã khóa quyền Admin!");
-                        checkAdmin();
-                    }
-                } else {
-                    document.getElementById('admin-modal').style.display = 'flex';
-                    document.getElementById('admin-pass-input').focus();
-                }
-            };
-
-            window.closeAdminModal = function() {
-                document.getElementById('admin-modal').style.display = 'none';
-                document.getElementById('admin-pass-input').value = '';
-            };
-
-            window.submitAdminPass = function() {
-                const pass = document.getElementById('admin-pass-input').value;
-                if (pass === "1002") {
-                    sessionStorage.setItem('isAdmin', 'true');
-                    alert("Đăng nhập Admin thành công!");
-                    checkAdmin();
-                    closeAdminModal();
-                } else {
-                    alert("Sai mật khẩu!");
-                    document.getElementById('admin-pass-input').value = '';
-                }
-            };
-
-            // Enter key to submit
-            document.getElementById('admin-pass-input')?.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') submitAdminPass();
-            });
-
-            // Admin Check Logic
-            function checkAdmin() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const isAdminParam = urlParams.get('admin') === 'true';
-                const isAdminSession = sessionStorage.getItem('isAdmin') === 'true';
-                
-                const lockIcon = document.querySelector('.admin-toggle-btn i');
-                
-                if (isAdminParam || isAdminSession) {
-                    if (isAdminParam) sessionStorage.setItem('isAdmin', 'true');
-                    if (lockIcon) {
-                        lockIcon.classList.remove('fa-lock');
-                        lockIcon.classList.add('fa-lock-open');
-                        lockIcon.parentElement.style.color = 'var(--primary-color)';
-                    }
-                    
-                    // Bật khả năng click đổi ảnh đại diện
-                    const imgLabel = document.getElementById('tutor-img-label');
-                    if (imgLabel) {
-                        imgLabel.setAttribute('for', 'tutor-img-upload');
-                        imgLabel.style.cursor = 'pointer';
-                        imgLabel.title = 'Nhấp để thay đổi ảnh chân dung';
-                    }
-                    const imgOverlay = document.getElementById('img-edit-overlay');
-                    if (imgOverlay) imgOverlay.style.display = '';
-
-                    const btnChoose = document.getElementById('btn-choose-img');
-                    const btnUpload = document.getElementById('btn-upload-cert');
-                    if (btnChoose) btnChoose.style.display = 'inline-flex';
-                    if (btnUpload) btnUpload.style.display = 'inline-flex';
-                    
-                    const savedImg = localStorage.getItem('tutor_profile_img');
-                    const btnRemove = document.getElementById('btn-remove-img');
-                    if (savedImg && btnRemove) {
-                        btnRemove.style.display = 'inline-flex';
-                    }
-                    
-                    // Show all delete buttons for certs & reviews
-                    document.querySelectorAll('.cert-delete-btn, .review-delete-btn').forEach(b => b.style.display = 'flex');
-                } else {
-                    if (lockIcon) {
-                        lockIcon.classList.remove('fa-lock-open');
-                        lockIcon.classList.add('fa-lock');
-                        lockIcon.parentElement.style.color = 'rgba(255, 255, 255, 0.3)';
-                    }
-
-                    // Tắt khả năng click đổi ảnh đại diện
-                    const imgLabel = document.getElementById('tutor-img-label');
-                    if (imgLabel) {
-                        imgLabel.removeAttribute('for');
-                        imgLabel.style.cursor = 'default';
-                        imgLabel.title = '';
-                    }
-                    const imgOverlay = document.getElementById('img-edit-overlay');
-                    if (imgOverlay) imgOverlay.style.display = 'none';
-
-                    if (document.getElementById('btn-choose-img')) document.getElementById('btn-choose-img').style.display = 'none';
-                    if (document.getElementById('btn-remove-img')) document.getElementById('btn-remove-img').style.display = 'none';
-                    if (document.getElementById('btn-upload-cert')) document.getElementById('btn-upload-cert').style.display = 'none';
-                    
-                    // Hide delete buttons (except user's own reviews which is handled in renderReview)
-                    document.querySelectorAll('.cert-delete-btn').forEach(b => b.style.display = 'none');
-                    // For reviews, we need to re-render or let the renderReview logic handle it. 
-                    // Let's just refresh the page or call load functions for simplicity in this case
-                }
-            }
-
-            // Review System Logic
-            const REVIEW_API = `${API_CONFIG.BASE_URL}/api/reviews`;
-
-            window.openReviewModal = () => document.getElementById('review-modal').style.display = 'flex';
-            window.closeReviewModal = () => document.getElementById('review-modal').style.display = 'none';
-
-            async function loadReviews() {
-                try {
-                    const response = await fetch(REVIEW_API);
-                    const reviews = await response.json();
-                    reviews.forEach(review => renderReview(review));
-                } catch (error) {
-                    console.error("Lỗi tải đánh giá:", error);
-                }
-            }
-
-            function renderReview(review) {
-                const track = document.getElementById('testimonial-track');
-                if (!track) return;
-                
-                const card = document.createElement('div');
-                card.className = 'testimonial-card-pro';
-                card.setAttribute('data-id', review.id);
-                
-                const stars = '<i class="fa-solid fa-star"></i>'.repeat(review.rating);
-                
-                // Logic: Admin can delete all, users can only delete their own (tracked via localStorage)
-                const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-                const myReviews = JSON.parse(localStorage.getItem('my_reviews') || '[]');
-                const isMine = myReviews.includes(review.id);
-                
-                const deleteBtn = (isAdmin || isMine) ? `<i class="fa-solid fa-trash-can review-delete-btn" style="top: 20px; right: 20px;" onclick="deleteReview(${review.id})"></i>` : '';
-
-                card.innerHTML = `
-                    ${deleteBtn}
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="stars">${stars}</div>
-                    <p>"${review.content}"</p>
-                    <div class="student-info">
-                        <strong>${review.author}</strong>
-                        <span>${review.role}</span>
-                    </div>
-                `;
-                track.appendChild(card);
-            }
-
-            window.deleteReview = async function(id) {
-                if (!confirm("Xóa đánh giá này?")) return;
-                try {
-                    await fetch(`${REVIEW_API}/${id}`, { method: 'DELETE' });
-                    const el = document.querySelector(`.testimonial-card-pro[data-id="${id}"]`);
-                    if (el) el.remove();
-                    // Reset slider position
-                    currentPos = 0;
-                    if (track) track.style.transform = `translateX(0)`;
-                } catch (error) {
-                    console.error("Lỗi xóa đánh giá:", error);
-                }
-            };
-
-            const reviewForm = document.getElementById('review-form');
-            if (reviewForm) {
-                reviewForm.onsubmit = async function(e) {
-                    e.preventDefault();
-                    const btn = this.querySelector('button');
-                    btn.innerText = "Đang gửi...";
-                    btn.disabled = true;
-
-                    const reviewData = {
-                        author: document.getElementById('review-author').value,
-                        role: document.getElementById('review-role').value,
-                        content: document.getElementById('review-content').value,
-                        rating: parseInt(this.querySelector('input[name="rating"]:checked').value)
-                    };
-
-                    try {
-                        const response = await fetch(REVIEW_API, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(reviewData)
-                        });
-                        if (response.ok) {
-                            const newReview = await response.json();
-                            
-                            // Save to my_reviews in localStorage
-                            const myReviews = JSON.parse(localStorage.getItem('my_reviews') || '[]');
-                            myReviews.push(newReview.id);
-                            localStorage.setItem('my_reviews', JSON.stringify(myReviews));
-                            
-                            renderReview(newReview);
-                            closeReviewModal();
-                            this.reset();
-                            alert("Cảm ơn bạn đã đánh giá!");
-                        }
-                    } catch (error) {
-                        console.error("Lỗi gửi đánh giá:", error);
-                        alert("Có lỗi xảy ra, vui lòng thử lại sau.");
-                    } finally {
-                        btn.innerText = "Gửi Đánh Giá";
-                        btn.disabled = false;
-                    }
-                };
-            }
-
-            window.addEventListener('DOMContentLoaded', () => {
-                const savedImg = localStorage.getItem('tutor_profile_img');
-                if (savedImg) {
-                    const profileImg = document.getElementById('main-tutor-img');
-                    if (profileImg) profileImg.src = savedImg;
-                }
-                renderCalendar(currentDate);
-                checkAdmin();
-                loadCertificates();
-                loadReviews(); // Load reviews on startup
-            });
-        })();
-    </script>
+    <script src="../assets/js/giasu-page.js"></script>
 </body>
 </html>
-

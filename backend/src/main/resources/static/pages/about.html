@@ -4,32 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Về Tôi - Hoàng Mạnh Trường</title>
+    <title>Trang Cá Nhân — Hoàng Mạnh Trường</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/share-page.css">
 </head>
 
-
-
+    <body class="about-page">
         <nav class="navbar-unified">
             <a href="../index.html" class="nav-logo">
                 <i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span>
             </a>
             <ul class="nav-links-unified">
             <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
             <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
             <li>
                 <a href="about.html">Tìm Hiểu Thêm ▾</a>
                 <ul class="nav-dropdown">
                     <li><a href="about.html">Cá Nhân</a></li>
                     <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
+                    <li><a href="teaching.html#research">Nghiên Cứu</a></li>
+                    <li><a href="about.html#knowledge">Kiến Thức</a></li>
                     <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
                 </ul>
             </li>
@@ -38,10 +37,7 @@
                 <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <div id="guest-links">
-                    <button onclick="window.promptAdmin()" class="btn-premium-nav" id="admin-login-label">Đăng nhập
-                        Admin</button>
-                </div>
+                <div id="guest-links"></div>
                 <div id="user-links" style="display: none; gap: 10px; align-items: center;">
                     <span id="nav-user-name" class="user-badge"></span>
                     <button onclick="logout()" class="logout-btn">Thoát</button>
@@ -51,7 +47,7 @@
         <main class="page-content" style="padding-top: 100px;">
             <section class="about reveal">
 
-                <h2 class="page-title">Về Tôi</h2>
+                <div class="personal-hero"><span class="share-kicker">PROFILE · KNOWLEDGE · EXPERIENCE</span><h1 class="page-title">Trang Cá Nhân</h1><p>Hồ sơ, hành trình và những kiến thức mình đúc kết trong quá trình học tập, xây dựng sản phẩm và giảng dạy.</p></div>
                 <div class="about-grid-triple">
                     <div class="about-left">
                         <div class="about-text glass-card">
@@ -147,11 +143,27 @@
                     </div>
                 </div>
             </section>
+
+            <section class="share-section knowledge-share" id="knowledge" aria-labelledby="knowledge-title">
+                <header class="blog-header reveal">
+                    <span class="share-kicker">Kiến thức &amp; kinh nghiệm</span>
+                    <h2 class="page-title" id="knowledge-title">Góc chia sẻ cá nhân</h2>
+                    <p class="subtitle-center">Kiến thức lập trình, kinh nghiệm học tập và mẹo giảng dạy được tổng hợp tại một nơi.</p>
+                    <div class="blog-filters" role="group" aria-label="Lọc bài viết">
+                        <button class="filter-btn active" type="button" data-filter="all">Tất cả</button>
+                        <button class="filter-btn" type="button" data-filter="it">Công nghệ &amp; IT</button>
+                        <button class="filter-btn" type="button" data-filter="tutor">Gia sư &amp; Học tập</button>
+                    </div>
+                </header>
+                <div class="blog-grid" id="blog-grid" aria-live="polite"></div>
+            </section>
         </main>
-        <footer>
+        <footer data-shared-footer>
             <p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p>
         </footer>
+        <script src="../assets/js/share-page.js"></script>
         <script src="../assets/js/common.js"></script>
+        <script src="../assets/js/api-client.js"></script>
         <script src="../assets/js/chatbot.js"></script>
         <script src="../assets/js/main.js"></script>
     </body>

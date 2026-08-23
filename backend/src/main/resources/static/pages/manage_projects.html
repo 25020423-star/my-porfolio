@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/api-client.js"></script>
     <style>
         :root {
             --bg-color: #030718;
@@ -23,7 +25,7 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(255, 0, 255, 0.05) 0%, transparent 50%);
             color: var(--text-main);
@@ -431,7 +433,7 @@
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
-        
+
         .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim);
@@ -448,7 +450,7 @@
             border-color: var(--neon-cyan);
             background: rgba(0, 240, 255, 0.05);
         }
-        
+
         select option {
             background-color: #050A1F;
             color: white;
@@ -484,7 +486,7 @@
             color: var(--neon-cyan);
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
-        
+
         .btn-save {
             background: linear-gradient(90deg, var(--neon-cyan), #00A3FF);
             color: #000; border: none; padding: 14px 20px;
@@ -691,7 +693,7 @@
                             <input type="number" id="projBugs" value="0" min="0">
                         </div>
                     </div>
-                    
+
                     <div style="display: flex; gap: 10px; margin-top: 30px;">
                         <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> LƯU DỮ LIỆU</button>
                         <button type="button" class="btn-save" style="background: rgba(255,255,255,0.1); color: white;" onclick="closeModal()">HỦY</button>
@@ -763,9 +765,8 @@
         }
 
         // Auth
-        const PIN = "1002";
         let enteredPin = "";
-        
+
         document.addEventListener('keydown', (e) => {
             if(document.getElementById('login-screen').style.display !== 'none') {
                 if(e.key >= '0' && e.key <= '9') {
@@ -791,16 +792,25 @@
             document.getElementById('error-msg').style.display = 'none';
         }
 
-        function checkPin() {
-            if(enteredPin === PIN) {
+        async function checkPin() {
+            try {
+                await ApiClient.post('/api/auth/admin/login', { pin: enteredPin });
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app-content').style.display = 'block';
                 initDashboard();
-            } else {
+            } catch {
                 document.getElementById('error-msg').style.display = 'block';
                 enteredPin = ""; updatePinUI();
             }
         }
+
+        ApiClient.get('/api/auth/admin/me').then(state => {
+            if (state.authenticated) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+                initDashboard();
+            }
+        }).catch(() => {});
 
         // Dashboard Logic
         function initDashboard() {
@@ -813,14 +823,14 @@
             const search = document.getElementById('searchInput').value.toLowerCase();
             const tbody = document.getElementById('projectTbody');
             tbody.innerHTML = '';
-            
+
             projects.filter(p => p.name.toLowerCase().includes(search) || p.tech.toLowerCase().includes(search))
                 .forEach(p => {
                     const techTags = p.tech.split(',').map(t => `<span class="tech-tag">${t.trim()}</span>`).join('');
-                    const statusHtml = p.status === 'Live' 
+                    const statusHtml = p.status === 'Live'
                         ? `<div class="status-indicator status-live"><i class="fa-solid fa-circle"></i> LIVE</div>`
                         : `<div class="status-indicator status-dev"><i class="fa-solid fa-code-branch"></i> DEV</div>`;
-                    
+
                     const metricsHtml = `
                         <div style="display: flex; flex-direction: column; gap: 5px;">
                             <span class="stats-badge"><i class="fa-solid fa-code" style="color:#00A3FF"></i> ${p.loc ? p.loc.toLocaleString() : 0}</span>
@@ -853,7 +863,7 @@
             document.getElementById('val-total').innerText = projects.length;
             const liveProjects = projects.filter(p => p.status === 'Live');
             document.getElementById('val-live').innerText = liveProjects.length;
-            
+
             const techSet = new Set();
             projects.forEach(p => p.tech.split(',').forEach(t => techSet.add(t.trim())));
             document.getElementById('val-tech').innerText = techSet.size;
@@ -862,7 +872,7 @@
             let totalLoc = 0;
             let totalHours = 0;
             let totalBugs = 0;
-            
+
             liveProjects.forEach(p => {
                 totalLoc += Number(p.loc) || 0;
                 totalHours += Number(p.hours) || 0;
@@ -881,7 +891,7 @@
             const dev = projects.filter(p => p.status === 'Dev').length;
 
             if(radialChart) radialChart.destroy();
-            
+
             // Neon colors for chart
             const gradientLive = ctx.createLinearGradient(0, 0, 0, 100);
             gradientLive.addColorStop(0, '#00F0FF');
@@ -928,11 +938,11 @@
             document.getElementById('projLoc').value = 0;
             document.getElementById('projHours').value = 0;
             document.getElementById('projBugs').value = 0;
-            
+
             document.getElementById('projModal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('projModal').style.display = 'none'; }
-        
+
         function editProject(id) {
             const p = projects.find(x => x.id === id);
             if(p) {
@@ -940,7 +950,7 @@
                 document.getElementById('projName').value = p.name;
                 document.getElementById('projCat').value = p.cat;
                 document.getElementById('projStatus').value = p.status;
-                
+
                 const techArray = p.tech.split(',').map(t => t.trim());
                 document.getElementById('projTech').value = p.tech;
                 document.querySelectorAll('.tech-chip').forEach(chip => {
@@ -950,7 +960,7 @@
                         chip.classList.remove('active');
                     }
                 });
-                
+
                 // Metrics load
                 document.getElementById('projLoc').value = p.loc || 0;
                 document.getElementById('projHours').value = p.hours || 0;
@@ -987,7 +997,7 @@
             } else {
                 projects.push(data);
             }
-            
+
             saveData();
             closeModal();
             initDashboard();

@@ -200,7 +200,7 @@
             position: relative; animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        
+
         .detail-img-hero { width: 100%; height: 400px; object-fit: cover; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .detail-body { padding: 3rem; }
         .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
@@ -231,7 +231,7 @@
             object-fit: cover; opacity: 0; transition: 0.5s ease;
         }
         .detail-slide.active { opacity: 1; }
-        
+
         .slide-nav {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 8px; z-index: 10;
@@ -241,7 +241,7 @@
             cursor: pointer; transition: 0.3s;
         }
         .slide-dot.active { background: #ff4d4d; transform: scale(1.5); }
-        
+
         .inner-arrow {
             position: absolute; top: 50%; transform: translateY(-50%);
             width: 40px; height: 40px; background: rgba(0,0,0,0.5);
@@ -341,7 +341,7 @@
     <!-- Professional Detail Modal -->
     <div id="detail-modal" class="detail-overlay" onclick="closeDetailModal(event)">
         <div class="close-modal" onclick="closeDetailModal(event)"><i class="fa-solid fa-xmark"></i></div>
-        
+
         <div class="nav-arrow arrow-prev" onclick="navigateMilestone(-1)"><i class="fa-solid fa-chevron-left"></i></div>
         <div class="nav-arrow arrow-next" onclick="navigateMilestone(1)"><i class="fa-solid fa-angles-right"></i></div>
 
@@ -392,6 +392,7 @@
     </div>
 
     <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/api-client.js"></script>
     <script>
         let currentDetailId = null;
         let milestones = JSON.parse(localStorage.getItem('loveTimeline')) || [
@@ -423,19 +424,19 @@
 
         async function renderTimeline(filter = "") {
             const container = document.getElementById('milestones-container');
-            
+
             try {
                 // Fetch from Java Backend
                 const response = await fetch(API_URL);
                 milestones = await response.json();
-                
+
                 // Sort chronologically (oldest first)
                 milestones.sort((a, b) => {
                     return parseDateString(a.date) - parseDateString(b.date);
                 });
-                
-                const filtered = milestones.filter(m => 
-                    m.title.toLowerCase().includes(filter.toLowerCase()) || 
+
+                const filtered = milestones.filter(m =>
+                    m.title.toLowerCase().includes(filter.toLowerCase()) ||
                     m.description.toLowerCase().includes(filter.toLowerCase()) ||
                     m.date.toLowerCase().includes(filter.toLowerCase())
                 );
@@ -458,7 +459,7 @@
                         </div>
                     </div>
                 `).join('');
-                
+
                 initObserver();
                 updateProgress();
                 adjustZoom(currentZoom);
@@ -486,7 +487,7 @@
             const container = document.getElementById('timeline-main');
             const containerTop = container.offsetTop;
             const containerHeight = container.offsetHeight;
-            
+
             let progress = Math.max(0, Math.min(100, ((scrollPos - containerTop) / containerHeight) * 100));
             document.getElementById('line-progress').style.height = progress + "%";
         }
@@ -499,14 +500,14 @@
             currentDetailId = id;
             currentImgIndex = 0;
             const m = milestones.find(item => item.id === id);
-            
+
             // Build Slideshow
             const slider = document.getElementById('detail-slider');
             if (m.images && m.images.length > 0) {
                 slider.innerHTML = m.images.map((img, i) => `
                     <img src="${assetUrl(img)}" class="detail-slide ${i === 0 ? 'active' : ''}">
                 `).join('');
-                
+
                 if (m.images.length > 1) {
                     slider.innerHTML += `
                         <div class="inner-arrow inner-prev" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></div>
@@ -531,14 +532,14 @@
             const m = milestones.find(item => item.id === currentDetailId);
             const slides = document.querySelectorAll('.detail-slide');
             const dots = document.querySelectorAll('.slide-dot');
-            
+
             slides[currentImgIndex].classList.remove('active');
             if (dots.length) dots[currentImgIndex].classList.remove('active');
-            
+
             currentImgIndex += dir;
             if (currentImgIndex < 0) currentImgIndex = m.images.length - 1;
             if (currentImgIndex >= m.images.length) currentImgIndex = 0;
-            
+
             slides[currentImgIndex].classList.add('active');
             if (dots.length) dots[currentImgIndex].classList.add('active');
         }
@@ -568,16 +569,16 @@
 
         // --- Milestone Actions ---
         function filterTimeline(val) { renderTimeline(val); }
-        
+
         let editingId = null;
-        function openAddModal() { 
+        function openAddModal() {
             editingId = null;
             document.getElementById('modal-title').innerText = "Ghi lại kỉ niệm mới";
             document.getElementById('m-input-date').value = '';
             document.getElementById('m-input-title').value = '';
             document.getElementById('m-input-file').value = '';
             document.getElementById('m-input-desc').value = '';
-            document.getElementById('add-modal').style.display = 'flex'; 
+            document.getElementById('add-modal').style.display = 'flex';
         }
 
         function editMilestone(e, id) {
@@ -618,16 +619,16 @@
             reader.onload = function(event) {
                 document.getElementById('crop-image').src = event.target.result;
                 document.getElementById('crop-modal').style.display = 'flex';
-                
+
                 if (currentCropper) {
                     currentCropper.destroy();
                 }
-                
+
                 currentCropper = new Cropper(document.getElementById('crop-image'), {
                     viewMode: 1,
                     autoCropArea: 1
                 });
-                
+
                 document.getElementById('btn-confirm-crop').onclick = () => confirmCrop(index);
                 document.getElementById('btn-skip-crop').onclick = () => skipCrop(index);
             };
@@ -651,8 +652,8 @@
             processCropQueue(index + 1);
         }
 
-        function closeAddModal() { 
-            document.getElementById('add-modal').style.display = 'none'; 
+        function closeAddModal() {
+            document.getElementById('add-modal').style.display = 'none';
             // Clear inputs
             document.getElementById('m-input-date').value = '';
             document.getElementById('m-input-title').value = '';
@@ -678,7 +679,7 @@
 
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        
+
                         // Compress to JPEG 0.6 quality to save massive space
                         resolve(canvas.toDataURL('image/jpeg', 0.6));
                     };
@@ -700,7 +701,7 @@
                 formData.append("date", date);
                 formData.append("title", title);
                 formData.append("desc", desc);
-                
+
                 if (croppedFiles.length > 0) {
                     for (let file of croppedFiles) {
                         formData.append("files", file);
@@ -762,14 +763,14 @@
             currentZoom = val;
             const container = document.getElementById('milestones-container');
             const scaleVal = val / 100;
-            
+
             // Apply scale and transform origin
             container.style.transform = `scale(${scaleVal})`;
             container.style.transformOrigin = 'top center';
-            
+
             // Adjust container height to avoid empty space when scaled down
             container.style.marginBottom = `-${(1 - scaleVal) * container.offsetHeight}px`;
-            
+
             // Adjust line height
             document.querySelector('.timeline-line-bg').style.transform = `scaleY(${scaleVal})`;
             document.querySelector('.timeline-line-bg').style.transformOrigin = 'top';
@@ -787,12 +788,12 @@
 
         const audio = document.getElementById('bg-music');
         function toggleMusic() {
-            if (audio.paused) { 
-                audio.play(); 
-                document.getElementById('play-pause').className = 'fa-solid fa-pause music-btn'; 
-            } else { 
-                audio.pause(); 
-                document.getElementById('play-pause').className = 'fa-solid fa-play music-btn'; 
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('play-pause').className = 'fa-solid fa-pause music-btn';
+            } else {
+                audio.pause();
+                document.getElementById('play-pause').className = 'fa-solid fa-play music-btn';
             }
         }
 

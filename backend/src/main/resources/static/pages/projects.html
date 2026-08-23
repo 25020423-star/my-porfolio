@@ -1,301 +1,117 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dự Án - Hoàng Mạnh Trường</title>
+    <meta name="description" content="Danh mục dự án và case study kiến trúc hệ thống của Hoàng Mạnh Trường.">
+    <title>Projects & Architecture — Hoàng Mạnh Trường</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/projects-page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="projects-page">
     <nav class="navbar-unified">
-        <a href="../index.html" class="nav-logo">
-            <i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span>
-        </a>
-        <ul class="nav-links-unified">
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
-            <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-            <li>
-                <a href="about.html">Tìm Hiểu Thêm ▾</a>
-                <ul class="nav-dropdown">
-                    <li><a href="about.html">Cá Nhân</a></li>
-                    <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
-                    <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <button class="theme-toggle" title="Chuyển chế độ">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <a href="manage_quiz.html" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.85rem; border-radius: 50px;">Admin</a>
-        </div>
+        <a href="../index.html" class="nav-logo"><i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span></a>
+        <ul class="nav-links-unified"></ul>
+        <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối" aria-label="Chuyển chế độ Sáng/Tối"><i class="fa-solid fa-moon"></i></button>
     </nav>
-    <main class="page-content" style="padding-top: 100px;">
-        <section class="projects reveal">
-            <h2 class="page-title">Dự Án Nổi Bật</h2>
-            <!-- Modal thông báo đang phát triển -->
-            <div id="wip-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
-                <div style="background:var(--card-bg, #1e1e2e); border-radius:20px; padding:40px; max-width:400px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1);">
-                    <div style="font-size:3rem; margin-bottom:15px;">🚧</div>
-                    <h3 style="font-size:1.3rem; font-weight:700; margin-bottom:10px; color:var(--text-primary,#fff);">Đang Phát Triển</h3>
-                    <p style="color:var(--text-secondary,#94a3b8); margin-bottom:25px; line-height:1.6;">Dự án này đang được hoàn thiện. Hãy quay lại sau nhé! 💪</p>
-                    <button onclick="document.getElementById('wip-modal').style.display='none'" style="background:linear-gradient(135deg,#e94560,#c2185b); color:#fff; border:none; border-radius:50px; padding:12px 30px; font-size:0.95rem; font-weight:600; cursor:pointer;">Đóng</button>
+
+    <main class="projects-shell">
+        <header class="projects-hero reveal">
+            <div class="hero-copy">
+                <span class="eyebrow"><i class="fa-solid fa-diagram-project"></i> Solutions Architecture Portfolio</span>
+                <h1>Không chỉ viết code.<br><span>Thiết kế hệ thống vận hành được.</span></h1>
+                <p>Các case study từ Java/Spring Boot, hệ thống realtime đến AI automation — trình bày rõ kiến trúc, quyết định kỹ thuật, trade-off và chỉ số vận hành.</p>
+                <div class="hero-actions">
+                    <a href="#project-catalog" class="architect-btn primary"><i class="fa-solid fa-layer-group"></i> Khám phá hệ thống</a>
+                    <a href="https://github.com/hoangmanhtruong-uet-dev" target="_blank" rel="noopener noreferrer" class="architect-btn ghost"><i class="fa-brands fa-github"></i> GitHub Profile</a>
                 </div>
             </div>
+            <div class="hero-system" aria-label="Sơ đồ nền tảng kiến trúc">
+                <div class="system-radar"></div>
+                <div class="hero-node client"><i class="fa-solid fa-display"></i><span>Clients</span></div>
+                <div class="hero-node gateway"><i class="fa-solid fa-shield-halved"></i><span>API Gateway</span></div>
+                <div class="hero-node service"><i class="fa-brands fa-java"></i><span>Services</span></div>
+                <div class="hero-node data"><i class="fa-solid fa-database"></i><span>Data Layer</span></div>
+                <div class="system-pulse one"></div><div class="system-pulse two"></div><div class="system-pulse three"></div>
+            </div>
+        </header>
 
-            <div class="projects-grid">
-                <!-- Dự án 1: Hệ Thống Đấu Giá (có trang riêng) -->
-                <a href="auction.html" class="project-card-link">
-                    <div class="project-card">
-                        <div class="project-img">
-                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Hệ Thống Đấu Giá">
-                        </div>
-                        <div class="project-info">
-                            <h3>Hệ Thống Đấu Giá</h3>
-                            <p>Ứng dụng quản lý đấu giá với cơ sở dữ liệu MySQL, được xây dựng trên nền tảng Java cung cấp giao diện cho người đấu giá.</p>
-                            <div class="project-tags">
-                                <span>Java</span><span>MySQL</span><span>JDBC</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+        <section class="engineering-strip reveal" aria-label="Năng lực kỹ thuật">
+            <div><strong>16</strong><span>Architecture Cases</span></div>
+            <div><strong>Java 21</strong><span>Primary Runtime</span></div>
+            <div><strong>95%</strong><span>Target Cache Hit</span></div>
+            <div><strong>CI/CD</strong><span>Cloud-ready Delivery</span></div>
+        </section>
 
-                <!-- Dự án 2: Personal Portfolio Website (có trang riêng) -->
-                <div class="project-card" style="cursor:default;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Personal Portfolio Website">
-                    </div>
-                    <div class="project-info">
-                        <h3>Personal Portfolio Website</h3>
-                        <p>Xây dựng website cá nhân chuyên nghiệp với giao diện hiện đại, tích hợp hệ thống quản lý lớp học, chatbot AI và timeline kỷ niệm.</p>
-                        <div class="project-tags">
-                            <span>Spring Boot</span><span>HTML/CSS/JS</span><span>MySQL</span><span>Cloudinary</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#22c55e22; color:#22c55e; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">✅ Đang chạy</span>
-                    </div>
-                </div>
+        <section class="project-catalog" id="project-catalog">
+            <div class="catalog-heading reveal">
+                <div><span class="eyebrow">Selected systems</span><h2>Case Studies</h2><p>Chọn lĩnh vực để xem cách mỗi hệ thống được thiết kế và đánh đổi.</p></div>
+                <div class="catalog-status"><span class="status-dot"></span><span id="project-count">Đang tải dự án</span></div>
+            </div>
 
-                <!-- Dự án WIP: Chatbot AI -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Chatbot AI">
-                    </div>
-                    <div class="project-info">
-                        <h3>Chatbot AI</h3>
-                        <p>Xây dựng chatbot thông minh tích hợp Gemini API, hỗ trợ hội thoại tự nhiên và trả lời câu hỏi theo ngữ cảnh.</p>
-                        <div class="project-tags">
-                            <span>Python</span><span>Gemini API</span><span>NLP</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
+            <div class="project-filters reveal" role="group" aria-label="Lọc dự án theo lĩnh vực">
+                <button class="project-filter active" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
+                <button class="project-filter" type="button" data-filter="java" aria-pressed="false">Java / Spring Boot</button>
+                <button class="project-filter" type="button" data-filter="cloud" aria-pressed="false">Cloud & DevOps</button>
+                <button class="project-filter" type="button" data-filter="ai" aria-pressed="false">AI & Automation</button>
+                <button class="project-filter" type="button" data-filter="fullstack" aria-pressed="false">Fullstack</button>
+            </div>
 
-                <!-- Dự án WIP: Dashboard Phân Tích Dữ Liệu -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dashboard Phân Tích Dữ Liệu">
-                    </div>
-                    <div class="project-info">
-                        <h3>Dashboard Phân Tích Dữ Liệu</h3>
-                        <p>Hệ thống dashboard trực quan hóa dữ liệu với biểu đồ động, hỗ trợ import CSV và phân tích thống kê cơ bản.</p>
-                        <div class="project-tags">
-                            <span>JavaScript</span><span>Chart.js</span><span>CSV Parser</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
+            <div class="architect-project-grid" id="projects-grid" aria-live="polite"></div>
+            <div class="project-empty" id="project-empty" hidden><i class="fa-regular fa-folder-open"></i><h3>Chưa có case study trong nhóm này</h3><p>Hãy thử một bộ lọc khác.</p></div>
+        </section>
 
-                <!-- Dự án WIP: Facebook Mini -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Facebook Mini">
-                    </div>
-                    <div class="project-info">
-                        <h3>Facebook Mini</h3>
-                        <p>Mạng xã hội thu nhỏ với tính năng đăng bài, bình luận, kết bạn và newsfeed theo thời gian thực.</p>
-                        <div class="project-tags">
-                            <span>Java</span><span>Spring Boot</span><span>WebSocket</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Get Shit Done (Task Manager) -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Get Shit Done">
-                    </div>
-                    <div class="project-info">
-                        <h3>Get Shit Done — Task Manager</h3>
-                        <p>Ứng dụng quản lý công việc theo phong cách tối giản, hỗ trợ deadline, ưu tiên và theo dõi tiến độ cá nhân.</p>
-                        <div class="project-tags">
-                            <span>JavaScript</span><span>LocalStorage</span><span>PWA</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Hệ Thống Chat Realtime -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="He thong chat realtime">
-                    </div>
-                    <div class="project-info">
-                        <h3>Hệ Thống Chat Realtime</h3>
-                        <p>Ứng dụng chat thời gian thực với WebSocket, hỗ trợ phòng chat, gửi file và thông báo đẩy.</p>
-                        <div class="project-tags">
-                            <span>Java</span><span>WebSocket</span><span>STOMP</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Nhận Diện Hình Ảnh -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Nhan dien hinh anh">
-                    </div>
-                    <div class="project-info">
-                        <h3>Hệ Thống Nhận Diện Hình Ảnh</h3>
-                        <p>Ứng dụng AI nhận diện và phân loại hình ảnh sử dụng mô hình học sâu, tích hợp REST API.</p>
-                        <div class="project-tags">
-                            <span>Python</span><span>TensorFlow</span><span>OpenCV</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: URL Shortener -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="URL Shortener">
-                    </div>
-                    <div class="project-info">
-                        <h3>URL Shortener</h3>
-                        <p>Dịch vụ rút gọn URL với thống kê lượt click, QR code tự động và quản lý link cá nhân.</p>
-                        <div class="project-tags">
-                            <span>Spring Boot</span><span>Redis</span><span>MySQL</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Web Dự Báo Thời Tiết -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1504608524841-42584120d693?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Web du bao thoi tiet">
-                    </div>
-                    <div class="project-info">
-                        <h3>Web Dự Báo Thời Tiết</h3>
-                        <p>Ứng dụng dự báo thời tiết theo thành phố, hiển thị nhiệt độ, độ ẩm, gió và dự báo 7 ngày tới.</p>
-                        <div class="project-tags">
-                            <span>JavaScript</span><span>OpenWeather API</span><span>CSS3</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Web Du Lịch -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Web du lich">
-                    </div>
-                    <div class="project-info">
-                        <h3>Web Du Lịch</h3>
-                        <p>Nền tảng đặt tour du lịch trực tuyến với tìm kiếm địa điểm, đánh giá và tích hợp bản đồ tương tác.</p>
-                        <div class="project-tags">
-                            <span>Spring Boot</span><span>MySQL</span><span>Google Maps API</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Web Nhạc -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Web nhac">
-                    </div>
-                    <div class="project-info">
-                        <h3>Web Nhạc</h3>
-                        <p>Ứng dụng nghe nhạc trực tuyến với playlist cá nhân, tìm kiếm bài hát và trình phát nhạc đầy đủ tính năng.</p>
-                        <div class="project-tags">
-                            <span>React</span><span>Node.js</span><span>MongoDB</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Web Tỏ Tình -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Web to tinh">
-                    </div>
-                    <div class="project-info">
-                        <h3>Web Tỏ Tình 💕</h3>
-                        <p>Trang web lãng mạn được tạo ra để... tỏ tình. Với hiệu ứng trái tim bay, âm nhạc nền và lời nhắn bí mật.</p>
-                        <div class="project-tags">
-                            <span>HTML/CSS</span><span>JavaScript</span><span>Canvas</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: Website Bán Hàng -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Website ban hang">
-                    </div>
-                    <div class="project-info">
-                        <h3>Website Bán Hàng</h3>
-                        <p>Nền tảng thương mại điện tử với giỏ hàng, thanh toán trực tuyến, quản lý đơn hàng và dashboard admin.</p>
-                        <div class="project-tags">
-                            <span>Spring Boot</span><span>MySQL</span><span>VNPay</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
-
-                <!-- Dự án WIP: TCP Network Applications -->
-                <div class="project-card wip-card" onclick="showWip()" style="cursor:pointer;">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="TCP Network">
-                    </div>
-                    <div class="project-info">
-                        <h3>TCP Network Applications</h3>
-                        <p>Hệ thống ứng dụng mạng với mô hình client-server, sử dụng đa luồng để xử lý nhiều kết nối đồng thời.</p>
-                        <div class="project-tags">
-                            <span>Java Networking</span><span>Multithreading</span><span>TCP/IP</span>
-                        </div>
-                        <span style="display:inline-block; margin-top:10px; background:#f59e0b22; color:#f59e0b; border-radius:50px; padding:3px 12px; font-size:0.78rem; font-weight:600;">🚧 Đang phát triển</span>
-                    </div>
-                </div>
+        <section class="architecture-principles reveal">
+            <div class="principle-copy"><span class="eyebrow">How I design</span><h2>Nguyên tắc kiến trúc</h2><p>Mỗi giải pháp được đánh giá trên bốn trục: khả năng mở rộng, độ tin cậy, bảo mật và chi phí vận hành.</p></div>
+            <div class="principle-grid">
+                <article><i class="fa-solid fa-arrows-up-down-left-right"></i><h3>Scale by evidence</h3><p>Đo bottleneck trước khi tách service hoặc thêm cache.</p></article>
+                <article><i class="fa-solid fa-shield-halved"></i><h3>Secure by default</h3><p>Least privilege, validation, rate limit và audit trail từ đầu.</p></article>
+                <article><i class="fa-solid fa-gauge-high"></i><h3>Observable systems</h3><p>Logs, metrics và trace gắn với SLO có thể hành động.</p></article>
+                <article><i class="fa-solid fa-coins"></i><h3>Cost-aware</h3><p>Cân bằng hiệu năng, độ phức tạp và tổng chi phí sở hữu.</p></article>
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p>
-    </footer>
+
+    <div class="case-modal" id="case-modal" hidden aria-hidden="true">
+        <div class="case-backdrop" data-close-case></div>
+        <article class="case-panel" role="dialog" aria-modal="true" aria-labelledby="case-title">
+            <header class="case-header">
+                <div><span class="case-kicker" id="case-kicker">CASE STUDY</span><h2 id="case-title">Project</h2><p id="case-summary"></p></div>
+                <button class="case-close" type="button" data-close-case aria-label="Đóng case study"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <div class="case-metrics" id="case-metrics"></div>
+            <nav class="case-tabs" role="tablist" aria-label="Chi tiết kiến trúc">
+                <button type="button" role="tab" class="active" data-case-tab="architecture" aria-selected="true">C4 Architecture</button>
+                <button type="button" role="tab" data-case-tab="decisions" aria-selected="false">ADR & Decisions</button>
+                <button type="button" role="tab" data-case-tab="security" aria-selected="false">Trade-off & Security</button>
+            </nav>
+            <div class="case-content">
+                <section class="case-tab-panel active" data-case-panel="architecture">
+                    <div class="c4-levels" role="group" aria-label="Cấp độ sơ đồ C4">
+                        <button type="button" class="active" data-c4-level="context">Context</button>
+                        <button type="button" data-c4-level="container">Container</button>
+                        <button type="button" data-c4-level="component">Component</button>
+                    </div>
+                    <div class="case-architecture" id="case-architecture"></div>
+                    <p class="diagram-caption" id="diagram-caption"></p>
+                </section>
+                <section class="case-tab-panel" data-case-panel="decisions" hidden><div class="decision-list" id="case-decisions"></div></section>
+                <section class="case-tab-panel" data-case-panel="security" hidden>
+                    <div class="tradeoff-grid"><div><span class="case-section-label">Trade-offs</span><ul id="case-tradeoffs"></ul></div><div><span class="case-section-label">Security controls</span><ul id="case-security"></ul></div></div>
+                </section>
+            </div>
+            <footer class="case-footer"><div class="case-stack" id="case-stack"></div><div class="case-actions" id="case-actions"></div></footer>
+        </article>
+    </div>
+
+    <footer data-shared-footer></footer>
     <script src="../assets/js/common.js"></script>
-    <script src="../assets/js/chatbot.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script>
-        function showWip() {
-            const modal = document.getElementById('wip-modal');
-            modal.style.display = 'flex';
-        }
-        // Đóng modal khi click ngoài
-        document.getElementById('wip-modal').addEventListener('click', function(e) {
-            if (e.target === this) this.style.display = 'none';
-        });
-    </script>
+    <script src="../assets/js/api-client.js"></script>
+    <script src="../assets/js/projects-page.js"></script>
 </body>
 </html>
-

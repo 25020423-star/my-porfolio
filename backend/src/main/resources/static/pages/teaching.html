@@ -1,172 +1,161 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trung Tâm Giảng Dạy - Hoàng Mạnh Trường</title>
+    <meta name="description" content="Gia sư Mạnh Trường - chương trình Toán, Lý và luyện thi được cá nhân hóa cho từng học sinh.">
+    <title>Gia sư Mạnh Trường | Giảng dạy Toán - Lý</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/common.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            background: #050810;
-            overflow-x: hidden;
-        }
-        .teaching-hero {
-            padding: 150px 2rem 80px;
-            text-align: center;
-            position: relative;
-        }
-        .teaching-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .teaching-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 2rem;
-            border-radius: 30px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        .teaching-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            background: rgba(168, 85, 247, 0.05);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-        .card-icon {
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-        .teaching-card h3 {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-        .teaching-card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        .btn-enter {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .teaching-card:hover .btn-enter {
-            gap: 20px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/teaching-system.css?v=20260823-2">
 </head>
-<body>
-    <nav class="navbar-unified">
-        <a href="../index.html" class="nav-logo">
-            <i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span>
-        </a>
-        <ul class="nav-links-unified">
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
-            <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-            <li>
-                <a href="about.html">Tìm Hiểu Thêm ▾</a>
-                <ul class="nav-dropdown">
-                    <li><a href="about.html">Cá Nhân</a></li>
-                    <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
-                    <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div id="auth-controls" class="nav-auth">
-            <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <div id="guest-links">
-                <button onclick="window.promptAdmin()" class="btn-premium-nav" id="admin-login-label">Đăng nhập Admin</button>
-            </div>
-            <div id="user-links" style="display: none; gap: 10px; align-items: center;">
-                <span id="nav-user-name" class="user-badge"></span>
-                <button onclick="logout()" class="logout-btn">Thoát</button>
+<body class="teaching-site">
+    <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
+
+    <header class="site-header" data-header>
+        <div class="site-shell header-inner">
+            <a class="brand" href="#home" aria-label="Gia sư Mạnh Trường - Trang chủ">
+                <span class="brand-mark"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
+                <span>Gia sư <strong>Mạnh Trường</strong></span>
+            </a>
+            <nav class="desktop-nav" aria-label="Điều hướng chính">
+                <a class="portfolio-home" href="../index.html" title="Quay về trang chủ cá nhân"><i class="fa-solid fa-arrow-left"></i> Trang cá nhân</a>
+                <a class="is-active" href="#home">Trang chủ</a>
+                <a href="#about">Giới thiệu</a>
+                <a href="#programs">Lộ trình</a>
+                <a href="#pricing">Học phí</a>
+                <a href="#resources">Góc học tập</a>
+                <a href="#research">Nghiên cứu</a>
+                <a href="#contact">Liên hệ</a>
+            </nav>
+            <div class="header-actions">
+                <a class="student-link" href="student_portal.html"><i class="fa-solid fa-user-graduate"></i><span>Cổng học sinh</span></a>
+                <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-navigation" data-menu-toggle><span></span><span></span><span></span></button>
             </div>
         </div>
-    </nav>
+        <nav class="mobile-nav" id="mobile-navigation" aria-label="Điều hướng di động" data-mobile-nav>
+            <a class="portfolio-home" href="../index.html"><i class="fa-solid fa-arrow-left"></i>Trang chủ cá nhân</a>
+            <a href="#home"><i class="fa-solid fa-house"></i>Trang chủ giảng dạy</a>
+            <a href="#about"><i class="fa-solid fa-address-card"></i>Giới thiệu</a>
+            <a href="#programs"><i class="fa-solid fa-book-open"></i>Lộ trình học</a>
+            <a href="#pricing"><i class="fa-solid fa-tags"></i>Học phí</a>
+            <a href="#resources"><i class="fa-solid fa-lightbulb"></i>Góc học tập</a>
+            <a href="#research"><i class="fa-solid fa-flask-vial"></i>Nghiên cứu</a>
+            <a href="#contact"><i class="fa-solid fa-envelope"></i>Liên hệ</a>
+            <a class="mobile-student-link" href="student_portal.html"><i class="fa-solid fa-user-graduate"></i>Cổng học sinh</a>
+        </nav>
+    </header>
 
-    <main class="page-content">
-        <section class="teaching-hero">
-            <h1 class="page-title">Hệ Sinh Thái Giảng Dạy</h1>
-            <p class="subtitle-center">Ứng dụng AI và Công nghệ vào giáo dục, hỗ trợ học tập và quản lý lớp học hiệu quả.</p>
+    <main id="main-content">
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-media" aria-hidden="true"></div><div class="hero-overlay" aria-hidden="true"></div>
+            <div class="site-shell hero-content" data-reveal>
+                <p class="eyebrow eyebrow-light"><i class="fa-solid fa-award"></i> Đồng hành học tập 1:1</p>
+                <h1 id="hero-title">Gia sư chuyên Toán/Lý<br>luyện thi bằng lộ trình cá nhân hóa</h1>
+                <p class="hero-lead">Tập trung đúng lỗ hổng kiến thức, luyện tư duy giải bài và theo sát tiến độ để mỗi buổi học đều tạo ra thay đổi đo được.</p>
+                <div class="hero-actions">
+                    <a class="button button-gold" href="#contact">Nhận tư vấn lộ trình <i class="fa-solid fa-arrow-right"></i></a>
+                    <a class="button button-ghost" href="#programs">Xem chương trình học</a>
+                </div>
+                <div class="hero-proof"><span><i class="fa-solid fa-circle-check"></i> Học thử trước khi đăng ký</span><span><i class="fa-solid fa-circle-check"></i> Báo cáo tiến độ định kỳ</span></div>
+            </div>
         </section>
 
-        <section class="teaching-grid">
-            <a href="giasu.html" class="teaching-card reveal delay-100">
-                <i class="fa-solid fa-robot card-icon"></i>
-                <h3>Gia Sư AI</h3>
-                <p>Hệ thống hỗ trợ giải bài tập và giải đáp thắc mắc thông minh dựa trên mô hình ngôn ngữ lớn.</p>
-                <span class="btn-enter">Khám phá ngay <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
+        <section class="stats-section" aria-label="Thành tích nổi bật">
+            <div class="site-shell stats-grid">
+                <article class="stat-card" data-reveal><span class="stat-icon"><i class="fa-solid fa-medal"></i></span><div><strong>10+ năm</strong><span>Kinh nghiệm giảng dạy</span></div></article>
+                <article class="stat-card" data-reveal><span class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></span><div><strong>95%</strong><span>Học sinh đạt mục tiêu</span></div></article>
+                <article class="stat-card" data-reveal><span class="stat-icon"><i class="fa-solid fa-chart-line"></i></span><div><strong>2–3 điểm</strong><span>Mức tăng sau một lộ trình</span></div></article>
+            </div>
+        </section>
 
-            <a href="quiz.html" class="teaching-card reveal delay-200">
-                <i class="fa-solid fa-pen-to-square card-icon"></i>
-                <h3>Thi Thử Online</h3>
-                <p>Ngân hàng đề thi đa dạng, chấm điểm tự động và phân tích kết quả chi tiết cho học sinh.</p>
-                <span class="btn-enter">Bắt đầu thi <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
+        <section class="section programs-section" id="programs" aria-labelledby="programs-title">
+            <div class="site-shell">
+                <div class="section-heading" data-reveal><p class="eyebrow">Chương trình trọng tâm</p><h2 id="programs-title">Không học dàn trải. Tập trung đúng mục tiêu.</h2><p>Ba lộ trình được điều chỉnh theo năng lực đầu vào, quỹ thời gian và kỳ thi của từng học sinh.</p></div>
+                <div class="program-grid">
+                    <article class="program-card" data-program="Củng cố kiến thức" data-reveal>
+                        <div class="program-image"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGaecfkcoeHRVzzQfvtWhSFN5rAlthRHSsx131v1EUo06xjVEQ0qj-c1vJRy4JjqSdUTWBqYFsxMjPYblL8UXPXQ6VbLSxlebs6wGNM2OVYx13cclHux23rOmr2dNAF7nZHsUAJslViC8jrewOA9G7_yiRD_H4tjMJZZW6SoveecXo__w76PRumN9UDD-iIPgGvMIL1kNmE5djzY-dIQYoXTgbPWenNH-gPWmkFYjX3dPQKr_YJ2dd" alt="Góc học tập sáng sủa với máy tính và vở ghi" loading="lazy"><span class="program-level">Lấy lại nền tảng</span></div>
+                        <div class="program-body"><h3>Củng cố kiến thức</h3><p>Lấp lỗ hổng căn bản, xây lại phương pháp tư duy và thói quen tự học bền vững.</p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> Kiểm tra đầu vào</li><li><i class="fa-solid fa-check"></i> Lộ trình theo tuần</li><li><i class="fa-solid fa-check"></i> Bài tập vừa sức</li></ul><button class="text-link" type="button" data-choose-program>Chọn lộ trình <i class="fa-solid fa-arrow-right"></i></button></div>
+                    </article>
+                    <article class="program-card featured" data-program="Luyện thi vào 10" data-reveal>
+                        <div class="program-image"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaxhoCjJWC_3pG3APVkSSdjPPRykP-blbqnvqihQ7hmMQa-aWRv6JuInEnonzCe_1SJCoWenjW3Fbn8pWZ5fa9tPQm2UB54KfYjdV7qhPjrqUvYk0kj3ZNOxHJO2aFnPClcYhNSsVbhKKMTqBRNKAt8-EGRyLV4K5ll_HHZwopuRE0PL6Mw9dANj5IM39IMn_UHx13aTmGOHf7al7rTnoXvEKEpOJWhRqnVSufY3F5zflOKFxFYSqj" alt="Tài liệu Toán và máy tính phục vụ luyện thi" loading="lazy"><span class="program-level">Phổ biến</span></div>
+                        <div class="program-body"><h3>Luyện thi vào 10</h3><p>Hệ thống kiến thức trọng tâm Toán, Lý và luyện đề theo cấu trúc tuyển sinh mới.</p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> Chiến lược theo chuyên đề</li><li><i class="fa-solid fa-check"></i> Chấm và chữa bài</li><li><i class="fa-solid fa-check"></i> Theo dõi điểm số</li></ul><button class="text-link" type="button" data-choose-program>Chọn lộ trình <i class="fa-solid fa-arrow-right"></i></button></div>
+                    </article>
+                    <article class="program-card" data-program="Luyện thi Đại học" data-reveal>
+                        <div class="program-image"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk9TknespqBxKW86T6dzZ6jMnkQ6_l8uX1tPjkxAqdH79VWD35yoY3-jt62kVOCnudOHBi46LRVTmYIXA1IQ7zdzW6-YS96O05md8xISlwh7l6ZmTwAfUQvLfa-UQ7j35ERJJlhsvsGEC6ZGNoJJtrTnUYeAzWzcFx-erueJ_tEee1ncz54C76npqNoKmXe5s1-lVos8IXRzHpz1mNvcWfYm_x4spUCQjpDJ16cFlQ7ACHmXNlCmjD" alt="Học sinh ôn thi với máy tính bảng và tài liệu" loading="lazy"><span class="program-level">Tăng tốc</span></div>
+                        <div class="program-body"><h3>Luyện thi Đại học</h3><p>Ôn khối A, A1 theo ma trận đề thi, tối ưu kỹ năng xử lý câu hỏi và tốc độ làm bài.</p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> Phân loại dạng bài</li><li><i class="fa-solid fa-check"></i> Bộ đề bám sát</li><li><i class="fa-solid fa-check"></i> Kế hoạch nước rút</li></ul><button class="text-link" type="button" data-choose-program>Chọn lộ trình <i class="fa-solid fa-arrow-right"></i></button></div>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-            <a href="student_portal.html" class="teaching-card reveal delay-300">
-                <i class="fa-solid fa-graduation-cap card-icon"></i>
-                <h3>Cổng Học Sinh</h3>
-                <p>Khu vực dành riêng cho học sinh quản lý lộ trình học tập, tài liệu và tương tác với giảng viên.</p>
-                <span class="btn-enter">Truy cập cổng <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
+        <section class="section about-section" id="about" aria-labelledby="about-title">
+            <div class="site-shell about-grid">
+                <div class="about-copy" data-reveal><p class="eyebrow">Hồ sơ năng lực</p><h2 id="about-title">Dạy cách tư duy,<br>không chỉ dạy cách giải.</h2><p>Mỗi học sinh bắt đầu ở một điểm khác nhau. Lộ trình tốt phải đủ rõ để học sinh biết mình đang tiến bộ ở đâu, nhưng cũng đủ linh hoạt để điều chỉnh khi cần.</p>
+                    <div class="credentials"><div><i class="fa-solid fa-certificate"></i><span><strong>Chuyên môn vững</strong>Toán, Lý và chiến lược luyện thi</span></div><div><i class="fa-solid fa-route"></i><span><strong>Lộ trình minh bạch</strong>Mục tiêu, bài tập và tiến độ theo tuần</span></div><div><i class="fa-solid fa-comments"></i><span><strong>Phản hồi đều đặn</strong>Trao đổi kết quả cùng học sinh, phụ huynh</span></div></div>
+                    <a class="button button-blue" href="#contact">Trao đổi mục tiêu học tập</a>
+                </div>
+                <div class="about-visual" data-reveal><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUY2JegXWlMbm8mo4ILgs2E7SIaWyooqBsWmJyHbBvDhTBFZrn3YYMIs51nSfGwQillM9VmTbBoLSoRtYPprkTxkcS9IoYAMYElgIoHr6o6xacg4l_4ZwVRXsfewrAOFgKLSEukwvGZL-_NnARSxQnNpO1ZyjpjobXBo5UmFc-DpUgPY8hIQ7_YNyWVj5BCt8lna5Lky0j_mvVjXAIVPGhxCFJuWJWvQVIhwCO7HiEVX_xrScoPirU" alt="Gia sư trong không gian giảng dạy hiện đại" loading="lazy"><div class="quote-card"><i class="fa-solid fa-quote-left"></i><p>Hiểu bản chất trước, tốc độ và điểm số sẽ theo sau.</p></div></div>
+            </div>
+        </section>
 
-            <a href="manage.html" class="teaching-card reveal delay-400">
-                <i class="fa-solid fa-user-shield card-icon"></i>
-                <h3>Quản Trị</h3>
-                <p>Khu vực dành cho giảng viên quản lý lớp học, đề thi và các dự án nghiên cứu.</p>
-                <span class="btn-enter">Vào quản trị <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
+        <section class="section pricing-section" id="pricing" aria-labelledby="pricing-title">
+            <div class="site-shell"><div class="section-heading" data-reveal><p class="eyebrow">Học phí minh bạch</p><h2 id="pricing-title">Chọn hình thức học phù hợp.</h2><p>Mức phí tham khảo; lộ trình chính thức được xác định sau khi trao đổi mục tiêu và kiểm tra đầu vào.</p></div>
+                <div class="pricing-grid">
+                    <article class="price-card" data-plan="Trực tuyến" data-reveal><div class="price-icon"><i class="fa-solid fa-laptop"></i></div><h3>Trực tuyến</h3><p class="price-description">Linh hoạt không gian, tương tác trực tiếp qua nền tảng học tập.</p><p class="price"><span>Từ</span> 150.000đ <small>/ buổi</small></p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> 1–2 học viên</li><li><i class="fa-solid fa-check"></i> 90 phút/buổi</li><li><i class="fa-solid fa-check"></i> Tài liệu điện tử</li><li><i class="fa-solid fa-check"></i> Báo cáo tiến độ</li></ul><button class="button button-soft" type="button" data-choose-plan>Đăng ký tư vấn</button></article>
+                    <article class="price-card popular" data-plan="1 kèm 1 tại nhà" data-reveal><span class="popular-badge"><i class="fa-solid fa-star"></i> Phổ biến nhất</span><div class="price-icon"><i class="fa-solid fa-person-chalkboard"></i></div><h3>1 kèm 1 tại nhà</h3><p class="price-description">Tập trung tối đa, cá nhân hóa toàn bộ lộ trình cho một học viên.</p><p class="price"><span>Từ</span> 250.000đ <small>/ buổi</small></p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> 1 giáo viên – 1 học viên</li><li><i class="fa-solid fa-check"></i> 120 phút/buổi</li><li><i class="fa-solid fa-check"></i> Lộ trình thiết kế riêng</li><li><i class="fa-solid fa-check"></i> Điều chỉnh sau mỗi 4 buổi</li></ul><button class="button button-gold" type="button" data-choose-plan>Đăng ký học thử</button></article>
+                    <article class="price-card" data-plan="Nhóm 3–5 học sinh" data-reveal><div class="price-icon"><i class="fa-solid fa-people-group"></i></div><h3>Nhóm 3–5 học sinh</h3><p class="price-description">Môi trường tương tác, thi đua học tập và tối ưu chi phí.</p><p class="price"><span>Từ</span> 100.000đ <small>/ buổi</small></p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> Nhóm nhỏ cùng trình độ</li><li><i class="fa-solid fa-check"></i> 90 phút/buổi</li><li><i class="fa-solid fa-check"></i> Luyện đề theo nhóm</li><li><i class="fa-solid fa-check"></i> Phản hồi từng học viên</li></ul><button class="button button-soft" type="button" data-choose-plan>Đăng ký tư vấn</button></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section research-section" id="research" aria-labelledby="research-title">
+            <div class="site-shell">
+                <div class="section-heading" data-reveal><p class="eyebrow">Nghiên cứu ứng dụng</p><h2 id="research-title">Từ bài giảng đến phòng Lab số.</h2><p>Hai không gian thực hành kết nối Hóa học, công nghệ phần mềm và tư duy nghiên cứu trong giáo dục.</p></div>
+                <div class="teaching-research-grid">
+                    <a class="teaching-research-card lab-card" href="chemlab.html" data-reveal><div class="research-card-icon"><i class="fa-solid fa-flask-vial"></i></div><div class="research-card-copy"><span>ADVANCED LAB</span><h3>Hóa Học Thực Nghiệm</h3><p>Mô phỏng phản ứng, bảng tuần hoàn, công cụ tính toán và phòng Lab ảo tương tác.</p><strong>Khám phá phòng Lab <i class="fa-solid fa-arrow-right"></i></strong></div><div class="research-card-metric"><b>12</b><small>PHIÊN LAB</small></div></a>
+                    <a class="teaching-research-card tech-card" href="tech_research.html" data-reveal><div class="research-card-icon"><i class="fa-solid fa-microchip"></i></div><div class="research-card-copy"><span>ACADEMIC TECHNOLOGY</span><h3>Công Nghệ Học Thuật</h3><p>Nghiên cứu Java, kiến trúc hệ thống, AI và giải pháp công nghệ phục vụ giáo dục.</p><strong>Xem trung tâm nghiên cứu <i class="fa-solid fa-arrow-right"></i></strong></div><div class="research-card-metric"><b>06</b><small>CHỦ ĐỀ</small></div></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section resources-section" id="resources" aria-labelledby="resources-title">
+            <div class="site-shell"><div class="resources-header" data-reveal><div><p class="eyebrow">Góc học tập</p><h2 id="resources-title">Tài liệu để học chủ động hơn.</h2></div><div class="resource-filters" role="group" aria-label="Lọc tài liệu"><button class="is-active" type="button" data-filter="all">Tất cả</button><button type="button" data-filter="math">Toán</button><button type="button" data-filter="physics">Vật lý</button><button type="button" data-filter="exam">Luyện thi</button></div></div>
+                <div class="resource-grid">
+                    <article class="resource-card resource-featured" data-category="math exam" data-reveal><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaxhoCjJWC_3pG3APVkSSdjPPRykP-blbqnvqihQ7hmMQa-aWRv6JuInEnonzCe_1SJCoWenjW3Fbn8pWZ5fa9tPQm2UB54KfYjdV7qhPjrqUvYk0kj3ZNOxHJO2aFnPClcYhNSsVbhKKMTqBRNKAt8-EGRyLV4K5ll_HHZwopuRE0PL6Mw9dANj5IM39IMn_UHx13aTmGOHf7al7rTnoXvEKEpOJWhRqnVSufY3F5zflOKFxFYSqj" alt="Học sinh ôn tập Toán tại bàn học" loading="lazy"><div class="resource-body"><div class="resource-meta"><span>Nổi bật</span><span>8 phút đọc</span></div><h3>Bí kíp ôn thi Toán cấp tốc</h3><p>Cách chia nhóm dạng bài, phân bổ thời gian và tránh những lỗi mất điểm thường gặp.</p><button class="text-link" type="button" data-resource-title="Bí kíp ôn thi Toán cấp tốc">Nhận tài liệu <i class="fa-solid fa-arrow-right"></i></button></div></article>
+                    <article class="resource-card" data-category="exam" data-reveal><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk9TknespqBxKW86T6dzZ6jMnkQ6_l8uX1tPjkxAqdH79VWD35yoY3-jt62kVOCnudOHBi46LRVTmYIXA1IQ7zdzW6-YS96O05md8xISlwh7l6ZmTwAfUQvLfa-UQ7j35ERJJlhsvsGEC6ZGNoJJtrTnUYeAzWzcFx-erueJ_tEee1ncz54C76npqNoKmXe5s1-lVos8IXRzHpz1mNvcWfYm_x4spUCQjpDJ16cFlQ7ACHmXNlCmjD" alt="Phân tích đề thi trên giấy" loading="lazy"><div class="resource-body"><div class="resource-meta"><span>Luyện thi</span><span>6 phút đọc</span></div><h3>Cách đọc ma trận đề thi</h3><p>Xác định phần kiến thức cần ưu tiên thay vì ôn tập theo cảm tính.</p><button class="text-link" type="button" data-resource-title="Cách đọc ma trận đề thi">Nhận tài liệu <i class="fa-solid fa-arrow-right"></i></button></div></article>
+                    <article class="resource-card download-card" data-category="physics exam" data-reveal><div class="download-visual"><i class="fa-solid fa-file-arrow-down"></i><span>PDF · 24 trang</span></div><div class="resource-body"><div class="resource-meta"><span>Miễn phí</span><span>Vật lý</span></div><h3>Cẩm nang công thức Lý vào 10</h3><p>Hệ thống công thức, đơn vị và bài tập mẫu theo từng chuyên đề.</p><button class="text-link" type="button" data-resource-title="Cẩm nang công thức Lý vào 10">Yêu cầu tài liệu <i class="fa-solid fa-download"></i></button></div></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+            <div class="site-shell contact-grid">
+                <div class="contact-intro" data-reveal><p class="eyebrow">Liên hệ & đăng ký</p><h2 id="contact-title">Bắt đầu bằng một cuộc trao đổi ngắn.</h2><p>Cho mình biết lớp, môn học và mục tiêu hiện tại. Mình sẽ phản hồi với gợi ý lộ trình phù hợp trước khi bạn quyết định đăng ký.</p>
+                    <div class="contact-list"><a href="mailto:truongcri0101@gmail.com"><i class="fa-solid fa-envelope"></i><span><small>Email</small>truongcri0101@gmail.com</span></a><a href="https://www.facebook.com/Mtruongdayyy" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i><span><small>Facebook</small>Mtruongdayyy</span></a><div><i class="fa-solid fa-location-dot"></i><span><small>Khu vực giảng dạy</small>Hà Nội & trực tuyến</span></div></div>
+                    <div class="privacy-note"><i class="fa-solid fa-shield-halved"></i> Thông tin chỉ được dùng để liên hệ tư vấn học tập.</div>
+                </div>
+                <form class="consultation-form" data-consultation-form novalidate data-reveal>
+                    <div class="form-heading"><span>01</span><div><h3>Thông tin học tập</h3><p>Các trường có dấu * là bắt buộc.</p></div></div>
+                    <div class="form-grid">
+                        <label><span>Họ và tên *</span><input type="text" name="name" autocomplete="name" placeholder="Nhập họ và tên" required><small class="field-error"></small></label>
+                        <label><span>Số điện thoại *</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="Nhập số điện thoại" required><small class="field-error"></small></label>
+                        <label><span>Lớp / Trình độ *</span><select name="grade" required><option value="">Chọn lớp</option><option>Tiểu học (Lớp 1–5)</option><option>THCS (Lớp 6–9)</option><option>THPT (Lớp 10–12)</option><option>Luyện thi Đại học</option></select><small class="field-error"></small></label>
+                        <label><span>Môn học *</span><input type="text" name="subject" placeholder="Ví dụ: Toán, Vật lý" required><small class="field-error"></small></label>
+                    </div>
+                    <fieldset><legend>Hình thức mong muốn</legend><label class="radio-option"><input type="radio" name="format" value="Trực tuyến"><span><i class="fa-solid fa-laptop"></i> Trực tuyến</span></label><label class="radio-option"><input type="radio" name="format" value="Tại nhà" checked><span><i class="fa-solid fa-house"></i> Tại nhà</span></label><label class="radio-option"><input type="radio" name="format" value="Nhóm nhỏ"><span><i class="fa-solid fa-people-group"></i> Nhóm nhỏ</span></label></fieldset>
+                    <label class="full-field"><span>Mục tiêu hoặc ghi chú thêm</span><textarea name="notes" rows="4" placeholder="Ví dụ: cần lấy lại gốc, mục tiêu 8+ kỳ thi vào 10..."></textarea></label>
+                    <input type="hidden" name="interest" value="Tư vấn chung">
+                    <button class="button button-gold submit-button" type="submit">Soạn email đăng ký <i class="fa-solid fa-paper-plane"></i></button><p class="form-status" role="status" aria-live="polite" data-form-status></p>
+                </form>
+            </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p>
-    </footer>
-
-    <script src="../assets/js/common.js"></script>
-    <script>
-        // Init reveals
-        const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-        reveals.forEach(r => observer.observe(r));
-    </script>
+    <footer class="site-footer"><div class="site-shell footer-grid"><div><a class="brand footer-brand" href="#home"><span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></span><span>Gia sư <strong>Mạnh Trường</strong></span></a><p>Nâng tầm kiến thức bằng lộ trình rõ ràng, sự tận tâm và cách học phù hợp với từng học sinh.</p></div><div class="footer-links"><strong>Khám phá</strong><a href="#about">Giới thiệu</a><a href="#programs">Chương trình</a><a href="#pricing">Học phí</a></div><div class="footer-links"><strong>Học tập</strong><a href="#resources">Góc học tập</a><a href="student_portal.html">Cổng học sinh</a><a href="#contact">Đăng ký tư vấn</a></div><div class="footer-links"><strong>Kết nối</strong><a href="mailto:truongcri0101@gmail.com">Email</a><a href="https://www.facebook.com/Mtruongdayyy" target="_blank" rel="noopener noreferrer">Facebook</a><a href="../index.html">Website cá nhân</a></div></div><div class="site-shell footer-bottom"><span>© 2026 Hoàng Mạnh Trường.</span><span>Thiết kế cho trải nghiệm học tập rõ ràng hơn.</span></div></footer>
+    <div class="floating-actions" aria-label="Liên hệ nhanh"><a href="https://www.facebook.com/Mtruongdayyy" target="_blank" rel="noopener noreferrer" aria-label="Nhắn tin qua Facebook"><i class="fa-brands fa-facebook-messenger"></i></a><a class="floating-gold" href="mailto:truongcri0101@gmail.com" aria-label="Gửi email"><i class="fa-solid fa-envelope"></i></a></div>
+    <script src="../assets/js/teaching-system.js"></script>
 </body>
 </html>

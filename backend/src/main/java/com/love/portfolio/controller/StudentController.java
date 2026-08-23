@@ -2,50 +2,73 @@ package com.love.portfolio.controller;
 
 import com.love.portfolio.model.Student;
 import com.love.portfolio.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = "*")
 public class StudentController {
 
-    @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public StudentController(StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
+        this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Student student) {
+        if (student.getUsername() == null || student.getUsername().isBlank()
+                || student.getPassword() == null || student.getPassword().length() < 8) {
+            return ResponseEntity.badRequest().body("Tên đăng nhập không được trống và mật khẩu phải có ít nhất 8 ký tự.");
+        }
+        student.setUsername(student.getUsername().trim());
         if (studentRepository.findByUsername(student.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body("Tài khoản đã tồn tại!");
         }
+        student.setPassword(passwordEncoder.encode(student.getPassword()));
         return ResponseEntity.ok(studentRepository.save(student));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Student student) {
+    public ResponseEntity<?> login(@RequestBody Student student, HttpSession session) {
         Optional<Student> foundStudent = studentRepository.findByUsername(student.getUsername());
-        if (foundStudent.isPresent()) {
-            if (foundStudent.get().getPassword().equals(student.getPassword())) {
-                return ResponseEntity.ok(foundStudent.get());
-            } else {
-                return ResponseEntity.status(401).body("Sai mật khẩu!");
-            }
+        if (foundStudent.isEmpty() || student.getPassword() == null) {
+            return ResponseEntity.status(401).body("Tên đăng nhập hoặc mật khẩu không đúng.");
         }
-        return ResponseEntity.status(404).body("NOT_FOUND");
+        Student stored = foundStudent.get();
+        boolean legacyPassword = !stored.getPassword().startsWith("$2");
+        boolean matches = legacyPassword
+                ? MessageDigest.isEqual(stored.getPassword().getBytes(StandardCharsets.UTF_8), student.getPassword().getBytes(StandardCharsets.UTF_8))
+                : passwordEncoder.matches(student.getPassword(), stored.getPassword());
+        if (!matches) return ResponseEntity.status(401).body("Tên đăng nhập hoặc mật khẩu không đúng.");
+        if (legacyPassword) {
+            stored.setPassword(passwordEncoder.encode(student.getPassword()));
+            studentRepository.save(stored);
+        }
+        session.setAttribute("studentUsername", stored.getUsername());
+        return ResponseEntity.ok(stored);
     }
 
     @GetMapping("/profile/{username}")
-    public ResponseEntity<?> getProfile(@PathVariable String username) {
+    public ResponseEntity<?> getProfile(@PathVariable String username, HttpSession session) {
+        if (!username.equals(session.getAttribute("studentUsername"))) return ResponseEntity.status(401).build();
         return studentRepository.findByUsername(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/save-quiz")
-    public ResponseEntity<?> saveQuiz(@RequestBody QuizResultRequest request) {
+    public ResponseEntity<?> saveQuiz(@RequestBody QuizResultRequest request, HttpSession session) {
+        if (!Objects.equals(request.getUsername(), session.getAttribute("studentUsername"))) return ResponseEntity.status(401).build();
         Optional<Student> optStudent = studentRepository.findByUsername(request.getUsername());
         if (optStudent.isPresent()) {
             Student student = optStudent.get();
@@ -75,6 +98,12 @@ public class StudentController {
             return ResponseEntity.ok(studentRepository.save(student));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok().build();
     }
 
     // DTO class for request

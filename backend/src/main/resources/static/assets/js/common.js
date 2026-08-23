@@ -1,4 +1,3 @@
-// API Configuration for deployment
 // Page Transition Injector
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.createElement('div');
@@ -12,27 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.body.prepend(loader);
 
-    // Inject Admin Modal
-    const adminModal = document.createElement('div');
-    adminModal.id = 'global-admin-modal';
-    adminModal.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-        display: none; align-items: center; justify-content: center; z-index: 20000;
-    `;
-    adminModal.innerHTML = `
-        <div class="login-card" style="max-width: 400px; padding: 40px; text-align: center; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 30px;">
-            <div style="font-size: 2.5rem; color: #a855f7; margin-bottom: 20px;"><i class="fa-solid fa-user-shield"></i></div>
-            <h2 style="color: white; margin-bottom: 10px;">Admin Access</h2>
-            <p style="color: #94a3b8; margin-bottom: 30px; font-size: 0.9rem;">Nhập mã truy cập để tiếp tục</p>
-            <input type="password" id="global-admin-pass" placeholder="••••" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: white; text-align: center; font-size: 1.5rem; letter-spacing: 5px; margin-bottom: 20px; outline: none;">
-            <div style="display: flex; gap: 10px;">
-                <button onclick="closeAdminModal()" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); color: white; border: none; cursor: pointer;">Hủy</button>
-                <button onclick="submitAdminLogin()" style="flex: 2; padding: 12px; border-radius: 12px; background: linear-gradient(135deg, #a855f7, #d946ef); color: white; border: none; cursor: pointer; font-weight: 700;">Đăng Nhập</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(adminModal);
 });
 
 window.addEventListener('load', () => {
@@ -56,9 +34,9 @@ setTimeout(() => {
 if (typeof API_CONFIG === 'undefined') {
     window.API_CONFIG = {
         // Cách 1: Đường dẫn tương đối — production tự gọi đúng domain, local trỏ về localhost:8080
-        BASE_URL: (window.location.hostname === '127.0.0.1' || 
-                   window.location.hostname === 'localhost' || 
-                   window.location.protocol === 'file:') 
+        BASE_URL: (window.location.hostname === '127.0.0.1' ||
+                   window.location.hostname === 'localhost' ||
+                   window.location.protocol === 'file:')
             ? 'http://localhost:8080'
             : '', // Để trống → trình duyệt tự gọi đúng domain hiện tại (Render, custom domain, v.v.)
     };
@@ -67,25 +45,45 @@ if (typeof API_CONFIG === 'undefined') {
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Unified Navbar Scroll Handling
     const navbar = document.querySelector('.navbar-unified');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+    if (navbar) {
+        const navLinks = navbar.querySelector('.nav-links-unified');
+        if (navLinks) {
+            const isInsidePages = window.location.pathname.includes('/pages/');
+            const pagePrefix = isInsidePages ? '' : 'pages/';
+            const homeHref = isInsidePages ? '../index.html' : 'index.html';
+            const mainNavigation = [
+                { label: 'Trang Chủ', href: homeHref, file: 'index.html' },
+                { label: 'Cá Nhân', href: `${pagePrefix}about.html`, file: 'about.html' },
+                { label: 'Giảng Dạy', href: `${pagePrefix}teaching.html`, file: 'teaching.html' },
+                { label: 'Mục Tiêu', href: `${pagePrefix}muctieu.html`, file: 'muctieu.html' },
+                { label: 'Dự Án', href: `${pagePrefix}projects.html`, file: 'projects.html' }
+            ];
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            navLinks.innerHTML = mainNavigation.map(item => `
+                <li><a href="${item.href}"${currentFile === item.file ? ' class="active" aria-current="page"' : ''}>${item.label}</a></li>
+            `).join('');
         }
-    });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
 
     // 2. Premium Theme Switching Logic
     const themeBtn = document.querySelector('.theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'dark';
-    
+
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateThemeIcon(currentTheme);
 
     themeBtn?.addEventListener('click', () => {
         let theme = document.documentElement.getAttribute('data-theme');
         let newTheme = theme === 'dark' ? 'light' : 'dark';
-        
+
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(newTheme);
@@ -115,28 +113,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => revealObserver.observe(el));
 
+    const sharedFooter = document.querySelector('[data-shared-footer]');
+    if (sharedFooter) {
+        sharedFooter.classList.add('shared-footer');
+        sharedFooter.innerHTML = `
+            <div class="shared-footer-inner">
+                <p>© 2026 Hoàng Mạnh Trường · Chia sẻ kiến thức và xây dựng trải nghiệm học tập tốt hơn.</p>
+                <nav aria-label="Liên kết cuối trang">
+                    <a href="${window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html'}">Trang chủ</a>
+                    <a href="${window.location.pathname.includes('/pages/') ? 'about.html#knowledge' : 'pages/about.html#knowledge'}">Cá nhân</a>
+                    <a href="mailto:truongcri0101@gmail.com">Liên hệ</a>
+                </nav>
+            </div>`;
+    }
+
     // 4. Global Auth State Handling for Navbar
     updateNavbarAuth();
 });
 
 function updateNavbarAuth() {
-    const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     const guestLinks = document.getElementById('guest-links');
     const userLinks = document.getElementById('user-links');
-    const navUserName = document.getElementById('nav-user-name');
-    const adminLabel = document.getElementById('admin-login-label');
-
-    if (!guestLinks || !userLinks) return;
-
-    if (isAdmin) {
-        guestLinks.style.display = 'none';
-        userLinks.style.display = 'flex';
-        if (navUserName) navUserName.innerHTML = '<i class="fa-solid fa-user-shield"></i> Admin';
-    } else {
-        guestLinks.style.display = 'flex';
-        userLinks.style.display = 'none';
-        if (adminLabel) adminLabel.innerText = 'Đăng nhập Admin';
-    }
+    if (guestLinks) guestLinks.style.display = 'none';
+    if (userLinks) userLinks.style.display = 'none';
 }
 
 function logout() {
@@ -145,37 +144,15 @@ function logout() {
     window.location.href = (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) ? 'index.html' : '../index.html';
 }
 
-window.promptAdmin = function() {
-    const modal = document.getElementById('global-admin-modal');
-    if (modal) modal.style.display = 'flex';
-    document.getElementById('global-admin-pass')?.focus();
-};
+window.promptAdmin = function() {};
 
-window.closeAdminModal = function() {
-    const modal = document.getElementById('global-admin-modal');
-    if (modal) modal.style.display = 'none';
-    const passInput = document.getElementById('global-admin-pass');
-    if (passInput) passInput.value = '';
-};
-
-window.submitAdminLogin = function() {
-    const passInput = document.getElementById('global-admin-pass');
-    const pass = passInput ? passInput.value : '';
-    if (pass === "1002") {
-        sessionStorage.setItem('isAdmin', 'true');
-        alert("Đăng nhập Admin thành công!");
-        updateNavbarAuth();
-        closeAdminModal();
-        location.reload();
-    } else {
-        alert("Sai mã truy cập!");
-        if (passInput) passInput.value = '';
+window.UiModal = {
+    open(target) {
+        const modal = typeof target === 'string' ? document.querySelector(target) : target;
+        if (modal) modal.hidden = false;
+    },
+    close(target) {
+        const modal = typeof target === 'string' ? document.querySelector(target) : target;
+        if (modal) modal.hidden = true;
     }
 };
-
-// Enter key for admin modal
-document.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && document.getElementById('global-admin-modal')?.style.display === 'flex') {
-        submitAdminLogin();
-    }
-});

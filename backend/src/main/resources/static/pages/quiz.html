@@ -1,397 +1,53 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thi Thử Hóa Học - Mtruong_dev</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/common.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .quiz-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            min-height: 500px;
-        }
-        
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .quiz-card {
-            background: var(--surface-color);
-            border-radius: 1.5rem;
-            border: 1px solid var(--glass-border);
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .timer-box {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: rgba(168, 85, 247, 0.1);
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: 1px solid var(--glass-border);
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent));
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .question-text {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-        }
-        
-        .options-grid {
-            display: grid;
-            gap: 1rem;
-        }
-        
-        .option-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            padding: 1.2rem 1.5rem;
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .option-item:hover {
-            background: rgba(168, 85, 247, 0.05);
-            border-color: var(--primary-color);
-            transform: translateX(5px);
-        }
-        
-        .option-item.selected {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
-        }
-        
-        .option-item span:first-child {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: var(--text-muted);
-        }
-        
-        .option-item.selected span:first-child {
-            background: var(--primary-color);
-            color: white;
-        }
-        
-        .quiz-footer {
-            margin-top: 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .result-screen {
-            text-align: center;
-            display: none;
-        }
-        
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 8px solid var(--primary-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-        }
-        
-        .score-circle h2 {
-            font-size: 3rem;
-            margin: 0;
-        }
-        
-        .answer-review {
-            text-align: left;
-            margin-top: 3rem;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 1rem;
-        }
-        
-        .review-item {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #ef4444;
-        }
-        
-        .review-item.correct {
-            border-left-color: #10b981;
-        }
-        
-        .start-screen {
-            text-align: center;
-        }
-        
-        .pulse-btn {
-            animation: pulse-glow 2s infinite;
-        }
-        
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(168, 85, 247, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
-        }
-
-        /* Exam Grid Styles */
-        .exam-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .exam-card-pro {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 25px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-        }
-        .exam-card-pro:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-        }
-        .exam-card-pro::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: linear-gradient(to bottom, var(--primary-color), var(--accent));
-            opacity: 0.3;
-            transition: 0.3s;
-        }
-        .exam-card-pro:hover::before { opacity: 1; width: 6px; }
-        
-        .exam-icon {
-            width: 50px; height: 50px;
-            background: rgba(168, 85, 247, 0.1);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        .exam-title-pro {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: white;
-        }
-        .exam-meta-pro {
-            display: flex;
-            gap: 15px;
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-        .meta-item { display: flex; align-items: center; gap: 6px; }
-        .meta-item i { font-size: 0.8rem; color: #94a3b8; }
-        
-        .btn-start-exam {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            width: 100%;
-            transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .exam-card-pro:hover .btn-start-exam {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
-        }
-    </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff">
+  <title>Thi thử trực tuyến | Gia sư Mạnh Trường</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/quiz-system.css">
+  <script src="../assets/js/config.js" defer></script><script src="../assets/js/api-client.js" defer></script><script src="../assets/js/quiz.js" defer></script>
 </head>
 <body>
-    <nav class="navbar-unified">
-        <a href="../index.html" class="nav-logo">
-            <i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span>
-        </a>
-        <ul class="nav-links-unified">
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
-            <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-            <li>
-                <a href="about.html">Tìm Hiểu Thêm ▾</a>
-                <ul class="nav-dropdown">
-                    <li><a href="about.html">Cá Nhân</a></li>
-                    <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
-                    <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div id="auth-controls" class="nav-auth">
-            <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <div id="guest-links">
-                <button onclick="window.promptAdmin()" class="btn-premium-nav" id="admin-login-label">Đăng nhập Admin</button>
-            </div>
-            <div id="user-links" style="display: none; gap: 10px; align-items: center;">
-                <span id="nav-user-name" class="user-badge"></span>
-                <button onclick="logout()" class="logout-btn">Thoát</button>
-            </div>
-        </div>
-    </nav>
+  <header class="exam-header">
+    <a href="student_portal.html" class="exam-brand"><span><i class="fa-solid fa-book-open"></i></span><div><strong id="header-title">Thi thử trực tuyến</strong><small id="header-meta">Hệ thống đánh giá năng lực</small></div></a>
+    <div class="candidate"><div><b id="candidate-name">Học sinh</b><small id="candidate-code">Thí sinh</small></div><img id="candidate-avatar" alt="Ảnh học sinh"></div>
+  </header>
 
-    <main class="page-content" style="padding-top: 100px;">
-        <!-- Screen shown when NOT logged in -->
-        <div id="auth-required-screen" class="container" style="display: none; justify-content: center; align-items: center; min-height: 70vh;">
-            <div class="glass-card reveal" style="max-width: 500px; padding: 50px; text-align: center; border-radius: 40px;">
-                <div style="width: 80px; height: 80px; background: rgba(168, 85, 247, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 2.5rem; color: var(--primary-color);">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h2 style="font-weight: 800; font-size: 1.8rem; margin-bottom: 15px;">Dừng Lại Một Chút!</h2>
-                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 35px;">
-                    Để tham gia thi thử và lưu lại kết quả của bạn, vui lòng đăng nhập vào tài khoản học sinh.
-                </p>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <a href="login.html?redirect=quiz.html" class="btn btn-primary" style="padding: 15px; border-radius: 15px; font-weight: 800;">ĐĂNG NHẬP NGAY</a>
-                    <a href="register.html" class="btn btn-outline" style="padding: 15px; border-radius: 15px; font-weight: 800;">CHƯA CÓ TÀI KHOẢN?</a>
-                </div>
-                <div style="margin-top: 30px;">
-                    <a href="../index.html" style="color: var(--text-muted); opacity: 0.6; font-size: 0.9rem; text-decoration: none;"><i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ</a>
-                </div>
-            </div>
-        </div>
+  <main>
+    <section class="auth-gate" id="auth-required-screen" hidden>
+      <div class="auth-card"><span><i class="fa-solid fa-user-lock"></i></span><h1>Đăng nhập để bắt đầu</h1><p>Bạn cần đăng nhập tài khoản học sinh trước khi tham gia kỳ thi trực tuyến.</p><a href="login.html?redirect=quiz.html" class="button primary">Đăng nhập học sinh</a><a href="teaching.html" class="text-link">Quay lại trang giảng dạy</a></div>
+    </section>
 
-        <div id="quiz-main-content" style="display: none;">
-        <div class="quiz-container" style="max-width: 1000px;">
-            <!-- Start Screen -->
-            <div id="start-screen" class="start-screen glass-card reveal" style="padding: 60px 40px; border-radius: 30px;">
-                <div style="position: absolute; top: 30px; right: 30px;">
-                    <a href="manage_quiz.html" class="btn btn-outline" style="padding: 12px 25px; border-radius: 12px; font-weight: 800; border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05); color: #a78bfa;">
-                        <i class="fa-solid fa-user-shield"></i> Admin Dashboard
-                    </a>
-                </div>
+    <section class="exam-picker" id="start-screen" hidden>
+      <div class="picker-heading"><p>THƯ VIỆN ĐỀ THI</p><h1>Chọn đề thi phù hợp với bạn</h1><span>Làm bài trên máy tính hoặc điện thoại, kết quả được lưu vào hồ sơ học tập.</span></div>
+      <div class="picker-toolbar"><label><i class="fa-solid fa-magnifying-glass"></i><input id="exam-search" placeholder="Tìm kiếm đề thi..."></label><select id="exam-sort"><option value="newest">Mới nhất</option><option value="short">Thời gian ngắn</option><option value="questions">Nhiều câu hỏi</option></select></div>
+      <div class="exam-grid" id="exam-selection-list"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Đang tải danh sách đề...</div></div>
+    </section>
 
-                <div class="exam-header-main" style="max-width: 600px; margin: 0 auto 50px;">
-                    <i class="fa-solid fa-atom fa-4x mb-4" style="color: var(--primary-color); filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));"></i>
-                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px;">Thử Thách Hóa Học</h2>
-                    <p style="color: #64748b; font-size: 1.1rem; line-height: 1.6;">Chọn một đề thi bên dưới để bắt đầu kiểm tra trình độ của bạn. Mỗi đề thi đều được thiết kế để củng cố kiến thức nền tảng.</p>
-                </div>
-                
-                <div id="exam-selection-list" class="exam-grid">
-                    <!-- Exam cards will be loaded here -->
-                </div>
-            </div>
+    <section class="exam-room" id="quiz-screen" hidden>
+      <div class="question-pane">
+        <div class="question-topline"><span class="question-number" id="question-count">Câu 1</span><span class="question-tag">Trắc nghiệm</span><button id="flag-btn"><i class="fa-regular fa-flag"></i><span>Đánh dấu xem lại</span></button></div>
+        <div class="progress-line"><i id="progress-fill"></i></div>
+        <article class="question-card"><h1 id="question-text">Đang tải câu hỏi...</h1><div id="options-container" class="options"></div></article>
+        <div class="question-actions"><button class="button ghost" id="prev-btn"><i class="fa-solid fa-arrow-left"></i>Câu trước</button><button class="button primary" id="next-btn">Câu tiếp<i class="fa-solid fa-arrow-right"></i></button><button class="button submit" id="submit-btn" hidden><i class="fa-solid fa-paper-plane"></i>Nộp bài thi</button></div>
+      </div>
+      <aside class="exam-sidebar">
+        <div class="timer-box"><span><i class="fa-regular fa-clock"></i> Thời gian còn lại</span><strong id="timer">00:00</strong><div><i id="timer-bar"></i></div></div>
+        <div class="palette"><div class="palette-head"><b>Danh sách câu hỏi</b><span id="palette-count">0 câu</span></div><div class="legend"><span><i class="done"></i>Đã làm</span><span><i class="flagged"></i>Đánh dấu</span><span><i class="current"></i>Đang xét</span></div><div class="question-palette" id="question-palette"></div></div>
+        <button class="button submit submit-side" id="submit-side"><i class="fa-solid fa-paper-plane"></i>Nộp bài thi</button>
+      </aside>
+    </section>
 
-            <!-- Quiz Screen -->
-            <div id="quiz-screen" class="quiz-card" style="display: none;">
-                <div class="timer-box">
-                    <i class="fa-solid fa-clock"></i>
-                    <span id="timer">15:00</span>
-                </div>
-                
-                <div class="quiz-content">
-                    <div class="progress-bar">
-                        <div id="progress-fill" class="progress-fill"></div>
-                    </div>
-                    
-                    <p id="question-count" class="text-muted mb-2">Câu hỏi 1 / 10</p>
-                    <h3 id="question-text" class="question-text">Đang tải câu hỏi...</h3>
-                    
-                    <div id="options-container" class="options-grid">
-                        <!-- Options will be loaded here -->
-                    </div>
-                    
-                    <div class="quiz-footer">
-                        <button id="prev-btn" class="btn btn-outline" disabled>Quay lại</button>
-                        <button id="next-btn" class="btn btn-primary">Câu kế tiếp</button>
-                        <button id="submit-btn" class="btn btn-primary" style="display: none;">Nộp bài</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Result Screen -->
-            <div id="result-screen" class="result-screen glass-card reveal">
-                <i class="fa-solid fa-trophy fa-4x mb-4" style="color: #fbbf24;"></i>
-                <h2 class="mb-2">Hoàn Thành!</h2>
-                <p class="text-muted mb-5">Đây là kết quả của bạn</p>
-                
-                <div class="score-circle">
-                    <h2 id="final-score">0</h2>
-                    <span>/ 10</span>
-                </div>
-                
-                <p id="result-message" class="mb-5">Cố gắng hơn lần sau nhé!</p>
-                
-                <div class="hero-cta" style="justify-content: center; margin-bottom: 3rem;">
-                    <button onclick="location.reload()" class="btn btn-primary">Làm Lại</button>
-                    <a href="giasu.html" class="btn btn-outline">Về Trang Gia Sư</a>
-                </div>
-                
-                <h3 class="mb-4" style="text-align: left;">Xem lại bài làm</h3>
-                <div id="answer-review" class="answer-review">
-                    <!-- Review items will be loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-    <footer>
-        <p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p>
-    </footer>
-
-    <script src="../assets/js/common.js"></script>
-    <script src="../assets/js/chatbot.js"></script>
-    <script src="../assets/js/quiz.js"></script>
+    <section class="result" id="result-screen" hidden>
+      <div class="result-heading"><div><p>KẾT QUẢ BÀI THI</p><h1 id="result-title">Kết quả bài thi</h1><span id="result-date"></span></div><div class="result-actions"><button class="button ghost" id="share-result"><i class="fa-solid fa-share-nodes"></i>Chia sẻ kết quả</button><button class="button primary" id="retry-btn"><i class="fa-solid fa-rotate-right"></i>Làm lại bài</button></div></div>
+      <div class="score-grid"><article class="result-stat"><span>Điểm số</span><strong><b id="final-score">0.0</b>/10</strong><small id="result-message">Hãy tiếp tục cố gắng!</small></article><article class="result-stat"><span><i class="fa-regular fa-clock"></i> Thời gian làm bài</span><strong id="used-time">00:00</strong><small>Hoàn thành trong thời gian quy định</small></article><article class="result-stat"><span><i class="fa-regular fa-circle-check"></i> Độ chính xác</span><strong><b id="correct-count">0</b>/<b id="total-count">0</b> câu</strong><small id="accuracy-label">0% câu trả lời đúng</small></article></div>
+      <article class="analysis-card"><h2>Phân tích theo chủ đề</h2><div class="analysis-bars"><div><span>Kiến thức nền tảng</span><b id="skill-label">0%</b><i><em id="skill-bar"></em></i></div><div><span>Khả năng vận dụng</span><b id="apply-label">0%</b><i><em id="apply-bar"></em></i></div><div><span>Câu hỏi cần ôn lại</span><b id="review-label">0%</b><i><em id="review-bar"></em></i></div></div></article>
+      <section class="review-section"><div class="review-head"><h2>Chi tiết bài làm</h2><button id="toggle-review">Thu gọn</button></div><div id="answer-review"></div></section>
+    </section>
+  </main>
+  <div class="confirm-modal" id="submit-confirm" hidden><div><span><i class="fa-solid fa-paper-plane"></i></span><h2>Nộp bài thi?</h2><p id="confirm-copy">Bạn vẫn còn câu chưa trả lời.</p><div><button class="button ghost" id="cancel-submit">Tiếp tục làm</button><button class="button submit" id="confirm-submit">Nộp bài</button></div></div></div>
+  <div class="toast" id="quiz-toast" hidden></div>
 </body>
 </html>
-

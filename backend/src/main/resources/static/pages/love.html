@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Outfit:wght@300;400;600;800&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/api-client.js"></script>
 </head>
 <body class="love-page-body">
     <!-- Premium Password Protection Overlay -->
@@ -21,7 +23,7 @@
                 <h2>Khu vực bí mật</h2>
                 <p>Nơi lưu giữ những kỉ niệm riêng tư ❤️</p>
             </div>
-            
+
             <div class="password-input-group">
                 <div class="input-wrapper">
                     <i class="fa-solid fa-key"></i>
@@ -32,7 +34,7 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
-            
+
             <div id="pwd-error" class="error-msg">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 Mật mã không chính xác!
@@ -51,9 +53,10 @@
             document.getElementById('password-overlay').style.display = 'none';
         }
 
-        function checkPassword() {
+        async function checkPassword() {
             const pwd = document.getElementById('love-password').value;
-            if (pwd === '1002') {
+            try {
+                await ApiClient.post('/api/auth/admin/login', { pin: pwd });
                 sessionStorage.setItem('love_unlocked', 'true');
                 const overlay = document.getElementById('password-overlay');
                 overlay.style.opacity = '0';
@@ -61,7 +64,7 @@
                 setTimeout(() => {
                     overlay.style.display = 'none';
                 }, 600);
-            } else {
+            } catch {
                 const errorMsg = document.getElementById('pwd-error');
                 errorMsg.style.display = 'flex';
                 document.getElementById('love-password').value = '';
@@ -71,7 +74,7 @@
                 errorMsg.style.animation = null;
             }
         }
-        
+
         // Allow pressing Enter
         document.addEventListener('DOMContentLoaded', () => {
             const pwdInput = document.getElementById('love-password');
@@ -736,7 +739,7 @@
 
             const start = new Date(data.startDate);
             const now = new Date();
-            
+
             let totalDays = Math.floor((now - start) / (1000 * 60 * 60 * 24));
             let years = now.getFullYear() - start.getFullYear();
             let months = now.getMonth() - start.getMonth();
@@ -777,15 +780,15 @@
             particle.style.top = '110vh';
             particle.style.zIndex = '-1';
             particle.style.transition = 'all 10s linear';
-            
+
             container.appendChild(particle);
-            
+
             setTimeout(() => {
                 particle.style.top = '-10vh';
                 particle.style.transform = `translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`;
                 particle.style.opacity = '0';
             }, 100);
-            
+
             setTimeout(() => particle.remove(), 10000);
         }
 

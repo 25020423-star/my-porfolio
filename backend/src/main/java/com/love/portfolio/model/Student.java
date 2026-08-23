@@ -1,5 +1,6 @@
 package com.love.portfolio.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Student {
     private String username;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String fullName;

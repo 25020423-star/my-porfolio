@@ -86,10 +86,3 @@ CREATE TABLE IF NOT EXISTS students (
     student_rank INT,
     quiz_history TEXT
 );
-
--- CNS PDF uploads (file bài nộp từng bài)
-CREATE TABLE IF NOT EXISTS cns_pdf (
-    slot_id   VARCHAR(20) PRIMARY KEY,
-    file_url  TEXT,
-    file_name VARCHAR(255)
-);

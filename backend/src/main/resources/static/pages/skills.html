@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -63,14 +63,14 @@
         }
 
         .skill-name { font-weight: 600; color: white; display: flex; align-items: center; gap: 8px; }
-        .skill-level { 
-            font-size: 0.8rem; 
-            font-weight: 700; 
-            padding: 2px 8px; 
+        .skill-level {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 2px 8px;
             border-radius: 4px;
             text-transform: uppercase;
         }
-        
+
         .level-proficient { background: rgba(16, 185, 129, 0.2); color: #10b981; }
         .level-intermediate { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
         .level-basic { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
@@ -303,33 +303,6 @@
             display: block;
         }
 
-        /* ── Floating CV Button ─────────────────────── */
-        .cv-float {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            z-index: 9000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 24px;
-            background: linear-gradient(135deg, #7c3aed, #db2777);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 800;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 8px 30px rgba(124,58,237,0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-            animation: pulse-glow 2.5s infinite;
-        }
-        .cv-float:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 14px 40px rgba(124,58,237,0.7);
-        }
     </style>
 </head>
 <body>
@@ -339,15 +312,14 @@
         </a>
         <ul class="nav-links-unified">
             <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
             <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
             <li>
                 <a href="about.html">Tìm Hiểu Thêm ▾</a>
                 <ul class="nav-dropdown">
                     <li><a href="about.html">Cá Nhân</a></li>
                     <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
+                    <li><a href="teaching.html#research">Nghiên Cứu</a></li>
+                    <li><a href="about.html#knowledge">Kiến Thức</a></li>
                     <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
                 </ul>
             </li>
@@ -356,14 +328,8 @@
             <button class="theme-toggle" title="Chuyển chế độ">
                 <i class="fa-solid fa-moon"></i>
             </button>
-            <a href="manage_quiz.html" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.85rem; border-radius: 50px;">Admin</a>
         </div>
     </nav>
-
-    <!-- Floating CV Button -->
-    <a href="cv.pdf" download class="cv-float">
-        <i class="fa-solid fa-file-arrow-down"></i> Tải CV (PDF)
-    </a>
 
     <main class="skills-page-container">
         <div class="skills-header">
@@ -378,7 +344,7 @@
                     <i class="fa-solid fa-rocket" style="font-size: 2.5rem; color: #f15a24;"></i>
                     <h2 class="roadmap-title" style="margin-bottom: 0;">Lộ trình học tập 2026</h2>
                 </div>
-                
+
                 <div class="roadmap-progress">
                     <div class="roadmap-list">
                         <!-- Q1 -->
@@ -669,11 +635,12 @@
         </section>
     </main>
 
-    <footer>
+    <footer data-shared-footer>
         <p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p>
     </footer>
 
     <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/api-client.js"></script>
     <script>
         async function fetchCodeLearnStats() {
             const username = document.getElementById('cl-username').value.trim();
@@ -691,7 +658,7 @@
                 if (response.ok && data.status === 'success') {
                     document.getElementById('cl-result').style.display = 'block';
                     document.getElementById('cl-msg').innerHTML = `<i class="fa-solid fa-check-circle"></i> Đồng bộ thành công Profile: <a href="${data.profileUrl}" target="_blank" style="color: #10b981;">${data.username}</a>`;
-                    
+
                     const skillsContainer = document.getElementById('cl-skills-container');
                     skillsContainer.innerHTML = '';
 
@@ -732,7 +699,7 @@
                 if (response.ok && data.status === 'success') {
                     document.getElementById('hr-result').style.display = 'block';
                     document.getElementById('hr-msg').innerHTML = `<i class="fa-solid fa-check-circle"></i> Đồng bộ thành công Profile: <a href="${data.profileUrl}" target="_blank" style="color: #2ead5a;">${data.username}</a>`;
-                    
+
                     const badgesContainer = document.getElementById('hr-badges-container');
                     badgesContainer.innerHTML = '';
 
@@ -812,4 +779,3 @@
     </script>
 </body>
 </html>
-

@@ -1,589 +1,114 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Học Sinh Pro - MtruongHóa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/common.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        :root {
-            --portal-primary: #a855f7;
-            --portal-accent: #d946ef;
-            --portal-bg: #0b0118;
-            --portal-card: rgba(30, 41, 59, 0.4);
-            --portal-border: rgba(168, 85, 247, 0.2);
-        }
-
-        body.portal-body {
-            background: var(--portal-bg) !important;
-            background-image: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(217, 70, 239, 0.1) 0%, transparent 40%) !important;
-            color: #f8fafc !important;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .dashboard-container {
-            padding-top: 100px;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding-bottom: 50px;
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 30px;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        /* Sidebar Glass Card */
-        .glass-sidebar {
-            background: var(--portal-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--portal-border);
-            border-radius: 30px;
-            padding: 40px 25px;
-            text-align: center;
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-
-        .avatar-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-        }
-
-        .avatar-main {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid var(--portal-primary);
-            padding: 5px;
-            object-fit: cover;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .level-badge {
-            position: absolute;
-            bottom: -5px;
-            right: -5px;
-            background: linear-gradient(135deg, var(--portal-primary), var(--portal-accent));
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.9rem;
-            border: 3px solid var(--portal-bg);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .xp-bar-container {
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .xp-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            margin-bottom: 8px;
-            color: #94a3b8;
-        }
-
-        .xp-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .xp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--portal-primary), var(--portal-accent));
-            border-radius: 10px;
-            width: 0%;
-            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* Main Content Cards */
-        .card-pro {
-            background: var(--portal-card);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--portal-border);
-            border-radius: 24px;
-            padding: 30px;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .card-pro:hover {
-            border-color: var(--portal-primary);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .section-header h3 {
-            font-size: 1.3rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-header h3 i {
-            color: var(--portal-primary);
-        }
-
-        /* Grid Layouts */
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .stat-item-pro {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .stat-item-pro .val {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--portal-primary);
-            display: block;
-        }
-
-        .stat-item-pro .lab {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-        }
-
-        /* Table Stylings */
-        .pro-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .pro-table th {
-            text-align: left;
-            color: #94a3b8;
-            font-size: 0.8rem;
-            padding: 15px;
-            border-bottom: 1px solid var(--portal-border);
-        }
-
-        .pro-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .rank-glow {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-        }
-
-        .rank-1 { background: linear-gradient(135deg, #ffd700, #b8860b); color: #000; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #808080); color: #000; }
-        .rank-3 { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
-
-        /* AI Path section */
-        .ai-path-card {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(217, 70, 239, 0.1));
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 24px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-path-card::before {
-            content: '\f0d0';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: -20px;
-            bottom: -20px;
-            font-size: 150px;
-            opacity: 0.05;
-            color: white;
-        }
-
-        /* Timeline History */
-        .history-list-pro {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .history-item-pro {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .history-item-pro:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(5px);
-        }
-
-        .score-tag {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--portal-primary);
-        }
-
-        /* Navbar Link fix */
-        .navbar-unified {
-            background: rgba(11, 1, 24, 0.8) !important;
-            backdrop-filter: blur(10px);
-        }
-        .nav-links-unified a {
-            color: white !important;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#fff">
+  <title>Cổng học sinh | Gia sư Mạnh Trường</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/student-portal.css?v=2">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="../assets/js/config.js" defer></script><script src="../assets/js/api-client.js" defer></script>
+  <script src="../assets/js/student-portal.js" defer></script>
 </head>
-<body class="portal-body">
-    <nav class="navbar-unified">
-        <a href="../index.html" class="nav-logo">
-            <i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span>
-        </a>
-        <ul class="nav-links-unified">
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="cns.html">Bài Tập Công Nghệ Số</a></li>
-            <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-            <li>
-                <a href="about.html">Tìm Hiểu Thêm ▾</a>
-                <ul class="nav-dropdown">
-                    <li><a href="about.html">Cá Nhân</a></li>
-                    <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="research_hub.html">Nghiên Cứu</a></li>
-                    <li><a href="blog.html">Kiến Thức</a></li>
-                    <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div id="auth-controls" class="nav-auth">
-            <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <div id="guest-links">
-                <button onclick="window.promptAdmin()" class="btn-premium-nav" id="admin-login-label">Đăng nhập Admin</button>
-            </div>
-            <div id="user-links" style="display: none; gap: 10px; align-items: center;">
-                <span id="nav-user-name" class="user-badge"></span>
-                <button onclick="logout()" class="logout-btn">Thoát</button>
-            </div>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-in">
+      <button class="icon-btn mobile" id="menu-btn" aria-label="Mở danh mục"><i class="fa-solid fa-bars"></i></button>
+      <a class="brand" href="teaching.html"><b>M</b><span>Gia sư <strong>Mạnh Trường</strong></span></a>
+      <nav class="desktop-nav" aria-label="Cổng học sinh">
+        <button class="active" data-view="overview">Tổng quan</button>
+        <button data-view="assignments">Bài tập & Tài liệu</button>
+        <button data-view="schedule">Lịch học</button>
+        <button data-view="report">Báo cáo học tập</button>
+        <button data-view="fees">Học phí</button>
+        <button data-view="notifications">Thông báo</button>
+        <a class="exam-nav-link" href="quiz.html"><i class="fa-regular fa-file-lines"></i> Thi thử</a>
+      </nav>
+      <div class="account">
+        <button class="bell" data-view="notifications" aria-label="Thông báo"><i class="fa-regular fa-bell"></i><i></i></button>
+        <button class="account-btn" id="account-btn"><img id="header-avatar" alt="Ảnh học sinh"><span id="header-name">Học sinh</span><i class="fa-solid fa-chevron-down"></i></button>
+        <div class="account-pop" id="account-pop" hidden><button id="sync-btn"><i class="fa-solid fa-rotate"></i> Đồng bộ dữ liệu</button><button id="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</button></div>
+      </div>
+    </div>
+  </header>
+  <div class="drawer" id="drawer" hidden>
+    <button data-view="overview"><i class="fa-solid fa-table-cells-large"></i>Tổng quan</button>
+    <button data-view="report"><i class="fa-solid fa-chart-line"></i>Báo cáo học tập</button>
+    <button data-view="fees"><i class="fa-solid fa-wallet"></i>Học phí</button>
+    <a class="exam-drawer-link" href="quiz.html"><i class="fa-regular fa-file-lines"></i>Thi thử Online</a>
+    <a href="teaching.html"><i class="fa-solid fa-arrow-left"></i>Trang giảng dạy</a>
+  </div>
+
+  <main class="shell main">
+    <section class="view active" data-panel="overview">
+      <div class="hero-title"><div><p class="kicker" id="today">Cổng học sinh</p><h1>Chào buổi sáng, <span data-first-name>Bạn</span>!</h1><p>Chúc bạn một ngày học tập hiệu quả.</p></div><button class="btn ghost desktop" id="overview-sync"><i class="fa-solid fa-rotate"></i> Đồng bộ dữ liệu</button></div>
+      <div class="overview-grid">
+        <div class="stack">
+          <article class="card next-card">
+            <div class="row"><span class="kicker"><i class="fa-regular fa-calendar"></i> Buổi học tiếp theo</span><span class="chip warn"><i class="fa-solid fa-bolt"></i>Sắp diễn ra</span></div>
+            <div class="lesson-row"><div><h2>Toán Đại Số 10</h2><p><i class="fa-regular fa-clock"></i> 19:00 - 21:00 · Thầy Trường</p></div><div class="countdown"><span><b id="cd-h">02</b>Giờ</span><span><b id="cd-m">45</b>Phút</span><span><b id="cd-s">12</b>Giây</span></div></div>
+            <div class="actions"><button class="btn primary" data-toast="Phòng học chưa mở. Bạn sẽ được thông báo trước giờ học."><i class="fa-solid fa-video"></i>Vào lớp học</button><button class="btn ghost" data-view="assignments"><i class="fa-regular fa-folder-open"></i>Xem tài liệu</button></div>
+          </article>
+          <div class="metrics">
+            <article class="card metric"><i class="blue fa-solid fa-arrow-trend-up"></i><div><small>Tiến độ khóa học</small><strong><b id="course-count">0</b>/24 <em>Buổi</em></strong></div><span><i id="course-bar"></i></span></article>
+            <article class="card metric"><i class="amber fa-regular fa-clipboard"></i><div><small>Bài tập về nhà</small><strong><b id="task-count">0</b>/10 <em>Bài</em></strong></div><span><i id="task-bar"></i></span></article>
+            <article class="card metric"><i class="green fa-solid fa-star"></i><div><small>Điểm trung bình</small><strong><b id="avg">0.0</b><em>/10</em></strong></div><span><i id="avg-bar"></i></span></article>
+          </div>
+          <article class="card chart-card"><div class="section-head"><div><p class="kicker">Kết quả học tập</p><h2>Xu hướng điểm số</h2></div><span class="level">Cấp <b id="level">1</b> · <b id="xp">0</b> XP</span></div><div class="chart"><canvas id="score-chart"></canvas></div></article>
         </div>
-    </nav>
-
-    <main class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="glass-sidebar">
-            <div class="avatar-container">
-                <img src="https://ui-avatars.com/api/?name=User" alt="Avatar" class="avatar-main" id="profile-avatar">
-                <div class="level-badge" id="user-level">1</div>
-            </div>
-            
-            <h2 id="user-name" style="font-size: 1.4rem; margin-bottom: 5px; font-weight: 800;">Học Sinh</h2>
-            <p id="user-rank-text" style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">Hạng: #--</p>
-            
-            <div class="xp-bar-container">
-                <div class="xp-text">
-                    <span>Tiến độ cấp độ</span>
-                    <span id="xp-val">0/100 XP</span>
-                </div>
-                <div class="xp-bar">
-                    <div class="xp-fill" id="xp-fill"></div>
-                </div>
-            </div>
-
-            <div class="stats-summary">
-                <div class="stat-item-pro">
-                    <span class="val" id="total-quizzes">0</span>
-                    <span class="lab">Bài thi</span>
-                </div>
-                <div class="stat-item-pro">
-                    <span class="val" id="avg-score">0.0</span>
-                    <span class="lab">Điểm TB</span>
-                </div>
-                <div class="stat-item-pro">
-                    <span class="val" id="total-xp">0</span>
-                    <span class="lab">Tổng XP</span>
-                </div>
-            </div>
-
-            <button class="btn btn-primary w-full mt-4" style="border-radius: 15px; padding: 12px;" onclick="fetchProfile()">
-                <i class="fa-solid fa-rotate"></i> Đồng bộ dữ liệu
-            </button>
+        <aside class="stack side">
+          <article class="card notices-preview"><div class="section-head"><h2>Thông báo mới nhất</h2><button data-view="notifications">Xem tất cả</button></div><div class="mini-notice"><i class="blue fa-regular fa-file-lines"></i><div><b>Bài tập mới: Phương trình bậc 2</b><p>Hạn nộp vào thứ Sáu tuần này.</p><small>2 giờ trước</small></div></div><div class="mini-notice"><i class="amber fa-regular fa-credit-card"></i><div><b>Nhắc nhở học phí</b><p>Kỳ học phí tháng này sắp đến hạn.</p><small>Hôm qua</small></div></div></article>
+          <article class="card profile"><img id="profile-avatar" alt="Ảnh học sinh"><div><small>Học sinh</small><h3 id="profile-name">Học sinh</h3><p>Hạng toàn hệ thống: <b id="rank">--</b></p></div><div class="profile-xp"><span>Cấp độ tiếp theo</span><b id="xp-label">0/100 XP</b></div><div class="bar"><i id="xp-bar"></i></div></article>
         </aside>
+      </div>
+    </section>
 
-        <!-- Main Content -->
-        <div class="dashboard-main" style="display: flex; flex-direction: column; gap: 30px;">
-            
-            <!-- AI & Chart Row -->
-            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px;">
-                <section class="ai-path-card">
-                    <div class="section-header">
-                        <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Lộ trình học tập AI</h3>
-                    </div>
-                    <div id="ai-advice-content" style="font-size: 1rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px;">
-                        Chào mừng bạn quay trở lại! Hãy làm thêm bài thi để AI có thể phân tích chính xác lộ trình dành riêng cho bạn.
-                    </div>
-                    <button class="btn btn-primary" onclick="analyzePath()" id="btn-analyze" style="display: none;">
-                        Phân tích năng lực
-                    </button>
-                </section>
+    <section class="view" data-panel="assignments" hidden>
+      <div class="page-title"><p class="kicker">Học liệu</p><h1>Bài tập & Tài liệu</h1><p>Theo dõi bài tập và truy cập tài liệu học tập của bạn.</p></div>
+      <div class="segment"><button class="active" data-mode="tasks">Bài tập</button><button data-mode="docs">Tài liệu</button></div>
+      <div id="tasks-pane"><div class="filters"><button class="active" data-task-filter="all">Tất cả</button><button data-task-filter="pending">Chưa nộp</button><button data-task-filter="submitted">Đã nộp</button><button data-task-filter="graded">Đã chấm</button></div>
+        <div class="two-col"><div class="stack">
+          <article class="card assignment" data-task-state="pending"><div class="row"><span class="chip danger">Chưa nộp · Hạn hôm nay 23:59</span><i class="fa-regular fa-file-lines"></i></div><h2>Đạo hàm & Ứng dụng</h2><p>Toán 12 · Thầy Nguyễn Văn A</p><div class="actions"><label class="btn primary upload"><i class="fa-solid fa-upload"></i>Chọn bài nộp<input id="upload" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" hidden></label><button class="btn ghost" data-toast="Nội dung đề bài đang được cập nhật."><i class="fa-regular fa-eye"></i>Xem đề</button></div><div class="file" id="file" hidden><i class="fa-regular fa-file"></i><span></span><button id="remove-file"><i class="fa-solid fa-xmark"></i></button></div><button class="btn primary full" id="submit-task" disabled>Hoàn tất nộp bài</button></article>
+          <article class="card assignment" data-task-state="submitted"><div class="row"><span class="chip info">Đã nộp · Chờ chấm</span><i class="fa-regular fa-circle-check"></i></div><h2>Bài tập Tiếng Anh Unit 4</h2><p>Tiếng Anh 10 · Cô Trần B</p></article>
+          <article class="card assignment" data-task-state="graded"><div class="row"><span class="chip success">Đã chấm</span><b class="score">9.5</b></div><h2>Kiểm tra 15 phút Hóa học</h2><p>Hóa 11 · Thầy Lê C</p><button class="btn ghost full" data-toast="Nhận xét: Trình bày tốt, cần ghi rõ điều kiện phản ứng.">Xem nhận xét</button></article>
+        </div><aside class="card library"><div class="section-head"><h2>Thư viện tài liệu</h2><span>8 tệp</span></div><button><i class="fa-regular fa-folder"></i><span><b>Toán học</b><small>3 tài liệu</small></span><i class="fa-solid fa-chevron-right"></i></button><button><i class="fa-regular fa-folder"></i><span><b>Tiếng Anh</b><small>2 tài liệu</small></span><i class="fa-solid fa-chevron-right"></i></button><button><i class="fa-regular fa-folder"></i><span><b>Hóa học</b><small>3 tài liệu</small></span><i class="fa-solid fa-chevron-right"></i></button></aside></div>
+      </div>
+      <div id="docs-pane" hidden><div class="doc-grid"><article class="card document"><i class="fa-solid fa-file-pdf"></i><div><h3>Công thức Đại số trọng tâm</h3><p>PDF · 2.4 MB</p></div><button data-toast="Tệp mẫu chưa được đính kèm trên máy chủ."><i class="fa-solid fa-download"></i></button></article><article class="card document"><i class="fa-solid fa-file-powerpoint"></i><div><h3>Chuyên đề Đạo hàm</h3><p>PPTX · 6.8 MB</p></div><button data-toast="Tệp mẫu chưa được đính kèm trên máy chủ."><i class="fa-solid fa-download"></i></button></article></div></div>
+    </section>
 
-                <section class="card-pro">
-                    <div class="section-header">
-                        <h3><i class="fa-solid fa-chart-line"></i> Xu hướng</h3>
-                    </div>
-                    <div style="height: 180px;">
-                        <canvas id="progressChart"></canvas>
-                    </div>
-                </section>
-            </div>
+    <section class="view" data-panel="schedule" hidden>
+      <div class="page-title"><p class="kicker">Thời khóa biểu</p><h1>Lịch học & Điểm danh</h1><p>Quản lý lịch học và gửi yêu cầu thay đổi lịch.</p></div>
+      <div class="two-col"><div class="stack"><article class="card upcoming"><div><span class="chip info"><i class="fa-regular fa-clock"></i>Sắp diễn ra</span><small>Buổi học tiếp theo</small><h2>Toán Lớp 9 - Đại số</h2><p>Thứ Tư, 15/10 · 18:00 - 19:30</p></div><div class="actions"><button class="btn primary" data-toast="Phòng học chưa mở."><i class="fa-solid fa-video"></i>Vào lớp học</button><button class="btn ghost" id="open-change">Xin nghỉ / Đổi lịch</button></div></article><article class="card calendar"><div class="section-head"><h2>Lịch học trong tháng</h2><span>Tháng 10, 2024</span></div><div class="week"><b>T2</b><b>T3</b><b>T4</b><b>T5</b><b>T6</b><b>T7</b><b>CN</b></div><div class="days" id="days"></div><p><i></i> Chạm vào ngày có dấu chấm vàng để xem chi tiết lịch học.</p></article></div>
+        <aside class="stack"><article class="card attendance"><h2>Chuyên cần tháng 10</h2><div class="ring"><b>95%</b><small>Tỷ lệ chuyên cần</small></div><div class="attendance-stats"><span><b>12</b>Có mặt</span><span><b>1</b>Vắng phép</span><span><b>0</b>Muộn</span></div></article><form class="card change-form" id="change-form" hidden><div class="section-head"><h2>Yêu cầu thay đổi lịch</h2><button type="button" id="close-change"><i class="fa-solid fa-xmark"></i></button></div><label>Ngày học<select required><option value="">Chọn buổi học</option><option>Thứ Tư, 15/10 · 18:00</option><option>Thứ Bảy, 18/10 · 09:00</option></select></label><label>Lý do<textarea rows="3" required placeholder="Nhập lý do xin nghỉ hoặc đổi lịch"></textarea></label><button class="btn primary full">Gửi yêu cầu</button></form></aside></div>
+    </section>
 
-            <!-- Leaderboard & History Row -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-                <!-- Leaderboard -->
-                <section class="card-pro">
-                    <div class="section-header">
-                        <h3><i class="fa-solid fa-crown"></i> Bảng Xếp Hạng</h3>
-                        <a href="quiz.html" style="font-size: 0.8rem; color: var(--portal-primary);">Thách đấu ngay</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="pro-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Học sinh</th>
-                                    <th>Điểm TB</th>
-                                    <th>Số bài</th>
-                                </tr>
-                            </thead>
-                            <tbody id="leaderboard-body"></tbody>
-                        </table>
-                    </div>
-                </section>
+    <section class="view" data-panel="report" hidden>
+      <div class="hero-title"><div class="page-title"><p class="kicker">Theo dõi tiến bộ</p><h1>Báo cáo học tập</h1><p>Cập nhật kết quả và nhận xét mới nhất từ giáo viên.</p></div><button class="btn ghost" id="download-report"><i class="fa-solid fa-download"></i><span class="desktop">Tải báo cáo</span></button></div>
+      <div class="two-col"><div class="stack"><article class="card teacher"><img src="https://ui-avatars.com/api/?name=Manh+Truong&background=e8efff&color=1a56db" alt="Giáo viên"><div><small>Giáo viên phụ trách</small><h2>Nguyễn Mạnh Trường</h2><p>Toán học · Hóa học</p></div><span class="chip success">Đang học</span></article><article class="card report-card"><div class="row"><div><p class="kicker">Nhật ký buổi học gần nhất</p><h2>Đại số: Hàm số bậc 2</h2></div><span class="chip success">Tốt</span></div><small>Thứ Ba, 24/10/2024</small><p>Học sinh nắm vững khái niệm và có thể tự chỉnh xác. Cần luyện tập thêm phần tìm giá trị lớn nhất.</p><div class="lesson-scores"><span>Mức độ tập trung <b>90%</b></span><span>Hoàn thành bài <b>90%</b></span></div></article><article class="card report-card"><div class="section-head"><h2>Tiến bộ điểm số (Tháng 10)</h2><span class="chip info">Mục tiêu 8.5</span></div><div class="weekly"><span>Tuần 1<i><b style="width:65%"></b></i><strong>6.5</strong></span><span>Tuần 2<i><b style="width:72%"></b></i><strong>7.2</strong></span><span>Tuần 3<i><b style="width:80%"></b></i><strong>8.0</strong></span><span>Tuần 4<i><b style="width:85%"></b></i><strong>8.5</strong></span></div></article></div>
+        <aside class="stack"><article class="card report-card"><h2>Đánh giá chung Tháng 10</h2><div class="evaluation good"><b><i class="fa-regular fa-thumbs-up"></i> Điểm mạnh</b><ul><li>Tính toán nhanh, tư duy logic tốt.</li><li>Luôn hoàn thành đầy đủ bài tập về nhà.</li><li>Chủ động đặt câu hỏi khi không hiểu bài.</li></ul></div><div class="evaluation improve"><b><i class="fa-regular fa-lightbulb"></i> Cần cải thiện</b><p>Cần rèn luyện tính cẩn thận khi làm bài kiểm tra để tránh sai sót ở những bước tính toán cơ bản.</p></div></article><article class="card report-card"><div class="section-head"><h2>Lịch sử kết quả</h2><span id="quiz-count">0 bài</span></div><div id="history"><p class="empty">Chưa có lịch sử điểm.</p></div></article></aside></div>
+    </section>
 
-                <!-- History -->
-                <section class="card-pro">
-                    <div class="section-header">
-                        <h3><i class="fa-solid fa-clock-rotate-left"></i> Hoạt động gần đây</h3>
-                    </div>
-                    <div id="history-list" class="history-list-pro">
-                        <p style="color: #94a3b8; text-align: center; padding: 20px;">Chưa có lịch sử làm bài.</p>
-                    </div>
-                </section>
-            </div>
+    <section class="view" data-panel="fees" hidden>
+      <div class="page-title"><p class="kicker">Thanh toán</p><h1>Quản lý Học phí</h1><p>Theo dõi chi tiết học phí và lịch sử thanh toán.</p></div>
+      <div class="two-col"><div class="stack"><article class="card invoice"><div class="row"><div><small>Kỳ thanh toán</small><h2>Tháng 10/2024</h2><p>Hạn nộp: Ngày 15/10/2024</p></div><span class="chip danger">Chưa thanh toán</span></div><div class="total"><span>Tổng tiền cần thanh toán</span><b>2.400.000đ</b></div><div class="invoice-line"><span>Toán Đại số · 8 buổi</span><b>1.600.000đ</b></div><div class="invoice-line"><span>Hóa học · 4 buổi</span><b>800.000đ</b></div></article><article class="card payments"><div class="section-head"><h2>Lịch sử thanh toán</h2><button>Xem tất cả</button></div><div><i class="green fa-solid fa-check"></i><span><b>Tháng 09/2024</b><small>Thanh toán ngày 02/09/2024</small></span><strong>2.400.000đ</strong></div><div><i class="green fa-solid fa-check"></i><span><b>Tháng 08/2024</b><small>Thanh toán ngày 03/08/2024</small></span><strong>2.700.000đ</strong></div></article></div><aside class="card qr"><p class="kicker">Thanh toán nhanh qua VietQR</p><h2>Quét mã QR để thanh toán</h2><i class="fa-solid fa-qrcode"></i><div><small>Chủ tài khoản</small><b>NGUYEN MANH TRUONG</b><small>Số tài khoản</small><b>1903 456 789 012</b><small>Nội dung</small><b id="payment-ref">HP THANG10</b></div><p><i class="fa-solid fa-circle-info"></i> Mã chỉ minh họa. Hệ thống không tự thực hiện giao dịch.</p></aside></div>
+    </section>
 
-        </div>
-    </main>
+    <section class="view" data-panel="notifications" hidden>
+      <div class="hero-title"><div class="page-title"><p class="kicker">Cập nhật</p><h1>Trung tâm Thông báo</h1><p>Không bỏ lỡ lịch học, bài tập và kết quả mới.</p></div><button class="btn ghost" id="read-all"><i class="fa-regular fa-circle-check"></i><span class="desktop">Đánh dấu đã đọc</span></button></div>
+      <div class="two-col"><div><div class="filters"><button class="active" data-notice-filter="all">Tất cả</button><button data-notice-filter="assignment">Bài tập</button><button data-notice-filter="result">Kết quả</button><button data-notice-filter="fee">Học phí</button></div><div class="notification-list">
+        <article class="card notification unread" data-notice="assignment"><i class="blue fa-regular fa-calendar"></i><div><small>Bài tập mới · 10 phút trước</small><h2>Gia sư Toán đã giao bài tập về nhà tuần 4</h2><p>Vui lòng hoàn thành các bài tập phần Đại số tuyến tính trước buổi học tới.</p><button data-view="assignments">Xem chi tiết</button></div></article>
+        <article class="card notification" data-notice="result"><i class="amber fa-solid fa-medal"></i><div><small>Kết quả kiểm tra · Hôm qua, 14:30</small><h2>Đã có kết quả bài kiểm tra Tiếng Anh giữa kỳ</h2><p>Em đã đạt điểm xuất sắc 9.5/10. Cố gắng phát huy nhé!</p></div></article>
+        <article class="card notification" data-notice="fee"><i class="red fa-regular fa-credit-card"></i><div><small>Học phí · 2 ngày trước</small><h2>Nhắc nhở thanh toán học phí tháng 10</h2><p>Vui lòng hoàn tất thanh toán học phí tháng 10 trước ngày 05/11.</p><button data-view="fees">Thanh toán ngay</button></div></article>
+        <article class="card notification" data-notice="schedule"><i class="gray fa-regular fa-calendar-check"></i><div><small>Thay đổi lịch · 3 ngày trước</small><h2>Dời lịch học môn Lý</h2><p>Buổi học ngày mai được dời sang thứ Bảy lúc 18:00.</p></div></article>
+      </div></div><aside class="card settings"><h2>Cài đặt nhận thông báo</h2><label><span><b>Thông báo trên ứng dụng</b><small>Nhận thông báo ngay khi có cập nhật</small></span><input data-setting="push" type="checkbox" checked><i></i></label><label><span><b>Thông báo qua Zalo</b><small>Gửi tin nhắn lịch học và kết quả</small></span><input data-setting="zalo" type="checkbox" checked><i></i></label><label><span><b>Thông báo qua Email</b><small>Gửi báo cáo học tập và hóa đơn</small></span><input data-setting="email" type="checkbox"><i></i></label></aside></div>
+    </section>
+  </main>
 
-    <script src="../assets/js/common.js"></script>
-    <script>
-        let currentStudent = JSON.parse(localStorage.getItem('current_student'));
-        let progressChart = null;
-
-        async function checkAuth() {
-            if (!currentStudent) {
-                window.location.href = 'login.html';
-                return;
-            }
-            fetchProfile();
-        }
-
-        async function fetchProfile() {
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/students/profile/${currentStudent.username}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    renderDashboard(data);
-                }
-            } catch (err) { console.error(err); }
-        }
-
-        function renderDashboard(data) {
-            document.getElementById('user-name').innerText = data.fullName;
-            document.getElementById('total-quizzes').innerText = data.quizCount || 0;
-            document.getElementById('avg-score').innerText = (data.avgScore || 0).toFixed(1);
-            document.getElementById('user-rank-text').innerText = `Hạng toàn hệ thống: #${data.studentRank || '--'}`;
-            document.getElementById('profile-avatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName)}&background=a855f7&color=fff&size=100`;
-
-            // Gamification logic (XP = quizCount * 20 + avgScore * 10)
-            const quizCount = data.quizCount || 0;
-            const avgScore = data.avgScore || 0;
-            const totalXP = Math.round(quizCount * 50 + avgScore * 5);
-            const level = Math.floor(totalXP / 100) + 1;
-            const xpInLevel = totalXP % 100;
-
-            document.getElementById('total-xp').innerText = totalXP;
-            document.getElementById('user-level').innerText = level;
-            document.getElementById('xp-val').innerText = `${xpInLevel}/100 XP`;
-            document.getElementById('xp-fill').style.width = `${xpInLevel}%`;
-
-            if (data.quizHistory) {
-                try {
-                    const history = JSON.parse(data.quizHistory);
-                    if (history.length > 0) {
-                        document.getElementById('btn-analyze').style.display = 'inline-block';
-                        renderHistory(history);
-                        initChart(history);
-                    }
-                } catch(e) { console.error("History parse error", e); }
-            }
-            fetchLeaderboard();
-        }
-
-        function renderHistory(history) {
-            const list = document.getElementById('history-list');
-            list.innerHTML = '';
-            history.slice(-5).reverse().forEach(h => {
-                const date = new Date(h.date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
-                const item = document.createElement('div');
-                item.className = 'history-item-pro';
-                item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="background: rgba(168, 85, 247, 0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--portal-primary);">
-                            <i class="fa-solid fa-file-invoice"></i>
-                        </div>
-                        <div>
-                            <div style="font-weight: 600; font-size: 0.95rem;">${h.examTitle}</div>
-                            <div style="font-size: 0.75rem; color: #94a3b8;">${date}</div>
-                        </div>
-                    </div>
-                    <div class="score-tag">${h.score}</div>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        async function fetchLeaderboard() {
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/students/leaderboard`);
-                if (response.ok) {
-                    const top = await response.json();
-                    const tbody = document.getElementById('leaderboard-body');
-                    tbody.innerHTML = '';
-                    top.forEach((s, i) => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td><div class="rank-glow rank-${i+1}">${i+1}</div></td>
-                            <td>
-                                <div style="font-weight: 600;">${s.fullName}</div>
-                            </td>
-                            <td><strong style="color: var(--portal-primary);">${s.avgScore.toFixed(1)}</strong></td>
-                            <td>${s.quizCount}</td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                }
-            } catch(e) {}
-        }
-
-        function initChart(history) {
-            const ctx = document.getElementById('progressChart').getContext('2d');
-            const recent = history.slice(-7);
-            const scores = recent.map(h => h.score);
-            const labels = recent.map((_, i) => i + 1);
-
-            if (progressChart) progressChart.destroy();
-            
-            const gradient = ctx.createLinearGradient(0, 0, 0, 150);
-            gradient.addColorStop(0, 'rgba(168, 85, 247, 0.3)');
-            gradient.addColorStop(1, 'rgba(168, 85, 247, 0)');
-
-            progressChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: scores,
-                        borderColor: '#a855f7',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: '#a855f7',
-                        pointHoverRadius: 6,
-                        tension: 0.4,
-                        fill: true,
-                        backgroundColor: gradient
-                    }]
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { display: false, min: 0, max: 10 },
-                        x: { display: false }
-                    }
-                }
-            });
-        }
-
-        async function analyzePath() {
-            const content = document.getElementById('ai-advice-content');
-            const btn = document.getElementById('btn-analyze');
-            content.innerHTML = '<div style="display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-spinner fa-spin"></i> AI đang phân tích dữ liệu học tập của bạn...</div>';
-            btn.disabled = true;
-
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/chemistry/solve`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: `Analyze my student profile. Average Score: ${currentStudent.avgScore}. Quiz count: ${currentStudent.quizCount}. What is my learning path and career advice in Vietnam? Give a short, encouraging summary in Vietnamese.` })
-                });
-                const data = await response.json();
-                content.innerHTML = `<div style="animation: fadeIn 0.5s ease-out;">${data.explanation}</div>`;
-                
-                // Add confetti for analysis completion
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#a855f7', '#d946ef']
-                });
-            } catch (e) { 
-                content.innerText = "Xin lỗi, hiện tại không thể kết nối với trí tuệ nhân tạo. Vui lòng thử lại sau."; 
-            } finally {
-                btn.disabled = false;
-            }
-        }
-
-
-        checkAuth();
-    </script>
+  <nav class="bottom-nav"><button class="active" data-view="overview"><i class="fa-solid fa-table-cells-large"></i><span>Tổng quan</span></button><button data-view="schedule"><i class="fa-regular fa-calendar"></i><span>Lịch học</span></button><button data-view="assignments"><i class="fa-regular fa-clipboard"></i><span>Bài tập</span></button><a class="exam-bottom-link" href="quiz.html"><i class="fa-regular fa-file-lines"></i><span>Thi thử</span></a><button data-view="notifications"><i class="fa-regular fa-bell"></i><span>Thông báo</span></button><button data-view="report"><i class="fa-regular fa-user"></i><span>Cá nhân</span></button></nav>
+  <div class="toast" id="toast" hidden></div>
 </body>
 </html>
-

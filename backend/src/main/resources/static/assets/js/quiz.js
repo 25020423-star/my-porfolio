@@ -1,210 +1,29 @@
-let exams = [];
-let currentExam = null;
-let currentQuestionIndex = 0;
-let score = 0;
-let userAnswers = [];
-let timer;
-let timeLeft = 0;
-
-const startScreen = document.getElementById('start-screen');
-const quizScreen = document.getElementById('quiz-screen');
-const resultScreen = document.getElementById('result-screen');
-const examSelectionList = document.getElementById('exam-selection-list');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options-container');
-const questionCount = document.getElementById('question-count');
-const progressFill = document.getElementById('progress-fill');
-const nextBtn = document.getElementById('next-btn');
-const prevBtn = document.getElementById('prev-btn');
-const submitBtn = document.getElementById('submit-btn');
-const timerDisplay = document.getElementById('timer');
-
-// Initialize Exam Selection
-async function init() {
-    try {
-        const res = await fetch(`${API_CONFIG.BASE_URL}/api/exams`);
-        exams = await res.json();
-        exams.forEach(e => { if (!e.questions) e.questions = []; });
-    } catch (err) {
-        console.error('Lỗi tải đề thi:', err);
-        exams = [];
-    }
-
-    examSelectionList.innerHTML = '';
-
-    if (exams.length === 0) {
-        examSelectionList.innerHTML = '<p style="color:#94a3b8; text-align:center;">Chưa có đề thi nào. Admin hãy tạo đề thi trước!</p>';
-        return;
-    }
-
-    exams.forEach(exam => {
-        const card = document.createElement('div');
-        card.className = 'exam-card-pro';
-        card.innerHTML = `
-            <div class="exam-icon">
-                <i class="fa-solid fa-file-lines"></i>
-            </div>
-            <h4 class="exam-title-pro">${exam.title}</h4>
-            <div class="exam-meta-pro">
-                <div class="meta-item"><i class="fa-solid fa-clock"></i> ${exam.time} phút</div>
-                <div class="meta-item"><i class="fa-solid fa-circle-question"></i> ${exam.questions.length} câu hỏi</div>
-            </div>
-            <button class="btn-start-exam">
-                BẮT ĐẦU THI <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        `;
-        card.onclick = () => startExam(exam.id);
-        examSelectionList.appendChild(card);
-    });
-}
-
-function startExam(id) {
-    currentExam = exams.find(e => e.id === id);
-    if (!currentExam || currentExam.questions.length === 0) {
-        alert("Đề thi này chưa có câu hỏi!");
-        return;
-    }
-    
-    currentQuestionIndex = 0;
-    score = 0;
-    userAnswers = new Array(currentExam.questions.length).fill(null);
-    timeLeft = currentExam.time * 60;
-    
-    startScreen.style.display = 'none';
-    quizScreen.style.display = 'block';
-    
-    loadQuestion();
-    startTimer();
-}
-
-function loadQuestion() {
-    const q = currentExam.questions[currentQuestionIndex];
-    questionText.innerText = q.question;
-    questionCount.innerText = `Câu hỏi ${currentQuestionIndex + 1} / ${currentExam.questions.length}`;
-    progressFill.style.width = `${((currentQuestionIndex + 1) / currentExam.questions.length) * 100}%`;
-    
-    optionsContainer.innerHTML = '';
-    q.options.forEach((option, index) => {
-        const div = document.createElement('div');
-        div.className = `option-item ${userAnswers[currentQuestionIndex] === index ? 'selected' : ''}`;
-        div.innerHTML = `
-            <span>${String.fromCharCode(65 + index)}</span>
-            <span>${option}</span>
-        `;
-        div.onclick = () => selectOption(index);
-        optionsContainer.appendChild(div);
-    });
-
-    prevBtn.disabled = currentQuestionIndex === 0;
-    if (currentQuestionIndex === currentExam.questions.length - 1) {
-        nextBtn.style.display = 'none';
-        submitBtn.style.display = 'block';
-    } else {
-        nextBtn.style.display = 'block';
-        submitBtn.style.display = 'none';
-    }
-}
-
-function selectOption(index) {
-    userAnswers[currentQuestionIndex] = index;
-    const options = document.querySelectorAll('.option-item');
-    options.forEach(opt => opt.classList.remove('selected'));
-    options[index].classList.add('selected');
-}
-
-function navigate(direction) {
-    currentQuestionIndex += direction;
-    loadQuestion();
-}
-
-function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) endQuiz();
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    const min = Math.floor(timeLeft / 60);
-    const sec = timeLeft % 60;
-    timerDisplay.innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-    if (timeLeft < 60) timerDisplay.style.color = '#ef4444';
-}
-
-function endQuiz() {
-    clearInterval(timer);
-    quizScreen.style.display = 'none';
-    resultScreen.style.display = 'block';
-    
-    score = 0;
-    userAnswers.forEach((ans, i) => {
-        if (ans === currentExam.questions[i].correct) score++;
-    });
-
-    const finalScore = (score / currentExam.questions.length * 10).toFixed(1);
-    document.getElementById('final-score').innerText = finalScore;
-    document.querySelector('.score-circle span').innerText = `/ 10`;
-    
-    // Save to student profile (LocalStorage only)
-    const student = JSON.parse(localStorage.getItem('current_student'));
-    if (student) {
-        if (!student.history) student.history = [];
-        student.history.push({
-            examTitle: currentExam.title,
-            score: parseFloat(finalScore),
-            date: new Date().toISOString()
-        });
-        localStorage.setItem('current_student', JSON.stringify(student));
-        
-        // Also update the general student_profile for backward compatibility if needed
-        const profile = JSON.parse(localStorage.getItem('student_profile')) || { name: student.fullName, history: [], totalPoints: 0 };
-        profile.history.push({
-            examTitle: currentExam.title,
-            score: parseFloat(finalScore),
-            date: new Date().toISOString()
-        });
-        localStorage.setItem('student_profile', JSON.stringify(profile));
-    }
-
-    showReview();
-}
-
-function showReview() {
-    const reviewContainer = document.getElementById('answer-review');
-    reviewContainer.innerHTML = '';
-    currentExam.questions.forEach((q, i) => {
-        const isCorrect = userAnswers[i] === q.correct;
-        const div = document.createElement('div');
-        div.className = `review-item ${isCorrect ? 'correct' : ''}`;
-        div.innerHTML = `
-            <h4 class="mb-2">Câu ${i+1}: ${q.question}</h4>
-            <p><strong>Bạn chọn:</strong> ${userAnswers[i] !== null ? q.options[userAnswers[i]] : 'Bỏ trống'}</p>
-            <p><strong>Đáp án đúng:</strong> ${q.options[q.correct]}</p>
-            <p class="text-muted mt-2"><i>${q.explanation}</i></p>
-        `;
-        reviewContainer.appendChild(div);
-    });
-}
-
-nextBtn.addEventListener('click', () => navigate(1));
-prevBtn.addEventListener('click', () => navigate(-1));
-submitBtn.addEventListener('click', endQuiz);
-
-document.addEventListener('DOMContentLoaded', () => {
-    const isStudent = localStorage.getItem('current_student') !== null;
-    const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-    
-    const authScreen = document.getElementById('auth-required-screen');
-    const mainContent = document.getElementById('quiz-main-content');
-    
-    if (isStudent || isAdmin) {
-        if (authScreen) authScreen.style.display = 'none';
-        if (mainContent) mainContent.style.display = 'block';
-        init();
-    } else {
-        if (authScreen) authScreen.style.display = 'flex';
-        if (mainContent) mainContent.style.display = 'none';
-    }
-});
+(()=>{
+"use strict";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const safe=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+let exams=[],shown=[],exam=null,index=0,answers=[],flags=new Set(),timeLeft=0,totalTime=0,timer=null,finished=false,toastTimer;
+const student=(()=>{try{return JSON.parse(localStorage.getItem("current_student"))}catch{return null}})();
+let admin=false;
+function toast(message){const el=$("#quiz-toast");el.textContent=message;el.hidden=false;requestAnimationFrame(()=>el.classList.add("show"));clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.classList.remove("show");setTimeout(()=>el.hidden=true,220)},2600)}
+function avatar(name){return "https://ui-avatars.com/api/?name="+encodeURIComponent(name||"Học sinh")+"&background=f1e3d4&color=713b10&bold=true"}
+function setupIdentity(){const name=student?.fullName||student?.username||(admin?"Quản trị viên":"Học sinh");$("#candidate-name").textContent=name;$("#candidate-code").textContent=admin?"Quản trị viên":"Mã: "+(student?.id||student?.username||"--");$("#candidate-avatar").src=student?.avatar||avatar(name)}
+async function init(){try{admin=(await ApiClient.get("/api/auth/admin/me")).authenticated}catch{admin=false}if(!student&&!admin){$("#auth-required-screen").hidden=false;return}$("#start-screen").hidden=false;setupIdentity();try{const response=await fetch(API_CONFIG.BASE_URL+"/api/exams");if(!response.ok)throw Error(response.status);exams=await response.json();exams.forEach(item=>item.questions=Array.isArray(item.questions)?item.questions:[])}catch(error){console.error("Lỗi tải đề thi",error);exams=[]}filterExams()}
+function filterExams(){const query=$("#exam-search").value.trim().toLowerCase(),sort=$("#exam-sort").value;shown=exams.filter(item=>String(item.title).toLowerCase().includes(query));if(sort==="short")shown.sort((a,b)=>a.time-b.time);if(sort==="questions")shown.sort((a,b)=>b.questions.length-a.questions.length);renderExams()}
+function renderExams(){const box=$("#exam-selection-list");if(!shown.length){box.innerHTML='<div class="empty"><i class="fa-regular fa-folder-open"></i><p>Chưa có đề thi phù hợp. Quản trị viên có thể tạo đề trong Ngân hàng câu hỏi.</p></div>';return}box.innerHTML=shown.map(item=>'<article class="exam-card"><span><i class="fa-regular fa-file-lines"></i></span><h2>'+safe(item.title)+'</h2><p>Đề thi trắc nghiệm trực tuyến, kết quả được chấm ngay sau khi nộp.</p><div class="exam-card-meta"><span><i class="fa-regular fa-clock"></i> '+(Number(item.time)||15)+' phút</span><span><i class="fa-regular fa-circle-question"></i> '+item.questions.length+' câu hỏi</span></div><button class="button primary" data-start="'+item.id+'">Bắt đầu thi <i class="fa-solid fa-arrow-right"></i></button></article>').join("")}
+function start(id){exam=exams.find(item=>String(item.id)===String(id));if(!exam?.questions.length){toast("Đề thi này chưa có câu hỏi.");return}index=0;answers=Array(exam.questions.length).fill(null);flags=new Set();finished=false;totalTime=Math.max(1,Number(exam.time)||15)*60;timeLeft=totalTime;$("#start-screen").hidden=true;$("#result-screen").hidden=true;$("#quiz-screen").hidden=false;$("#header-title").textContent=exam.title;$("#header-meta").textContent=exam.questions.length+" câu hỏi · "+exam.time+" phút";renderQuestion();startTimer()}
+function renderQuestion(){const question=exam.questions[index];$("#question-count").textContent="Câu "+(index+1);$("#question-text").textContent=question.question;$("#progress-fill").style.width=(index+1)/exam.questions.length*100+"%";$("#options-container").innerHTML=(question.options||[]).map((option,i)=>'<button class="option '+(answers[index]===i?"selected":"")+'" data-option="'+i+'"><span>'+String.fromCharCode(65+i)+'</span><b>'+safe(option)+'</b></button>').join("");$("#prev-btn").disabled=index===0;$("#next-btn").hidden=index===exam.questions.length-1;$("#submit-btn").hidden=index!==exam.questions.length-1;$("#flag-btn").classList.toggle("active",flags.has(index));renderPalette()}
+function renderPalette(){$("#palette-count").textContent=exam.questions.length+" câu";$("#question-palette").innerHTML=exam.questions.map((_,i)=>'<button data-jump="'+i+'" class="'+(answers[i]!==null?"answered ":"")+(flags.has(i)?"flagged ":"")+(i===index?"current":"")+'">'+(i+1)+'</button>').join("")}
+function select(i){answers[index]=i;renderQuestion()}
+function move(direction){const next=index+direction;if(next>=0&&next<exam.questions.length){index=next;renderQuestion()}}
+function startTimer(){clearInterval(timer);updateTimer();timer=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0)finish()},1000)}
+function updateTimer(){const minutes=Math.floor(Math.max(0,timeLeft)/60),seconds=Math.max(0,timeLeft)%60;$("#timer").textContent=String(minutes).padStart(2,"0")+":"+String(seconds).padStart(2,"0");$("#timer-bar").style.width=Math.max(0,timeLeft/totalTime*100)+"%";$("#timer").style.color=timeLeft<60?"#dc2626":""}
+function askSubmit(){const missing=answers.filter(answer=>answer===null).length;$("#confirm-copy").textContent=missing?"Bạn còn "+missing+" câu chưa trả lời. Bạn vẫn muốn nộp bài?":"Bạn đã hoàn thành tất cả câu hỏi. Xác nhận nộp bài?";$("#submit-confirm").hidden=false}
+async function finish(){if(finished)return;finished=true;clearInterval(timer);$("#submit-confirm").hidden=true;$("#quiz-screen").hidden=true;$("#result-screen").hidden=false;const correct=answers.reduce((sum,answer,i)=>sum+(answer===exam.questions[i].correct?1:0),0),score=Number((correct/exam.questions.length*10).toFixed(1)),accuracy=Math.round(correct/exam.questions.length*100),used=totalTime-timeLeft;$("#result-title").textContent="Kết quả bài thi: "+exam.title;$("#result-date").textContent="Hoàn thành lúc "+new Date().toLocaleString("vi-VN");$("#final-score").textContent=score.toFixed(1);$("#correct-count").textContent=correct;$("#total-count").textContent=exam.questions.length;$("#accuracy-label").textContent=accuracy+"% câu trả lời đúng";$("#used-time").textContent=String(Math.floor(used/60)).padStart(2,"0")+":"+String(used%60).padStart(2,"0");$("#result-message").textContent=score>=8?"Kết quả rất tốt":score>=5?"Đã hoàn thành bài thi":"Cần ôn tập thêm";setBar("skill",accuracy);setBar("apply",Math.max(0,accuracy-12));setBar("review",100-accuracy);renderReview();await saveResult(score)}
+function setBar(id,value){$("#"+id+"-label").textContent=value+"%";$("#"+id+"-bar").style.width=value+"%"}
+function renderReview(){$("#answer-review").innerHTML=exam.questions.map((question,i)=>{const ok=answers[i]===question.correct,chosen=answers[i]===null?"Bỏ trống":question.options[answers[i]],correct=question.options[question.correct];return '<article class="review-item '+(ok?"":"wrong")+'"><div class="review-question"><span class="review-status"><i class="fa-solid fa-'+(ok?"check":"xmark")+'"></i></span><div><h3>Câu '+(i+1)+": "+safe(question.question)+'</h3><p>'+safe(question.explanation||"Chưa có lời giải chi tiết.")+'</p></div></div><div class="review-answer"><div><span>Bạn chọn</span><b>'+safe(chosen)+'</b></div><div><span>Đáp án đúng</span><b>'+safe(correct)+'</b></div></div></article>'}).join("")}
+async function saveResult(score){if(!student)return;const payload={username:student.username,examTitle:exam.title,score};try{const response=await fetch(API_CONFIG.BASE_URL+"/api/students/save-quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});if(response.ok){localStorage.setItem("current_student",JSON.stringify(await response.json()));toast("Kết quả đã được lưu vào hồ sơ học tập.");return}}catch(error){console.warn("Không thể lưu kết quả lên máy chủ",error)}const cached=JSON.parse(localStorage.getItem("student_profile")||"null")||{name:student.fullName,history:[],totalPoints:0};cached.history=Array.isArray(cached.history)?cached.history:[];cached.history.push({examTitle:exam.title,score,date:new Date().toISOString()});localStorage.setItem("student_profile",JSON.stringify(cached));toast("Đang ngoại tuyến: kết quả đã được lưu trên thiết bị.")}
+document.addEventListener("click",event=>{const startButton=event.target.closest("[data-start]");if(startButton)start(startButton.dataset.start);const option=event.target.closest("[data-option]");if(option)select(Number(option.dataset.option));const jump=event.target.closest("[data-jump]");if(jump){index=Number(jump.dataset.jump);renderQuestion()}});
+$("#exam-search").oninput=filterExams;$("#exam-sort").onchange=filterExams;$("#prev-btn").onclick=()=>move(-1);$("#next-btn").onclick=()=>move(1);$("#flag-btn").onclick=()=>{flags.has(index)?flags.delete(index):flags.add(index);renderQuestion()};$("#submit-btn").onclick=askSubmit;$("#submit-side").onclick=askSubmit;$("#cancel-submit").onclick=()=>$("#submit-confirm").hidden=true;$("#confirm-submit").onclick=finish;$("#retry-btn").onclick=()=>exam&&start(exam.id);$("#toggle-review").onclick=()=>{const box=$("#answer-review");box.hidden=!box.hidden;$("#toggle-review").textContent=box.hidden?"Xem chi tiết":"Thu gọn"};$("#share-result").onclick=async()=>{const text="Mình đạt "+$("#final-score").textContent+"/10 trong bài "+exam.title;try{if(navigator.share)await navigator.share({title:"Kết quả thi",text});else await navigator.clipboard.writeText(text);toast("Đã sao chép kết quả.")}catch{}};
+init()
+})();

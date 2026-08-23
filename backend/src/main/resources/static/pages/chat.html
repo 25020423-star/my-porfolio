@@ -38,7 +38,7 @@
             position: absolute;
             width: 150%; height: 150%;
             top: -25%; left: -25%;
-            background-image: 
+            background-image:
                 radial-gradient(at 10% 20%, rgba(255, 77, 77, 0.15) 0px, transparent 50%),
                 radial-gradient(at 90% 10%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
                 radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
@@ -567,7 +567,7 @@
         <div class="auth-card">
             <div class="auth-logo">Love Chat Pro ❤️</div>
             <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 25px;">Xác thực danh tính truy cập trò chuyện</p>
-            
+
             <div class="auth-user-selector">
                 <button type="button" class="auth-user-btn" id="btn-user-male" onclick="selectAuthRole('male')">
                     <img id="auth-img-male" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Male">
@@ -578,7 +578,7 @@
                     <span id="auth-name-female">Anh Thư</span>
                 </button>
             </div>
-            
+
             <div class="auth-input-group">
                 <label>Mật mã bảo mật</label>
                 <div class="auth-input-wrapper">
@@ -586,9 +586,9 @@
                     <input type="password" id="auth-pass" class="auth-input" placeholder="Nhập mật mã..." onkeypress="handleAuthKey(event)">
                 </div>
             </div>
-            
+
             <button class="auth-btn-submit" onclick="submitAuth()">Xác nhận danh tính</button>
-            
+
             <div id="auth-error-msg" class="auth-error">
                 <i class="fa-solid fa-circle-exclamation"></i> Mật mã không chính xác hoặc chưa chọn vai!
             </div>
@@ -612,7 +612,7 @@
                     <p style="margin:0; font-size:0.75rem; color:#10b981;">● Đang trực tuyến</p>
                 </div>
             </div>
-            
+
             <div style="margin-top:auto; padding-top: 20px; border-top: 1px solid var(--chat-border);">
                 <a href="love.html" style="color:#94a3b8; text-decoration:none; display:flex; align-items:center; gap:10px;">
                     <i class="fa-solid fa-arrow-left"></i> Về bảng điều khiển
@@ -671,7 +671,7 @@
             <img id="partner-avatar-right" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" class="profile-img-large">
             <h3 id="info-name">Nguyễn Thị Anh Thư</h3>
             <p style="color:#94a3b8; font-size:0.9rem; margin-top: 5px;">"Hạnh phúc là khi có anh bên cạnh" 🌸</p>
-            
+
             <div style="margin-top:40px; text-align:left;">
                 <h4 style="font-size:0.8rem; text-transform:uppercase; color:#94a3b8; letter-spacing:1px;">Ảnh đã chia sẻ</h4>
                 <div class="media-grid">
@@ -699,11 +699,12 @@
     </div>
 
     <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/api-client.js"></script>
     <script>
         const API_URL = `${API_CONFIG.BASE_URL}/api/chat`;
         const chatArea = document.getElementById('chat-messages');
         const msgInput = document.getElementById('msg-input');
-        
+
         // Auto config names and avatars from localStorage based on role
         const loveConfig = JSON.parse(localStorage.getItem('inLoveConfig')) || {
             nameMale: "Hoàng Mạnh Trường",
@@ -717,7 +718,7 @@
         const authNameFemale = document.getElementById('auth-name-female');
         const authImgMale = document.getElementById('auth-img-male');
         const authImgFemale = document.getElementById('auth-img-female');
-        
+
         if (authNameMale) authNameMale.innerText = loveConfig.nameMale || "Mạnh Trường";
         if (authNameFemale) authNameFemale.innerText = loveConfig.nameFemale || "Anh Thư";
         if (authImgMale) authImgMale.src = loveConfig.imgMale;
@@ -741,7 +742,7 @@
             selectedRole = role;
             document.getElementById('btn-user-male').classList.remove('selected');
             document.getElementById('btn-user-female').classList.remove('selected');
-            
+
             if (role === 'male') {
                 document.getElementById('btn-user-male').classList.add('selected');
             } else if (role === 'female') {
@@ -845,7 +846,7 @@
         } else {
             const authModal = document.getElementById('auth-modal');
             if (authModal) authModal.style.display = 'none';
-            
+
             // Set details
             document.getElementById('chat-partner-name').innerText = PARTNER_NAME;
             document.getElementById('info-name').innerText = PARTNER_NAME;
@@ -869,7 +870,7 @@
                     const item = img.closest('.media-item');
                     if (item) {
                         item.style.display = 'none';
-                        
+
                         // Check if all items in media grid are hidden
                         const mediaGrid = document.querySelector('.media-grid');
                         if (mediaGrid) {
@@ -882,9 +883,9 @@
                         }
                     }
                 };
-                
+
                 img.onerror = handleImageError;
-                
+
                 // If the src is empty, placeholder, or already broken
                 if (!img.getAttribute('src') || img.getAttribute('src').trim() === '' || img.getAttribute('src').includes('placeholder')) {
                     handleImageError();
@@ -897,7 +898,7 @@
                 const response = await fetch(API_URL);
                 if (response.ok) {
                     const data = await response.json();
-                    
+
                     // Check if content has changed (length or message data changes like reactions)
                     const hasChanged = data.length !== messages.length || data.some((m, idx) => {
                         const lm = messages[idx];
@@ -910,9 +911,9 @@
                     if (hasChanged) {
                         // Map incoming messages to preserve local statuses
                         messages = data.map((m, idx) => {
-                            const localMsg = messages.find(lm => 
-                                lm.sender === m.sender && 
-                                lm.text === m.text && 
+                            const localMsg = messages.find(lm =>
+                                lm.sender === m.sender &&
+                                lm.text === m.text &&
                                 Math.abs(new Date(lm.timestamp) - new Date(m.timestamp)) < 15000
                             );
                             return {
@@ -935,11 +936,11 @@
                 const isSent = m.sender === MY_NAME;
                 const time = new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const msgId = m.id || `${m.sender}_${m.text}_${new Date(m.timestamp).getTime()}`;
-                
+
                 // Get reaction
                 const reaction = m.reaction || null;
                 const reactionHtml = reaction ? `<div class="msg-reactions" onclick="reactToMessage('${msgId}', '${reaction}')">${reaction}</div>` : '';
-                
+
                 // Get status html
                 let statusHtml = '';
                 if (isSent) {
@@ -981,7 +982,7 @@
 
             const msgId = `loc_${Date.now()}`;
             const newMsg = { id: msgId, sender: MY_NAME, text: text, timestamp: new Date(), status: 'sent', reaction: null };
-            
+
             // Optimistic update
             messages.push(newMsg);
             renderMessages();
@@ -1042,7 +1043,7 @@
 
         function clearHistory() {
             if (!confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử trò chuyện? Hành động này không thể hoàn tác.")) return;
-            
+
             // Fallback clear locally first
             messages = [];
             renderMessages();

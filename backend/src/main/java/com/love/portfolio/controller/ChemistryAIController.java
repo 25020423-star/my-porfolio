@@ -22,7 +22,6 @@ public class ChemistryAIController {
     @PostMapping("/solve-image")
     public Object solveWithImage(@RequestParam(value = "image", required = false) org.springframework.web.multipart.MultipartFile image,
                                  @RequestParam(value = "prompt", required = false) String prompt) {
-        System.out.println("DEBUG: YÊU CẦU GIẢI BÀI TẬP ĐÃ TỚI SERVER!");
         try {
             byte[] bytes = (image != null) ? image.getBytes() : null;
             return chemistryAIService.solveChemistryWithImage(bytes, prompt);

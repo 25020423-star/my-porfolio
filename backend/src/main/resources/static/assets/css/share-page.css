@@ -1,0 +1,13 @@
+.share-hero { text-align: center; padding: 3rem 1rem 1.5rem; }
+        .personal-hero { padding: 2.5rem 1rem 3.5rem; text-align: center; }
+        .personal-hero .page-title { display: block; left: auto; transform: none; margin: .45rem auto 1.25rem; }
+        .personal-hero p { max-width: 760px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; line-height: 1.75; }
+        .about-page .knowledge-share { margin-top: 6rem; padding-top: 5rem; }
+        .share-hero .page-title, .knowledge-share .page-title { left: auto; transform: none; display: block; margin: .3rem auto 1rem; }
+        .share-kicker { color: var(--primary-color); font-size: .75rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+        .share-section { width: 100%; box-sizing: border-box; margin: 2.5rem auto 4rem; scroll-margin-top: 120px; }
+        .knowledge-share { padding-top: 1rem; border-top: 1px solid var(--glass-border); }
+        @media (max-width: 720px) {
+            .share-hero { padding-top: 1rem; }
+            .share-section { margin-top: 1.5rem; }
+        }

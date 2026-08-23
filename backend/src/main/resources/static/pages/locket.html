@@ -19,7 +19,7 @@
 
         body {
             background-color: var(--locket-bg);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 20% 20%, rgba(255, 204, 0, 0.05) 0%, transparent 40%),
                 radial-gradient(circle at 80% 80%, rgba(255, 204, 0, 0.05) 0%, transparent 40%);
             color: white;
@@ -332,7 +332,7 @@
                 <i class="fa-solid fa-camera-retro"></i>
                 <h2>KHOẢNH KHẮC MỚI</h2>
             </div>
-            
+
             <div class="upload-main">
                 <!-- Image Section -->
                 <div class="upload-left">
@@ -340,7 +340,7 @@
                         <!-- Camera View -->
                         <video id="camera-video" autoplay playsinline style="display: none; width: 100%; height: 100%; object-fit: cover;"></video>
                         <canvas id="camera-canvas" style="display: none;"></canvas>
-                        
+
                         <!-- Empty State / Result Preview -->
                         <div class="empty-state" id="upload-empty-state" onclick="document.getElementById('locket-file').click()">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -589,7 +589,7 @@
                 <i class="fa-solid fa-sliders"></i>
                 <h2>TÙY CHỈNH LOCKET</h2>
             </div>
-            
+
             <div class="settings-scroll">
                 <!-- Nickname Section -->
                 <div class="setting-group">
@@ -738,6 +738,7 @@
     </style>
 
     <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/api-client.js"></script>
     <script>
         const API_URL = `${API_CONFIG.BASE_URL}/api/locket`;
         let moments = [];
@@ -759,10 +760,10 @@
         function renderLocket() {
             const grid = document.getElementById('history-grid');
             const countLabel = document.getElementById('moment-count');
-            
+
             if (moments.length > 0) {
                 updateMainView(currentIndex);
-                
+
                 grid.innerHTML = moments.slice().reverse().map((m, idx) => `
                     <div class="history-item-full" onclick="jumpToMoment(${moments.length - 1 - idx})">
                         <img src="${API_CONFIG.BASE_URL + m.imageUrl}">
@@ -785,12 +786,12 @@
             setTimeout(() => {
                 img.src = API_CONFIG.BASE_URL + m.imageUrl;
                 caption.innerText = m.caption || "Khoảnh khắc không lời ❤️";
-                
+
                 const date = new Date(m.timestamp);
-                time.innerText = date.toLocaleString('vi-VN', { 
+                time.innerText = date.toLocaleString('vi-VN', {
                     hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric'
                 }).toUpperCase();
-                
+
                 img.style.opacity = '1';
             }, 300);
         }
@@ -802,7 +803,7 @@
         function sendReaction() {
             const container = document.querySelector('.main-display-wrapper');
             const btn = document.querySelector('.big-heart-btn');
-            
+
             for (let i = 0; i < 8; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'floating-heart';
@@ -888,12 +889,12 @@
             previewImg.style.display = 'block';
             video.style.display = 'none';
             document.getElementById('btn-snap').style.display = 'none';
-            
+
             // Store as blob for upload
             canvas.toBlob((blob) => {
                 capturedFile = new File([blob], "camera_capture.jpg", { type: "image/jpeg" });
             }, 'image/jpeg');
-            
+
             stopCamera();
         }
 
@@ -907,7 +908,7 @@
                 img.style.display = 'block';
                 document.querySelector('.empty-state').style.display = 'none';
                 document.getElementById('upload-preview').style.borderStyle = 'solid';
-                
+
                 // Hide camera if it was on
                 document.getElementById('camera-video').style.display = 'none';
                 document.getElementById('btn-snap').style.display = 'none';
@@ -921,7 +922,7 @@
         async function sendLocket() {
             const captionInput = document.getElementById('locket-caption');
             const btn = document.getElementById('send-btn');
-            
+
             // Use capturedFile (either from upload or camera)
             if (!capturedFile) return alert("Hãy chọn ảnh hoặc chụp một tấm thật tươi nhé!");
 
@@ -954,8 +955,8 @@
             }
         }
 
-        function closeUpload() { 
-            document.getElementById('upload-modal').style.display = 'none'; 
+        function closeUpload() {
+            document.getElementById('upload-modal').style.display = 'none';
             stopCamera();
             isCameraMode = false;
             document.getElementById('btn-camera-toggle').innerHTML = '<i class="fa-solid fa-camera"></i>';
@@ -965,18 +966,18 @@
 
         // Modals
         function openUpload() { document.getElementById('upload-modal').style.display = 'flex'; }
-        
+
         function openSettings() {
             const config = getLocketConfig();
             document.getElementById('setting-nickname').value = config.nickname;
             document.getElementById('setting-grid-cols').value = config.gridCols || "2";
             document.getElementById('setting-music').checked = config.musicEnabled !== false;
-            
+
             // Set active color dot
             document.querySelectorAll('.color-dot').forEach(dot => {
                 dot.classList.toggle('active', dot.style.backgroundColor === config.accentColor);
             });
-            
+
             document.getElementById('settings-modal').style.display = 'flex';
         }
 
@@ -1008,11 +1009,11 @@
         }
 
         function getLocketConfig() {
-            return JSON.parse(localStorage.getItem('locketConfig')) || { 
-                nickname: "Béo ❤️", 
-                accentColor: "#ffcc00", 
+            return JSON.parse(localStorage.getItem('locketConfig')) || {
+                nickname: "Béo ❤️",
+                accentColor: "#ffcc00",
                 gridCols: "2",
-                musicEnabled: true 
+                musicEnabled: true
             };
         }
 
@@ -1020,10 +1021,10 @@
             const config = getLocketConfig();
             const sendBtn = document.getElementById('send-btn');
             if (sendBtn) sendBtn.innerText = `GỬI CHO ${config.nickname.toUpperCase()} ❤️`;
-            
+
             document.documentElement.style.setProperty('--locket-yellow', config.accentColor);
             document.getElementById('history-grid').style.gridTemplateColumns = `repeat(${config.gridCols}, 1fr)`;
-            
+
             // Handle music (if you have an audio element)
             const audio = document.getElementById('bg-music');
             if (audio) {
