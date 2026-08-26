@@ -164,12 +164,21 @@ async function loadHeroImage() {
         const response = await fetch(`${API_CONFIG.BASE_URL}/api/settings/hero_image_url`);
         if (response.ok) {
             const data = await response.json();
-            if (data && data.settingValue) {
-                const heroImg = document.getElementById('hero-img');
-                if (heroImg) {
-                    heroImg.src = data.settingValue;
-                }
-            }
+            const configuredUrl = data?.settingValue?.trim();
+            const heroImg = document.getElementById('hero-img');
+            if (!configuredUrl || !heroImg) return;
+
+            // Keep the bundled image visible unless the configured replacement
+            // has actually loaded. Old database values may point at files that
+            // no longer exist after a redeploy.
+            const replacement = new Image();
+            replacement.onload = () => {
+                if (replacement.naturalWidth > 0) heroImg.src = configuredUrl;
+            };
+            replacement.onerror = () => {
+                console.warn('Configured hero image is unavailable; using bundled fallback.');
+            };
+            replacement.src = configuredUrl;
         }
     } catch (error) {
         console.error('Failed to load hero image setting:', error);

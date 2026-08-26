@@ -234,8 +234,9 @@
         margin-top:.5rem; margin-bottom:-.4rem;
     }
     </style>
+    <link rel="stylesheet" href="../assets/css/love-feature-system.css">
 </head>
-<body class="love-page-body">
+<body class="love-page-body love-feature-page feature-tracking">
 
 <!-- Widgets -->
 <div class="dark-mode-toggle" onclick="toggleDarkMode()">
@@ -693,7 +694,6 @@ function submitManual() {
 }
 
 // ── Map click mode ──
-let mapClickMode = false;
 function useMapClick() {
     document.getElementById('map-hint').style.display = 'block';
     mapClickMode = true;
@@ -854,5 +854,6 @@ window.onload = () => {
     }
 };
 </script>
+<script src="../assets/js/love-feature-system.js"></script>
 </body>
 </html>

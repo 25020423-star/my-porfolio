@@ -293,8 +293,9 @@
         }
         .action-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3); }
     </style>
+    <link rel="stylesheet" href="../assets/css/love-feature-system.css">
 </head>
-<body class="love-page-body">
+<body class="love-page-body love-feature-page feature-timeline">
     <!-- Global Widgets -->
     <div class="dark-mode-toggle" onclick="toggleDarkMode()">
         <i class="fa-solid fa-moon" id="dark-mode-icon"></i>
@@ -799,5 +800,6 @@
 
         window.onload = () => { renderTimeline(); adjustZoom(100); };
     </script>
+<script src="../assets/js/love-feature-system.js"></script>
 </body>
 </html>

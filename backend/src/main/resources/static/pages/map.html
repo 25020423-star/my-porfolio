@@ -341,9 +341,10 @@
         .add-loc-card i { font-size:2rem; }
         .add-loc-card span { font-size:.9rem; font-weight:700; }
     </style>
+    <link rel="stylesheet" href="../assets/css/love-feature-system.css">
 </head>
 
-<body class="love-page-body">
+<body class="love-page-body love-feature-page feature-map">
     <!-- ── WIDGETS ── -->
     <div class="dark-mode-toggle" onclick="toggleDarkMode()">
         <i class="fa-solid fa-moon" id="dark-mode-icon"></i>
@@ -872,5 +873,6 @@
     setTimeout(() => { map.invalidateSize(); }, 400);
     window.addEventListener('resize', () => { map.invalidateSize(); });
     </script>
+<script src="../assets/js/love-feature-system.js"></script>
 </body>
 </html>

@@ -1,171 +1,136 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hồ sơ cá nhân, hành trình, kỹ năng và góc chia sẻ của Hoàng Mạnh Trường.">
     <title>Trang Cá Nhân — Hoàng Mạnh Trường</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/share-page.css">
+    <link rel="stylesheet" href="../assets/css/share-page.css?v=20260823-personal-stitch-2">
 </head>
-
-    <body class="about-page">
-        <nav class="navbar-unified">
-            <a href="../index.html" class="nav-logo">
-                <i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span>
-            </a>
-            <ul class="nav-links-unified">
+<body class="about-page personal-page">
+    <nav class="navbar-unified" aria-label="Điều hướng chính">
+        <a href="../index.html" class="nav-logo"><i class="fa-solid fa-circle-user"></i> Mtruong<span>_dev</span></a>
+        <ul class="nav-links-unified">
             <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-            <li>
-                <a href="about.html">Tìm Hiểu Thêm ▾</a>
-                <ul class="nav-dropdown">
-                    <li><a href="about.html">Cá Nhân</a></li>
-                    <li><a href="teaching.html">Giảng Dạy</a></li>
-                    <li><a href="teaching.html#research">Nghiên Cứu</a></li>
-                    <li><a href="about.html#knowledge">Kiến Thức</a></li>
-                    <li><a href="muctieu.html">Mục Tiêu Cá Nhân</a></li>
-                </ul>
-            </li>
+            <li><a class="active" href="about.html">Cá Nhân</a></li>
+            <li><a href="teaching.html">Giảng Dạy</a></li>
+            <li><a href="muctieu.html">Mục Tiêu</a></li>
+            <li><a href="projects.html">Dự Án</a></li>
         </ul>
-            <div id="auth-controls" class="nav-auth">
-                <button class="theme-toggle" title="Chuyển chế độ Sáng/Tối">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-                <div id="guest-links"></div>
-                <div id="user-links" style="display: none; gap: 10px; align-items: center;">
-                    <span id="nav-user-name" class="user-badge"></span>
-                    <button onclick="logout()" class="logout-btn">Thoát</button>
+        <div id="auth-controls" class="nav-auth">
+            <button class="theme-toggle" type="button" title="Chuyển chế độ Sáng/Tối" aria-label="Chuyển chế độ màu"><i class="fa-solid fa-moon"></i></button>
+            <div id="guest-links"></div>
+            <div id="user-links" style="display:none;gap:10px;align-items:center"><span id="nav-user-name" class="user-badge"></span><button onclick="logout()" class="logout-btn">Thoát</button></div>
+        </div>
+    </nav>
+
+    <main class="personal-shell">
+        <section class="personal-hero" aria-labelledby="personal-title">
+            <div class="personal-intro" data-reveal>
+                <span class="personal-kicker"><i class="fa-solid fa-terminal"></i> PROFILE · KNOWLEDGE · EXPERIENCE</span>
+                <h1 id="personal-title">Trang <span>Cá Nhân</span></h1>
+                <p>Hồ sơ, hành trình học tập và làm việc của mình trong lĩnh vực công nghệ. Một góc nhỏ ghi lại kỹ năng, kinh nghiệm và niềm đam mê tạo ra các giải pháp phần mềm chất lượng.</p>
+                <div class="personal-tags" aria-label="Lĩnh vực nổi bật"><span>#Backend</span><span>#Java</span><span>#Spring</span><span>#Education</span></div>
+            </div>
+
+            <article class="profile-card" data-reveal aria-label="Hồ sơ Hoàng Mạnh Trường">
+                <div class="profile-aura" aria-hidden="true"></div>
+                <img class="profile-avatar" src="../assets/images/profile-stitch.jpg" alt="Chân dung đại diện Hoàng Mạnh Trường" width="512" height="512">
+                <h2>Hoàng Mạnh Trường</h2>
+                <p>Sinh viên UET · Java Developer</p>
+                <dl class="profile-facts">
+                    <div><dt>2+</dt><dd>Năm học tập</dd></div>
+                    <div><dt>10+</dt><dd>Dự án</dd></div>
+                    <div><dt>1K+</dt><dd>Giờ code</dd></div>
+                </dl>
+                <button class="profile-action" id="download-profile" type="button"><i class="fa-solid fa-file-arrow-down"></i> Lưu hồ sơ PDF</button>
+            </article>
+        </section>
+
+        <section class="personal-bento" aria-label="Hành trình và kỹ năng">
+            <article class="bento-card journey-card" data-reveal>
+                <div class="card-heading"><i class="fa-solid fa-timeline"></i><h2>Hành Trình</h2></div>
+                <div class="journey-line">
+                    <div class="journey-item is-current">
+                        <span class="journey-dot"></span>
+                        <p class="journey-date">2024 — Hiện tại</p>
+                        <h3>Sinh viên UET</h3>
+                        <p>Học tại Đại học Công nghệ — ĐHQGHN, tập trung Java, cấu trúc dữ liệu, cơ sở dữ liệu và kiến trúc Backend.</p>
+                        <div class="mini-tags"><span>Java</span><span>MySQL</span><span>Spring</span></div>
+                    </div>
+                    <div class="journey-item">
+                        <span class="journey-dot"></span>
+                        <p class="journey-date">Trước đó</p>
+                        <h3>THPT &amp; ĐGNL</h3>
+                        <p>Đạt 27.75 điểm khối A00 và Giải Nhì học sinh giỏi cấp Tỉnh.</p>
+                    </div>
+                </div>
+                <a class="outline-action" href="timeline.html">Xem toàn bộ hành trình <i class="fa-solid fa-arrow-right"></i></a>
+            </article>
+
+            <div class="bento-side">
+                <article class="bento-card skills-card" data-reveal>
+                    <div class="card-heading card-heading-row">
+                        <div><i class="fa-solid fa-bolt"></i><h2>Kỹ Năng Nổi Bật</h2></div>
+                        <a href="skills.html">Xem tất cả <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                    <div class="skills-grid" aria-label="Danh sách kỹ năng">
+                        <div><i class="fa-brands fa-java"></i><span>Java</span></div>
+                        <div><i class="fa-solid fa-leaf"></i><span>Spring</span></div>
+                        <div><i class="fa-brands fa-js"></i><span>JS / TS</span></div>
+                        <div><i class="fa-brands fa-react"></i><span>React</span></div>
+                        <div><i class="fa-solid fa-server"></i><span>REST API</span></div>
+                        <div><i class="fa-solid fa-database"></i><span>MySQL</span></div>
+                        <div><i class="fa-solid fa-layer-group"></i><span>Postgres</span></div>
+                        <div><i class="fa-brands fa-git-alt"></i><span>Git</span></div>
+                        <div><i class="fa-brands fa-docker"></i><span>Docker</span></div>
+                    </div>
+                </article>
+
+                <div class="explore-strip" data-reveal>
+                    <a href="love.html"><span class="explore-icon love"><i class="fa-solid fa-heart"></i></span><span><small>LIVE</small><strong>Tình Yêu</strong></span><i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="education.html"><span class="explore-icon"><i class="fa-solid fa-graduation-cap"></i></span><span><small>UET</small><strong>Học Vấn</strong></span><i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="experience.html"><span class="explore-icon"><i class="fa-solid fa-briefcase"></i></span><span><small>JAVA</small><strong>Kinh Nghiệm</strong></span><i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
-        </nav>
-        <main class="page-content" style="padding-top: 100px;">
-            <section class="about reveal">
+        </section>
 
-                <div class="personal-hero"><span class="share-kicker">PROFILE · KNOWLEDGE · EXPERIENCE</span><h1 class="page-title">Trang Cá Nhân</h1><p>Hồ sơ, hành trình và những kiến thức mình đúc kết trong quá trình học tập, xây dựng sản phẩm và giảng dạy.</p></div>
-                <div class="about-grid-triple">
-                    <div class="about-left">
-                        <div class="about-text glass-card">
-                            <h3 class="mb-3"><i class="fa-solid fa-address-card"></i> Khái Quát</h3>
-                            <p>Tôi là sinh viên trường Đại học Công nghệ - Đại học Quốc Gia Hà Nội (UET), một người đam
-                                mê công nghệ và lập trình. Tôi đặc biệt có kinh nghiệm với hệ sinh thái Java, phát triển
-                                ứng dụng và quản lý cơ sở dữ liệu.</p>
-                            <p>Với nền tảng học thuật vững chắc, tôi luôn tư duy logic để tạo ra các phần mềm tối ưu và
-                                mang lại trải nghiệm tốt nhất.</p>
-                            <div class="tech-stack-row mt-4">
-                                <i class="fa-brands fa-java tech-icon" title="Java"></i>
-                                <i class="fa-solid fa-leaf tech-icon" title="Spring Boot"></i>
-                                <i class="fa-solid fa-database tech-icon" title="MySQL"></i>
-                                <i class="fa-brands fa-python tech-icon" title="Python"></i>
-                                <i class="fa-brands fa-js tech-icon" title="JavaScript"></i>
-                                <i class="fa-brands fa-html5 tech-icon" title="HTML5"></i>
-                                <i class="fa-brands fa-css3-alt tech-icon" title="CSS3"></i>
-                                <i class="fa-brands fa-git-alt tech-icon" title="Git"></i>
-                            </div>
-                            <div class="personal-info mt-4">
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fa-solid fa-user"></i> Họ tên:</span>
-                                    <span class="info-value">Hoàng Mạnh Trường</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fa-solid fa-school"></i> Học vấn:</span>
-                                    <span class="info-value">Sinh viên UET - ĐHQGHN</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fa-solid fa-location-dot"></i> Nơi ở:</span>
-                                    <span class="info-value">Hà Nội, Việt Nam</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-mid">
-                        <div class="timeline glass-card">
-                            <h3 class="mb-3"><i class="fa-solid fa-graduation-cap"></i> Hành trình</h3>
-                            <div class="timeline-container">
-                                <div class="timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <div class="timeline-date">Hiện tại</div>
-                                    <div class="timeline-content">
-                                        <h4>Sinh viên UET</h4>
-                                        <p>Tập trung học thuật, Java, MySQL.</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <div class="timeline-date">Trước đó</div>
-                                    <div class="timeline-content">
-                                        <h4>THPT & ĐGNL</h4>
-                                        <p>Đạt 27.75 điểm Khối A00. Giải Nhì HSG Tỉnh.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-right-sidebar">
-                        <div class="personal-subpages">
-                            <h4 class="sidebar-title"><i class="fa-solid fa-compass"></i> Khám Phá</h4>
-                            <div class="explore-grid mini-grid">
-                                <!-- Love Card -->
-                                <a href="love.html" class="explore-card love-card mini-card">
-                                    <div class="explore-icon mini-icon"><i class="fa-solid fa-heart"></i></div>
-                                    <div class="explore-info">
-                                        <h4>Tình Yêu</h4>
-                                        <span class="badge badge-love mini-badge">Live</span>
-                                    </div>
-                                </a>
-
-                                <!-- Education Card -->
-                                <a href="education.html" class="explore-card edu-card mini-card">
-                                    <div class="explore-icon mini-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                                    <div class="explore-info">
-                                        <h4>Học Vấn</h4>
-                                        <span class="badge badge-edu mini-badge">UET</span>
-                                    </div>
-                                </a>
-
-                                <!-- Experience Card -->
-                                <a href="experience.html" class="explore-card exp-card mini-card">
-                                    <div class="explore-icon mini-icon"><i class="fa-solid fa-briefcase"></i></div>
-                                    <div class="explore-info">
-                                        <h4>Kinh Nghiệm</h4>
-                                        <span class="badge badge-exp mini-badge">Java</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+        <section class="knowledge-share" id="knowledge" aria-labelledby="knowledge-title">
+            <header class="knowledge-header" data-reveal>
+                <div>
+                    <span class="section-kicker">KIẾN THỨC · GIA SƯ · KINH NGHIỆM</span>
+                    <h2 id="knowledge-title"><i class="fa-regular fa-newspaper"></i> Góc chia sẻ</h2>
+                    <p>Kiến thức lập trình, kinh nghiệm học tập và mẹo giảng dạy được tổng hợp tại một nơi.</p>
                 </div>
-            </section>
+                <div class="blog-filters" role="group" aria-label="Lọc bài viết">
+                    <button class="filter-btn active" type="button" data-filter="all">Tất cả</button>
+                    <button class="filter-btn" type="button" data-filter="it">Công nghệ</button>
+                    <button class="filter-btn" type="button" data-filter="tutor">Gia sư</button>
+                    <button class="filter-btn" type="button" data-filter="experience">Kinh nghiệm</button>
+                </div>
+            </header>
+            <div class="blog-grid" id="blog-grid" aria-live="polite"></div>
+        </section>
+    </main>
 
-            <section class="share-section knowledge-share" id="knowledge" aria-labelledby="knowledge-title">
-                <header class="blog-header reveal">
-                    <span class="share-kicker">Kiến thức &amp; kinh nghiệm</span>
-                    <h2 class="page-title" id="knowledge-title">Góc chia sẻ cá nhân</h2>
-                    <p class="subtitle-center">Kiến thức lập trình, kinh nghiệm học tập và mẹo giảng dạy được tổng hợp tại một nơi.</p>
-                    <div class="blog-filters" role="group" aria-label="Lọc bài viết">
-                        <button class="filter-btn active" type="button" data-filter="all">Tất cả</button>
-                        <button class="filter-btn" type="button" data-filter="it">Công nghệ &amp; IT</button>
-                        <button class="filter-btn" type="button" data-filter="tutor">Gia sư &amp; Học tập</button>
-                    </div>
-                </header>
-                <div class="blog-grid" id="blog-grid" aria-live="polite"></div>
-            </section>
-        </main>
-        <footer data-shared-footer>
-            <p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p>
-        </footer>
-        <script src="../assets/js/share-page.js"></script>
-        <script src="../assets/js/common.js"></script>
-        <script src="../assets/js/api-client.js"></script>
-        <script src="../assets/js/chatbot.js"></script>
-        <script src="../assets/js/main.js"></script>
-    </body>
+    <nav class="personal-mobile-nav" aria-label="Điều hướng di động">
+        <a href="../index.html"><i class="fa-solid fa-house"></i><span>Trang chủ</span></a>
+        <a class="active" href="about.html"><i class="fa-solid fa-user"></i><span>Cá nhân</span></a>
+        <a href="teaching.html"><i class="fa-solid fa-graduation-cap"></i><span>Giảng dạy</span></a>
+        <a href="muctieu.html"><i class="fa-solid fa-bullseye"></i><span>Mục tiêu</span></a>
+        <a href="projects.html"><i class="fa-solid fa-terminal"></i><span>Dự án</span></a>
+    </nav>
 
+    <footer data-shared-footer><p>&copy; 2026 Hoàng Mạnh Trường. Designed and Built with ❤️</p></footer>
+    <script src="../assets/js/share-page.js?v=20260823-personal-stitch"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/api-client.js"></script>
+    <script src="../assets/js/chatbot.js"></script>
+</body>
 </html>

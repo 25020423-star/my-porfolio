@@ -7,238 +7,182 @@
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Outfit:wght@300;400;600;800&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/love-gate.css">
+    <link rel="stylesheet" href="../assets/css/love-hub.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="../assets/js/config.js"></script>
     <script src="../assets/js/api-client.js"></script>
 </head>
-<body class="love-page-body">
-    <!-- Premium Password Protection Overlay -->
-    <div id="password-overlay" class="password-screen">
-        <div class="password-card glass-card">
-            <div class="lock-header">
-                <div class="lock-icon-wrapper">
-                    <i class="fa-solid fa-lock"></i>
-                    <i class="fa-solid fa-heart pulse-heart"></i>
-                </div>
-                <h2>Khu vực bí mật</h2>
-                <p>Nơi lưu giữ những kỉ niệm riêng tư ❤️</p>
-            </div>
+<body class="love-page-body love-hub-body">
+    <div id="password-overlay" class="secret-gate" role="dialog" aria-modal="true" aria-labelledby="secret-title">
+        <div class="secret-gate__aurora secret-gate__aurora--one"></div>
+        <div class="secret-gate__aurora secret-gate__aurora--two"></div>
+        <div class="secret-gate__stars" aria-hidden="true"></div>
 
-            <div class="password-input-group">
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-key"></i>
-                    <input type="password" id="love-password" placeholder="Nhập mật mã..." maxlength="4">
-                </div>
-                <button onclick="checkPassword()" class="btn-unlock">
-                    <span>Truy cập</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-
-            <div id="pwd-error" class="error-msg">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                Mật mã không chính xác!
-            </div>
-
-            <div class="password-footer">
-                <a href="../index.html"><i class="fa-solid fa-house"></i> Quay lại trang chủ</a>
-                <span class="hint">Gợi ý: 10/02</span>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Check password on load
-        if (sessionStorage.getItem('love_unlocked') === 'true') {
-            document.getElementById('password-overlay').style.display = 'none';
-        }
-
-        async function checkPassword() {
-            const pwd = document.getElementById('love-password').value;
-            try {
-                await ApiClient.post('/api/auth/admin/login', { pin: pwd });
-                sessionStorage.setItem('love_unlocked', 'true');
-                const overlay = document.getElementById('password-overlay');
-                overlay.style.opacity = '0';
-                overlay.style.pointerEvents = 'none';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 600);
-            } catch {
-                const errorMsg = document.getElementById('pwd-error');
-                errorMsg.style.display = 'flex';
-                document.getElementById('love-password').value = '';
-                // Simple shake re-trigger
-                errorMsg.style.animation = 'none';
-                errorMsg.offsetHeight; /* trigger reflow */
-                errorMsg.style.animation = null;
-            }
-        }
-
-        // Allow pressing Enter
-        document.addEventListener('DOMContentLoaded', () => {
-            const pwdInput = document.getElementById('love-password');
-            if(pwdInput) {
-                pwdInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') checkPassword();
-                });
-            }
-        });
-    </script>
-
-    <!-- Global Widgets -->
-    <div class="dark-mode-toggle" onclick="toggleDarkMode()">
-        <i class="fa-solid fa-moon" id="dark-mode-icon"></i>
-    </div>
-
-    <div class="settings-toggle" onclick="openSettings()" style="position: fixed; top: 80px; right: 20px; z-index: 1000; width: 45px; height: 45px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1);">
-        <i class="fa-solid fa-gear"></i>
-    </div>
-
-    <div class="music-player">
-        <!-- Will be populated by music.js -->
-    </div>
-
-    <div class="back-nav">
-        <a href="../index.html" class="back-link"><i class="fa-solid fa-house"></i> Về Trang Cá Nhân</a>
-    </div>
-
-    <main>
-        <section class="love-hero-container">
-            <!-- Main Professional Love Card -->
-            <div class="love-card-main">
-                <div class="hub-header">
-                    <span class="hub-badge">Hành Trình Hạnh Phúc</span>
-                    <h1 class="hub-brand">Inlove<span></span></h1>
-                </div>
-
-                <div class="big-heart-section">
-                    <div class="heart-pulse-wrapper">
-                        <i class="fa-solid fa-heart big-heart"></i>
-                        <div class="days-count-overlay">
-                            <span class="days-val" id="big-total-days">0</span>
-                            <span class="days-unit">Ngày bên nhau</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-num" id="count-years">0</span>
-                        <span class="stat-label">Năm</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num" id="count-months">0</span>
-                        <span class="stat-label">Tháng</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num" id="count-weeks">0</span>
-                        <span class="stat-label">Tuần</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num" id="count-days">0</span>
-                        <span class="stat-label">Ngày</span>
-                    </div>
-                </div>
-
-                <!-- Couple Showcase -->
-                <div class="couple-showcase">
-                    <div class="person-profile">
-                        <div class="avatar-frame">
-                            <img id="img-male" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="Male">
-                        </div>
-                        <div class="person-meta">
-                            <h3 class="person-nickname" id="name-male">Nino 🌟</h3>
-                            <span class="person-age" id="age-male">20 tuổi</span>
-                        </div>
-                    </div>
-
-                    <div class="love-separator">
-                        <div class="line"></div>
+        <main class="secret-gate__main">
+            <section class="secret-card">
+                <div class="secret-card__intro">
+                    <div class="secret-heart" aria-hidden="true">
+                        <span class="secret-heart__halo"></span>
                         <i class="fa-solid fa-heart"></i>
-                        <div class="line"></div>
                     </div>
+                    <div class="secret-card__intro-copy">
+                        <p class="secret-card__eyebrow"><i class="fa-solid fa-lock"></i> Our little secret</p>
+                        <h1 id="secret-title">Khu vực <span>bí mật</span></h1>
+                        <p>Nơi cất giữ những kỷ niệm chỉ thuộc về hai chúng ta <span aria-hidden="true">♥</span></p>
+                    </div>
+                    <p class="secret-card__signature">our little secret ♡</p>
+                </div>
 
-                    <div class="person-profile">
-                        <div class="avatar-frame">
-                            <img id="img-female" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" alt="Female">
-                        </div>
-                        <div class="person-meta">
-                            <h3 class="person-nickname" id="name-female">Béo 💮</h3>
-                            <span class="person-age" id="age-female">20 tuổi</span>
-                        </div>
+                <div class="secret-card__access">
+                    <header>
+                        <p class="secret-card__step">PRIVATE ACCESS</p>
+                        <h2>Bước vào thế giới của chúng ta</h2>
+                        <p>Nhập mật khẩu để mở những kỷ niệm riêng tư.</p>
+                    </header>
+
+                    <form id="love-password-form" class="secret-form" novalidate>
+                        <label class="secret-field" for="love-password">
+                            <span class="sr-only">Mật khẩu của chúng mình</span>
+                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                            <input type="password" id="love-password" placeholder="Mật khẩu của chúng mình..." maxlength="4" autocomplete="current-password" required>
+                            <button id="toggle-love-password" class="secret-field__toggle" type="button" aria-label="Hiện mật khẩu" aria-pressed="false">
+                                <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </label>
+
+                        <p id="pwd-error" class="secret-form__error" role="alert" aria-live="polite">
+                            <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                            <span>Sai mật khẩu rồi, thử lại nhé ♡</span>
+                        </p>
+
+                        <button id="unlock-love" class="secret-form__submit" type="submit">
+                            <span>Mở kỷ niệm</span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </form>
+
+                    <div class="secret-card__actions">
+                        <p class="secret-card__hint">Gợi ý: 10/02 - một ngày đặc biệt ♡</p>
+                        <a href="../index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Quay lại trang chủ</a>
                     </div>
                 </div>
+            </section>
+        </main>
 
-                <!-- Love Note / Typing Effect -->
-                <div class="love-note">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <span id="love-message"></span><span class="typing-cursor">|</span>
-                </div>
+        <footer class="secret-gate__footer">Made with <span>♡</span> by Mtruong_dev <b>·</b> © 2026</footer>
+    </div>
 
-                <!-- Navigation Grid -->
-                <div class="hub-nav-grid">
-                    <a href="timeline.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-timeline"></i></div>
-                        <div class="nav-text">
-                            <strong>Dòng thời gian</strong>
-                            <span>Các cột mốc</span>
-                        </div>
-                    </a>
-                    <a href="map.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                        <div class="nav-text">
-                            <strong>Bản đồ</strong>
-                            <span>Nơi ta đi qua</span>
-                        </div>
-                    </a>
-                    <a href="bucketlist.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-list-check"></i></div>
-                        <div class="nav-text">
-                            <strong>Bucket List</strong>
-                            <span>Ước mơ chung</span>
-                        </div>
-                    </a>
-                    <a href="messages.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
-                        <div class="nav-text">
-                            <strong>Hộp Thư</strong>
-                            <span>Thư bí mật</span>
-                        </div>
-                    </a>
-                    <a href="tracking.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
-                        <div class="nav-text">
-                            <strong>Vị trí</strong>
-                            <span>Đang ở đâu?</span>
-                        </div>
-                    </a>
-                    <a href="chat.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-comments"></i></div>
-                        <div class="nav-text">
-                            <strong>Trò chuyện</strong>
-                            <span>Nhắn tin Real-time</span>
-                        </div>
-                    </a>
-                    <a href="locket.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-square-rss"></i></div>
-                        <div class="nav-text">
-                            <strong>Locket Love</strong>
-                            <span>Ảnh tức thì</span>
-                        </div>
-                    </a>
-                    <a href="photobooth.html" class="nav-button">
-                        <div class="nav-icon"><i class="fa-solid fa-camera-retro"></i></div>
-                        <div class="nav-text">
-                            <strong>Photobooth</strong>
-                            <span>Chụp dải ảnh</span>
-                        </div>
-                    </a>
+    <script src="../assets/js/love-gate.js"></script>
+
+    <div class="memory-sky" aria-hidden="true"></div>
+
+    <header class="memory-topbar">
+        <a class="memory-brand" href="love.html" aria-label="Trang chủ Góc Kỷ Niệm">
+            <i class="fa-solid fa-heart"></i>
+            <span>Secret Corner</span>
+        </a>
+        <nav class="memory-nav" aria-label="Điều hướng Góc Kỷ Niệm">
+            <a href="timeline.html">Timeline</a>
+            <a href="map.html">Bản đồ</a>
+            <a href="bucketlist.html">Bucket List</a>
+            <a href="messages.html">Hộp thư</a>
+        </nav>
+        <div class="memory-actions">
+            <a class="memory-icon-button" href="../index.html" aria-label="Về trang cá nhân"><i class="fa-solid fa-house"></i></a>
+            <button class="memory-icon-button" type="button" onclick="openSettings()" aria-label="Cài đặt kỷ niệm"><i class="fa-solid fa-gear"></i></button>
+            <button class="memory-icon-button" type="button" onclick="toggleDarkMode()" aria-label="Đổi giao diện"><i class="fa-solid fa-moon" id="dark-mode-icon"></i></button>
+        </div>
+    </header>
+
+    <div class="music-player" aria-label="Trình phát nhạc"></div>
+
+    <main class="memory-shell">
+        <section class="memory-hero" aria-labelledby="memory-title">
+            <div class="memory-hero__intro">
+                <span class="memory-kicker">Hành trình hạnh phúc</span>
+                <h1 id="memory-title">Inlove</h1>
+                <p>Kỷ niệm của chúng mình, được giữ lại trong một góc nhỏ thật riêng.</p>
+            </div>
+
+            <div class="memory-day-card" aria-label="Tổng số ngày bên nhau">
+                <div class="memory-heart">
+                    <i class="fa-solid fa-heart"></i>
+                    <span id="big-total-days">0</span>
+                    <small>Ngày</small>
                 </div>
+                <div>
+                    <strong id="next-milestone-days">—</strong>
+                    <span>ngày tới cột mốc tiếp theo</span>
+                </div>
+            </div>
+
+            <div class="memory-stats" aria-label="Thời gian bên nhau">
+                <div><strong id="count-years">0</strong><span>Năm</span></div>
+                <div><strong id="count-months">0</strong><span>Tháng</span></div>
+                <div><strong id="count-weeks">0</strong><span>Tuần</span></div>
+                <div><strong id="count-days">0</strong><span>Ngày</span></div>
+            </div>
+
+            <div class="memory-couple">
+                <article class="memory-person">
+                    <div class="memory-avatar"><img id="img-male" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="Ảnh Hoàng Mạnh Trường"></div>
+                    <h2 id="name-male">Hoàng Mạnh Trường</h2>
+                    <span id="age-male">20 tuổi</span>
+                </article>
+                <div class="memory-connection" aria-hidden="true"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+                <article class="memory-person">
+                    <div class="memory-avatar"><img id="img-female" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80" alt="Ảnh Nguyễn Thị Anh Thư"></div>
+                    <h2 id="name-female">Nguyễn Thị Anh Thư</h2>
+                    <span id="age-female">20 tuổi</span>
+                </article>
+            </div>
+
+            <blockquote class="memory-quote"><i class="fa-solid fa-quote-left"></i><span id="love-message"></span><span class="typing-cursor">|</span></blockquote>
+        </section>
+
+        <section id="memory-features" class="memory-feature-section" aria-labelledby="feature-title">
+            <div class="memory-section-heading">
+                <div><span>Không gian của chúng mình</span><h2 id="feature-title">Mở một kỷ niệm</h2></div>
+                <p>Mười hai góc nhỏ, mỗi nơi lưu một kiểu yêu thương khác nhau.</p>
+            </div>
+
+            <div class="memory-feature-grid">
+                <a class="memory-feature-card" href="timeline.html"><i class="fa-solid fa-route"></i><div><h3>Dòng thời gian</h3><p>Các cột mốc đáng nhớ</p></div><span>01</span></a>
+                <button class="memory-feature-card" type="button" data-memory-tool="diary"><i class="fa-solid fa-book-open"></i><div><h3>Nhật ký chung</h3><p>Viết cho nhau mỗi ngày</p></div><span>02</span></button>
+                <button class="memory-feature-card" type="button" data-memory-tool="gallery"><i class="fa-solid fa-images"></i><div><h3>Kho ảnh</h3><p>Lưu giữ những khoảnh khắc</p></div><span>03</span></button>
+                <a class="memory-feature-card" href="map.html"><i class="fa-solid fa-map-location-dot"></i><div><h3>Bản đồ</h3><p>Những nơi ta đã đi qua</p></div><span>04</span></a>
+                <a class="memory-feature-card" href="bucketlist.html"><i class="fa-solid fa-list-check"></i><div><h3>Bucket List</h3><p>Ước mơ chung</p></div><span>05</span></a>
+                <button class="memory-feature-card" type="button" data-memory-tool="plans"><i class="fa-solid fa-rocket"></i><div><h3>Kế hoạch tương lai</h3><p>Cùng nhau xây dựng ước mơ</p></div><span>06</span></button>
+                <a class="memory-feature-card" href="messages.html"><i class="fa-solid fa-envelope-open-text"></i><div><h3>Hộp thư</h3><p>Những lá thư bí mật</p></div><span>07</span></a>
+                <button class="memory-feature-card" type="button" data-memory-tool="gifts"><i class="fa-solid fa-gift"></i><div><h3>Quà tặng</h3><p>Những món quà ý nghĩa</p></div><span>08</span></button>
+                <a class="memory-feature-card" href="locket.html"><i class="fa-solid fa-square-rss"></i><div><h3>Locket Love</h3><p>Chia sẻ ảnh tức thì</p></div><span>09</span></a>
+                <a class="memory-feature-card" href="photobooth.html"><i class="fa-solid fa-camera-retro"></i><div><h3>Photobooth</h3><p>Chụp dải ảnh cùng nhau</p></div><span>10</span></a>
+                <a class="memory-feature-card" href="tracking.html"><i class="fa-solid fa-location-crosshairs"></i><div><h3>Vị trí</h3><p>Chia sẻ vị trí an toàn</p></div><span>11</span></a>
+                <a class="memory-feature-card" href="chat.html"><i class="fa-solid fa-comments"></i><div><h3>Trò chuyện</h3><p>Nhắn tin thời gian thực</p></div><span>12</span></a>
             </div>
         </section>
+
+        <section class="memory-today" aria-labelledby="today-title">
+            <div><span>Gợi ý hôm nay</span><h2 id="today-title">Tạo thêm một điều để nhớ</h2><p>Viết một dòng nhật ký, lưu một tấm ảnh hoặc lên kế hoạch cho buổi hẹn tiếp theo.</p></div>
+            <button type="button" data-memory-tool="diary"><i class="fa-solid fa-pen"></i> Viết nhật ký</button>
+        </section>
     </main>
+
+    <nav class="memory-bottom-nav" aria-label="Điều hướng trên điện thoại">
+        <a href="love.html" class="is-active"><i class="fa-solid fa-heart"></i><span>Kỷ niệm</span></a>
+        <a href="timeline.html"><i class="fa-solid fa-route"></i><span>Timeline</span></a>
+        <a href="locket.html"><i class="fa-solid fa-square-rss"></i><span>Locket</span></a>
+        <button type="button" onclick="openSettings()"><i class="fa-solid fa-gear"></i><span>Cài đặt</span></button>
+    </nav>
+
+    <div id="memory-tool-modal" class="memory-tool-modal" hidden>
+        <div class="memory-tool-modal__backdrop" data-close-memory-tool></div>
+        <section class="memory-tool-panel" role="dialog" aria-modal="true" aria-labelledby="memory-tool-title">
+            <header><div><span id="memory-tool-kicker">Góc nhỏ</span><h2 id="memory-tool-title">Nhật ký chung</h2></div><button type="button" data-close-memory-tool aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+            <div id="memory-tool-content" class="memory-tool-content"></div>
+        </section>
+    </div>
 
     <!-- Settings Modal -->
     <style>
@@ -623,7 +567,6 @@
         }
     </script>
 
-    <script src="../assets/js/config.js"></script>
     <script src="../assets/js/music.js"></script>
     <script>
         function toggleDarkMode() {
@@ -633,11 +576,11 @@
         }
 
 
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             initInLove();
             setTimeout(typeMessage, 1000);
             setInterval(createFloatingParticle, 2000);
-        };
+        });
 
         function initInLove() {
             const config = JSON.parse(localStorage.getItem('inLoveConfig')) || {
@@ -770,7 +713,8 @@
         }
 
         function createFloatingParticle() {
-            const container = document.querySelector('.love-hero-container');
+            const container = document.querySelector('.memory-shell');
+            if (!container) return;
             const particle = document.createElement('i');
             particle.className = 'fa-solid fa-heart';
             particle.style.position = 'fixed';
@@ -819,5 +763,6 @@
             }
         }
     </script>
+    <script src="../assets/js/love-hub.js"></script>
 </body>
 </html>
